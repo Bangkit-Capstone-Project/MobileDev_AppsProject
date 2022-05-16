@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.welcomingpage.WelcomingPageActivity">
+
+    <ImageView
+        android:id="@+id/welcoming_image"
+        android:layout_width="315dp"
+        android:layout_height="188dp"
+        android:layout_marginTop="115dp"
+        android:src="@drawable/welcoming_image_one"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="A girl taking a picture of a plant"/>
+
+    <TextView
+        android:id="@+id/welcoming_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="29dp"
+        android:text="Selamat Datang di Tanamin"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcoming_image" />
+
+    <TextView
+
+        android:id="@+id/welcoming_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aplikasi yang bikin kamu anti gagal pane!\nPanen hasilnya sekarang!"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/welcoming_title"
+        app:layout_constraintTop_toBottomOf="@+id/welcoming_title" />
+
+    <com.example.tanamin.ui.custom.dark_green_button
+        android:id="@+id/welcoming_btn_login"
+        android:layout_width="281dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="142dp"
+        android:background="@drawable/round_button_green"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcoming_description" />
+
+    <com.example.tanamin.ui.custom.white_button
+        android:id="@+id/welcoming_btn_signup"
+        android:layout_width="281dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/round_button_white"
+        android:text="SIGN UP"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/welcoming_btn_login"
+        app:layout_constraintStart_toStartOf="@+id/welcoming_btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/welcoming_btn_login" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
