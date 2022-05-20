@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.bottomnavigation.ui.notifications
+package com.example.tanamin.ui.bottomnavigation.ui.myplant
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.tanamin.databinding.FragmentProfileBinding
+import com.example.tanamin.databinding.FragmentMyPlantBinding
 
-class ProfileFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+class MyPlantFragment : Fragment() {
+
+    private var _binding: FragmentMyPlantBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +23,14 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+        val dashboardViewModel =
+            ViewModelProvider(this).get(MyPlantViewModel::class.java)
 
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentMyPlantBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textDashboard
+        dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root
