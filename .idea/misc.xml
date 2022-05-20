@@ -3,13 +3,45 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/Profile.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/angle-right-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/angle-right-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/arrow-small-left-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/arrow-small-left-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/cross-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/edit-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/expand-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/flower-tulip-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/flower-tulip-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/flower.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/heart-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/heart-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/home-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/home-free-icon-font_24.xml" value="0.1" />
         <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1115" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1" />
         <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.1115" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/megaphone-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/notebook-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/notebook-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/picture-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/profile.xml" value="0.1" />
         <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/round_button_green.xml" value="0.1" />
         <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/round_button_white.xml" value="0.1515" />
-        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_signup.xml" value="0.13999999999999999" />
-        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_welcoming_page.xml" value="0.12" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/user-free-icon-font_24(1).xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/user-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/users-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/drawable/world-free-icon-font_24.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.1526293287729799" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_signup.xml" value="0.1" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/activity_welcoming_page.xml" value="0.16666666666666666" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/fragment_dashboard.xml" value="0.10816588285592134" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/layout/fragment_notifications.xml" value="0.10816588285592134" />
+        <entry key="..\:/Android/TANAMIN/app/src/main/res/menu/bottom_nav_menu.xml" value="0.13852073535699017" />
       </map>
     </option>
   </component>

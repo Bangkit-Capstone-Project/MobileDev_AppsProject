@@ -127,5 +127,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_text_input_email" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>
