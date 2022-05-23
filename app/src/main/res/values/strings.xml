@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">TANAMIN</string>
+    <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_my_plant">Tanamanku</string>
+    <string name="title_profile">Profil</string>
+    <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen hasilnya sekarang!</string>
+    <string name="login">Masuk</string>
+    <string name="register">Daftar</string>
+    <string name="welcome_tittle">Selamat datang di Tanamin</string>
+    <string name="login_desc">Silakan masuk dengan akun yang telah terdaftar</string>
+    <string name="register_desc">Lengkapi dulu data dirimu dibawah ini, ya</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="name">Nama</string>
+    <string name="hint_email">Masukkan email kamu</string>
+    <string name="hint_password">Masukkan password kamu</string>
+    <string name="hint_name">Masukkan nama kamu</string>
+    <string name="home_slogan">Rawat tanamanmu disini</string>
+    <string name="menu">Menu</string>
+    <string name="news">Berita</string>
+    <string name="article">Artikel</string>
+    <string name="rice_capt">Diagnosa penyakit\n Tanaman Padi</string>
+    <string name="cassava_capt">Diagnosa penyakit\n Tanaman Singkong</string>
+    <string name="vegetable_capt">Periksa Jenis\n sayuran</string>
+    <string name="edit">Edit Profil</string>
+    <string name="language">Pilih Bahasa</string>
+    <string name="credit">Credit</string>
+    <string name="about">Tentang</string>
+    <string name="logout">Keluar</string>
+    <string name="plant_empty">Tanaman belum ditambahkan</string>
+
+</resources>
