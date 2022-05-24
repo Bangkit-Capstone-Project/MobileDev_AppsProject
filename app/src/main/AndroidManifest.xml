@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TANAMIN">
         <activity
-            android:name=".ui.riceplant.RiceplantActivity"
+            android:name=".ui.mainfeature.plantsprediction.PlantsPredictionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.casavaplant.CassavaPlantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.riceplant.RicePlantActivity"
             android:exported="false" />
         <activity
             android:name=".ui.bottomnavigation.BottomNavigationActivity"
