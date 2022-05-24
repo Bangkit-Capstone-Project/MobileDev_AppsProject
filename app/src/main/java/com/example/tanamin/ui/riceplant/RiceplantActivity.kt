@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.tanamin.databinding.ActivityRiceplantBinding
 
 class RiceplantActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityRiceplantBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
