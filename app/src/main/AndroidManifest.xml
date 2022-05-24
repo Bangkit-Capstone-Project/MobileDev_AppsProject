@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TANAMIN">
         <activity
+            android:name=".ui.mainfeature.camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.bottomnavigation.ui.profile.credit.CreditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.mainfeature.plantsprediction.PlantsPredictionActivity"
             android:exported="false" />
         <activity
