@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.mainfeature.riceplant
+package com.example.tanamin.ui.mainfeature.casavaplant
 
 import android.content.Intent
 import android.os.Build
@@ -13,13 +13,13 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import com.example.tanamin.databinding.ActivityCameraCassavaPlantBinding
 import com.example.tanamin.ui.mainfeature.camerautil.createFile
-import com.example.tanamin.databinding.ActivityCameraRiceBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CameraRiceActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCameraRiceBinding
+class CameraCassavaPlantActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCameraCassavaPlantBinding
     private lateinit var cameraExecutor: ExecutorService
 
     private var imageCapture: ImageCapture? = null
@@ -28,7 +28,7 @@ class CameraRiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCameraRiceBinding.inflate(layoutInflater)
+        binding = ActivityCameraCassavaPlantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -63,7 +63,7 @@ class CameraRiceActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
-                        this@CameraRiceActivity,
+                        this@CameraCassavaPlantActivity,
                         "Gagal mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -75,7 +75,7 @@ class CameraRiceActivity : AppCompatActivity() {
                         "isBackCamera",
                         cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA
                     )
-                    setResult(RicePlantActivity.CAMERA_X_RESULT, intent)
+                    setResult(CassavaPlantActivity.CAMERA_X_RESULT, intent)
                     finish()
                 }
 
@@ -108,7 +108,7 @@ class CameraRiceActivity : AppCompatActivity() {
                 )
             } catch (exc: Exception) {
                 Toast.makeText(
-                    this@CameraRiceActivity,
+                    this@CameraCassavaPlantActivity,
                     "Gagal memunculkan kamera.",
                     Toast.LENGTH_SHORT
                 ).show()
@@ -128,4 +128,5 @@ class CameraRiceActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
+
 }

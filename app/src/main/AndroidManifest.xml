@@ -3,6 +3,7 @@
     package="com.example.tanamin">
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -12,6 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TANAMIN">
+        <activity
+            android:name=".ui.mainfeature.casavaplant.CameraCassavaPlantActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.mainfeature.riceplant.CameraRiceActivity"
             android:exported="false" />
