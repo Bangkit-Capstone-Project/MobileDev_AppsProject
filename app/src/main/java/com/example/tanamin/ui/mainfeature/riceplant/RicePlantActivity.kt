@@ -2,10 +2,12 @@ package com.example.tanamin.ui.mainfeature.riceplant
 
 import android.Manifest
 import android.content.Intent
+import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -13,6 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tanamin.databinding.ActivityRicePlantBinding
+import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
+import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import java.io.File
 
 class RicePlantActivity : AppCompatActivity() {
@@ -62,6 +66,7 @@ class RicePlantActivity : AppCompatActivity() {
         }
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
+        binding.galleryButton.setOnClickListener { startGallery() }
 
         //Handling Backbutton
         val actionbar = supportActionBar
@@ -90,17 +95,25 @@ class RicePlantActivity : AppCompatActivity() {
         }
     }
 
-    fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
-        val matrix = Matrix()
-        return if (isBackCamera) {
-            matrix.postRotate(90f)
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width ,bitmap.height, matrix,  true)
-        } else {
-            matrix.postRotate(-90f)
-            matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f) // flip gambar
-            Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    private fun startGallery() {
+        val intent = Intent()
+        intent.action = ACTION_GET_CONTENT
+        intent.type = "image/*"
+        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        launcherIntentGallery.launch(chooser)
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg: Uri = result.data?.data as Uri
+            val myFile = uriToFile(selectedImg, this@RicePlantActivity)
+            binding.previewImageView.setImageURI(selectedImg)
         }
     }
+
+
 
     //Handling onBackPressed for the Backbutton
     override fun onSupportNavigateUp(): Boolean {

@@ -129,4 +129,5 @@ class CameraRiceActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
+
 }
