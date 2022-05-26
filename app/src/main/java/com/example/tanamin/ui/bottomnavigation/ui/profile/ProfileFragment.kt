@@ -1,5 +1,6 @@
 package com.example.tanamin.ui.bottomnavigation.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.FragmentProfileBinding
+import com.example.tanamin.ui.bottomnavigation.ui.profile.credit.CreditActivity
+import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivity
 
 class ProfileFragment : Fragment() {
 
@@ -31,6 +34,14 @@ class ProfileFragment : Fragment() {
         val textView: TextView = binding.tvName
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
+        }
+
+        //HANDLIND TO CREDIT ACTIVITY
+        binding.credit.setOnClickListener {
+            requireActivity().run{
+                startActivity(Intent(this, CreditActivity::class.java))
+                finish()
+            }
         }
         return root
     }

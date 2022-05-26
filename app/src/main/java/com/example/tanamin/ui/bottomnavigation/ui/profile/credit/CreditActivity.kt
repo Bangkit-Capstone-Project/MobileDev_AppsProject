@@ -8,5 +8,18 @@ class CreditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_credit)
+
+        //Handling Backbutton
+        val actionbar = supportActionBar
+        actionbar!!.title = "TANAMIN"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
+
+    }
+
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

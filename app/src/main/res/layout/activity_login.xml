@@ -7,7 +7,7 @@
     tools:context=".ui.login.LoginActivity">
 
     <TextView
-        android:id="@+id/login_title"
+        android:id="@+id/title_credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/login_description"
+        android:id="@+id/description_credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -30,8 +30,8 @@
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_title"
-        app:layout_constraintTop_toBottomOf="@+id/login_title" />
+        app:layout_constraintStart_toStartOf="@+id/title_credit"
+        app:layout_constraintTop_toBottomOf="@+id/title_credit" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -41,7 +41,7 @@
         android:src="@drawable/login_image_one"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_description" />
+        app:layout_constraintTop_toBottomOf="@+id/description_credit" />
 
     <TextView
         android:id="@+id/textview1"
