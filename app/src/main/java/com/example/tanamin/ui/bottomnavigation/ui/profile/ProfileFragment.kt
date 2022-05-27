@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
         binding.credit.setOnClickListener {
             requireActivity().run{
                 startActivity(Intent(this, CreditActivity::class.java))
-                finish()
             }
         }
         return root

@@ -23,7 +23,9 @@ class LoginActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
 
         binding.loginBtnLogin.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, BottomNavigationActivity::class.java))
+            val intent =  Intent(this, BottomNavigationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
     }

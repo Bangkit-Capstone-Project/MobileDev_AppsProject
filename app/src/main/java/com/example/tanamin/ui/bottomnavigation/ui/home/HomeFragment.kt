@@ -28,17 +28,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.tvSlogan
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         //HANDLING CARD VIEW FOR ALL THE MAINFEATURE
         //RICE
         binding.cvRice.setOnClickListener {
             requireActivity().run{
                 startActivity(Intent(this, RicePlantActivity::class.java))
-                finish()
             }
         }
 
@@ -46,7 +40,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.cvCassava.setOnClickListener {
             requireActivity().run{
                 startActivity(Intent(this, CassavaPlantActivity::class.java))
-                finish()
             }
         }
 
@@ -54,7 +47,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.cvVegetable.setOnClickListener {
             requireActivity().run{
                 startActivity(Intent(this, PlantsPredictionActivity::class.java))
-                finish()
             }
         }
 

@@ -13,7 +13,7 @@ class CreditActivity : AppCompatActivity() {
         val actionbar = supportActionBar
         actionbar!!.title = "TANAMIN"
         actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+
 
     }
 
