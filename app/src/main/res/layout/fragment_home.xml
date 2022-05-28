@@ -134,7 +134,7 @@
                         android:id="@+id/imgCassava"
                         android:layout_width="152dp"
                         android:layout_height="103dp"
-                        android:src="@drawable/cassava"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvCassavaCapt"

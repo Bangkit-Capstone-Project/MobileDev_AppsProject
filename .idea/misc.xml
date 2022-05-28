@@ -5,18 +5,20 @@
       <map>
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/drawable-v24/ic_capture.xml" value="0.1" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/drawable-v24/ic_switch_camera.xml" value="0.168" />
-        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.22" />
+        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.1" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_camera.xml" value="0.1" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_camera_cassava_plant.xml" value="0.1118659420289855" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_camera_plants_prediction.xml" value="0.2" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_camera_rice.xml" value="0.2" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_cassava_plant.xml" value="0.14666666666666667" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_credit.xml" value="0.22" />
-        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_plants_prediction.xml" value="0.13722826086956522" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_rice_plant.xml" value="0.1" />
+        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_signup.xml" value="0.14666666666666667" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/activity_welcoming_page.xml" value="0.15172101449275363" />
-        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
+        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/fragment_my_plant.xml" value="0.2" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/fragment_profile.xml" value="0.16666666666666666" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/layout/item_list_plant.xml" value="0.18795289855072464" />
         <entry key="..\:/Android/MobileDev_AppsProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2" />
