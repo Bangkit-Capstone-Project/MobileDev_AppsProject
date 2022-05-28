@@ -123,15 +123,18 @@
 
     <com.example.tanamin.ui.custom.dark_green_button
         android:id="@+id/login_btn_login"
-        android:layout_width="281dp"
+        android:layout_width="360dp"
         android:layout_height="48dp"
         android:layout_marginTop="89dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/round_button_green"
         android:text="@string/login"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/copyrightTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text_input_email" />
+        app:layout_constraintTop_toBottomOf="@+id/login_text_input_email"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/copyrightTextView"

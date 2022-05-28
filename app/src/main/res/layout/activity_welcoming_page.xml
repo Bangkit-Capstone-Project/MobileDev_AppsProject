@@ -10,8 +10,8 @@
     <ImageView
         android:id="@+id/welcoming_image"
         android:layout_width="wrap_content"
-        android:layout_height="188dp"
-        android:layout_marginTop="120dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="80dp"
         android:contentDescription="A girl taking a picture of a plant"
         android:src="@drawable/welcoming_image_one"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         android:id="@+id/welcoming_btn_login"
         android:layout_width="281dp"
         android:layout_height="48dp"
-        android:layout_marginTop="142dp"
+        android:layout_marginTop="102dp"
         android:background="@drawable/round_button_green"
         android:text="@string/login"
         android:textColor="@color/white"
@@ -67,5 +67,18 @@
         app:layout_constraintEnd_toEndOf="@+id/welcoming_btn_login"
         app:layout_constraintStart_toStartOf="@+id/welcoming_btn_login"
         app:layout_constraintTop_toBottomOf="@+id/welcoming_btn_login" />
+
+    <TextView
+        android:id="@+id/copyrightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:text="© 2022 Tanamin"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
