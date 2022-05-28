@@ -43,8 +43,7 @@ class CameraCassavaPlantActivity : AppCompatActivity() {
 
         //BACBUTTON HANDLER
         binding.backButtonImage.setOnClickListener{
-            val intent = Intent(this, PlantsPredictionActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 
