@@ -12,6 +12,16 @@
         android:layout_height="match_parent" />
 
     <ImageView
+        android:id="@+id/backButtonImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
+
+    <ImageView
         android:id="@+id/captureImage"
         android:layout_width="60dp"
         android:layout_height="60dp"

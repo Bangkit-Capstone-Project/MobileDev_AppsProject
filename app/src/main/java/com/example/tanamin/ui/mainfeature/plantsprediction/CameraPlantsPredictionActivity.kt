@@ -44,6 +44,12 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
             startCamera()
         }
 
+        //BACBUTTON HANDLER
+        binding.backButtonImage.setOnClickListener{
+            val intent = Intent(this, PlantsPredictionActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     public override fun onResume() {
