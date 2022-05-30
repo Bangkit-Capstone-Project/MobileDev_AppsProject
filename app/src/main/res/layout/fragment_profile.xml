@@ -18,9 +18,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="72dp"
             android:layout_marginBottom="8dp"
-            app:srcCompat="@color/dark_green"
-            tools:src="@tools:sample/avatars"
-            tools:srcCompat="@tools:sample/avatars" />
+
+            android:src="@drawable/user"
+             />
 
         <TextView
             android:id="@+id/tvName"
@@ -30,6 +30,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:fontFamily="@font/poppins_regular"
             android:layout_gravity="center"
             android:text="Bambang Saptaji"
             android:layout_marginBottom="30dp"/>
@@ -64,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/edit"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -123,6 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/language"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -162,6 +165,7 @@
                     android:layout_marginStart="8dp"
                     android:text="@string/about"
                     android:textStyle="bold"
+                    android:fontFamily="@font/poppins_regular"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView8"
@@ -219,6 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/credit"
+                    android:fontFamily="@font/poppins_regular"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView10"
                     app:layout_constraintTop_toTopOf="parent"

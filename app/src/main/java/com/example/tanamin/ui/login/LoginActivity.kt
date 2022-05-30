@@ -1,10 +1,8 @@
 package com.example.tanamin.ui.login
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.tanamin.databinding.ActivityLoginBinding
 import com.example.tanamin.ui.bottomnavigation.BottomNavigationActivity
 
@@ -16,7 +14,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
 
-        //Handling Backbutton
+        //Handling Backbutton`
         val actionbar = supportActionBar
         actionbar!!.title = "TANAMIN"
         actionbar.setDisplayHomeAsUpEnabled(true)

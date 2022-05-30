@@ -93,6 +93,26 @@
         <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject-master/app/src/main/res/layout/item_menu.xml" value="0.15729166666666666" />
         <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject-master/app/src/main/res/menu/bottom_nav_menu.xml" value="0.22" />
         <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject-master/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_bottom_navigation.xml" value="0.1" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_camera_plants_prediction.xml" value="0.14130434782608695" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_camera_rice.xml" value="0.14130434782608695" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_cassava_plant.xml" value="0.14130434782608695" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_credit.xml" value="0.13632246376811594" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_detail_main_feature.xml" value="0.1" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_detail_news.xml" value="0.22" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_login.xml" value="0.3333333333333333" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_news.xml" value="0.15307971014492755" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_plants_prediction.xml" value="0.1431159420289855" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_rice_plant.xml" value="0.1431159420289855" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_signup.xml" value="0.15307971014492755" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/activity_welcoming_page.xml" value="0.15307971014492755" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/fragment_home.xml" value="0.14666666666666667" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/fragment_profile.xml" value="0.3333333333333333" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/item_all_news.xml" value="0.3333333333333333" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/item_list_plant.xml" value="0.13632246376811594" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/item_main_menu.xml" value="0.1" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/layout/item_news.xml" value="0.15307971014492755" />
+        <entry key="..\:/BANGKIT/Project/MobileDev_AppsProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17552083333333332" />
       </map>
     </option>
   </component>
