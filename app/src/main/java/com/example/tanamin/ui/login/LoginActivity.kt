@@ -1,11 +1,12 @@
 package com.example.tanamin.ui.login
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
+import androidx.appcompat.app.AppCompatActivity
+
 import android.view.View
+
 import com.example.tanamin.databinding.ActivityLoginBinding
 import com.example.tanamin.ui.bottomnavigation.BottomNavigationActivity
 
@@ -16,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
+
 
         //ANIMATION
         playAnimation()

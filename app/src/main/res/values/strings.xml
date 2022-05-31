@@ -4,7 +4,7 @@
     <string name="title_home">Beranda</string>
     <string name="title_my_plant">Tanamanku</string>
     <string name="title_profile">Profil</string>
-    <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen hasilnya sekarang!</string>
+    <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen\nhasilnya sekarang!</string>
     <string name="login">Masuk</string>
     <string name="register">Daftar</string>
     <string name="welcome_tittle">Selamat datang di Tanamin</string>
@@ -20,14 +20,119 @@
     <string name="menu">Menu</string>
     <string name="news">Berita</string>
     <string name="article">Artikel</string>
-    <string name="rice_capt">Diagnosa penyakit\n Tanaman Padi</string>
-    <string name="cassava_capt">Diagnosa penyakit\n Tanaman Singkong</string>
-    <string name="vegetable_capt">Periksa Jenis\n sayuran</string>
+    <string name="rice_capt">Diagnosa tanaman Padi</string>
+    <string name="cassava_capt">Diagnosa tanaman Singkong</string>
+    <string name="tomato_capt">Diagnosa tanaman Tomat</string>
+    <string name="vegetable_capt">Identifikasi jenis sayuran</string>
     <string name="edit">Edit Profil</string>
     <string name="language">Pilih Bahasa</string>
     <string name="credit">Credit</string>
     <string name="about">Tentang</string>
     <string name="logout">Keluar</string>
     <string name="plant_empty">Tanaman belum ditambahkan</string>
+    <string name="scan">Scan Disini</string>
+    <string name="home_capt">Pilih tanamanmu</string>
+    <string name="rice">Padi</string>
+    <string name="cassava">Singkong</string>
+    <string name="vegetables">Sayuran</string>
+    <string name="tomato">Tomat</string>
+    <string name="bannerTwo_Capt">Cegah\nPenyakit\nTanaman</string>
+    <string name="bannerOne_Capt">Rawat\nTanaman Kamu\nDisini</string>
+    <string name="bannerThree_Capt">Anti\nGagal Panen</string>
+    <string name="news_tittle_activity">Tanamin News</string>
+
+
+    <string-array name="news_tittle">
+        <item>Petani Budidayakan Padi Jenis Srinuk, Ganjar Dukung Penuh</item>
+        <item>Antisipasi Climate Change, Kementan Gelar Pertanian Cerdas Iklim</item>
+        <item>Petik Padi, Tradisi Petani Plumbungan Sragen Awali Panen</item>
+        <item>Sandiaga Uno: Kemenparekraf Siap Dampingi UMKM Kampung Singkong Argowiyoto Salatiga</item>
+        <item>Kurangi Ketergantungan Terigu, Pemprov Lampung Siap Geliatkan Tepung Singkong</item>
+        <item>Kendalikan Hama Penyakit pada Singkong, Ahli IPB University Ungkap Pentingnya Mengelola Ekosistem</item>
+        <item>Pemkab Karawang Dorong Upaya Swasembada Sayuran</item>
+        <item>Harga Sayuran di Trenggalek Naik</item>
+        <item>Harga Tomat Melejit Naik 2 Kali Lipat, Rp. 20 Ribu per Kilo di Pasar Mardika Ambon</item>
+    </string-array>
+    <string-array name="news_image">
+        <item>@drawable/rice_news_one</item>
+        <item>@drawable/rice_news_two</item>
+        <item>@drawable/rice_news_three</item>
+        <item>@drawable/singkong_news_one</item>
+        <item>@drawable/singkong_news_two</item>
+        <item>@drawable/singkong_news_three</item>
+        <item>@drawable/vegetables_news_one</item>
+        <item>@drawable/vegetables_news_two</item>
+        <item>@drawable/tomato_news_one</item>
+    </string-array>
+    <string-array name="news_desc">
+        <item>Klaten: Gubernur Jawa Tengah Ganjar Pranowo mendukung upaya petani Kabupaten Klaten membudidayakan padi organik dengan bibit jenis Srinuk. Apalagi Pemkab Klaten telah berhasil mendapatkan Hak Atas Kekayaan Intelektual (HAKI) atas varietas tersebut.\n
+            Varietas ini merupakan hasil rekayasa genetik benih padi rojolele hasil kerja sama antara Badan Tenaga Nuklir Nasional (Batan) dengan Pemerintah Kabupaten Klaten. Hal tersebut disampaikan Ganjar saat kunjungan kerja ke Klaten, Jawa Tengah, pada Senin, 23 Mei 2022. Menurut dia, komitmen petani patut didukung karena berhasil mengembangkan bibit padi organik dengan hasil menjanjikan.\n
+            Ganjar juga mangapresiasi Pemkab Klaten yang berhasil mengurus HAKI dari varietas Srinuk ini. Dia optimistis upaya serupa bisa didorong untuk varietas tanaman selain padi, terutama dengan bantuan dari Badan Riset dan Inovasi Nasional. Beberapa contoh tanaman juga telah dikirimkannya ke sana.\n
+            “Tanamannya tidak hanya padi tapi mungkin bisa kedelai yang mungkin masih kurang, optimalisasi dari lahan untuk meningkatkan produktivitas,” ujarnya.
+            Padi Srinuk di Kecamatan Manisrenggo rencananya akan panen pada Juli 2022. Ganjar akan mengecek dan turut mengevaluasi hasil panennya. </item>
+        <item>INFO BISNIS – Perubahan iklim atau climate change menjadi ancaman yang sangat serius bagi pertanian. Berdampak pada penurunan kualitas dan kuantitas produksi tanaman pangan, sehingga menyulitkan upaya mewujudkan ketahanan pangan nasional.Kementerian Pertanian mengantisipasi ancaman tersebut dengan mengembangkan program Climate Smart Agriculture (CSA) atau pertanian cerdas iklim.\nCSA merupakan pendekatan yang mentransformasikan dan mengorientasikan ulang sistem produksi pertanian dan rantai nilai pangan. “Saya mendorong berbagai inovasi dan teknologi seperti Climate Smart Agriculture atau CSA untuk menghadapi perubahan iklim," kata Menteri Pertanian, Syahrul Yasin Limpo.
+            Menurut Kepala Badan Penyuluhan dan Pengembangan SDM Pertanian (BPPSDMP), Dedi Nursyamsi, Kementan akan mengembangkan pertanian dengan memaksimalkan BPP Kostratani sebagai acuan untuk menciptakan pertanian yang tangguh menghadapi krisis iklim.</item>
+        <item>Solopos.com, SRAGEN–Puluhan petani yang tergabung dalam Kelompok Tani Ngudi Luhur Plumbungan, Karangmalang, Sragen, menggelar tradisi petik padi untuk mengawali panen raya pada hamparan sawah seluas 30 hektare, Rabu (25/5/2022).\n
+            Petik padi tersebut dilanjutkan kenduri sebagai wujud syukur kepada Tuhan atas hasil panen yang melimpah dan terbebas dari hama tikus dan hama lainnya.Di tempat itu mereka menggelar kenduri bersama sebagai wujud syukur atas panen yang melimpah. Para penebas dan tukang membajak tanah sebagai mitra para petani ikut bergabung di dalamnya.\n
+            Sesepuh petani, Suparno, kembali diminta untuk mengikrarkan hajat para petani untuk memulai (wiwitan) panen raya dengan adat tradisi Jawa.</item>
+        <item>
+            SALATIGA - Menteri Pariwisata dan Ekonomi Kreatif Sandiaga Uno siap mendampingi dan meningkatkan kapasitas pelaku UMKM "Kampung Singkong Argowiyoto Salatiga" . Hal ini dilakukan guna menghasilkan produk olahan singkong yang berkualitas dan berkelanjutan.
+            Salah satunya dengan meningkatkan desain kemasan produk agar semakin higienis, menarik, dan ramah lingkungan. Menparekraf Sandiaga saat bertemu para pelaku UMKM di "Kampung Singkong Argowiyoto Salatiga", Senin (16/5/2022), mengatakan ada beberapa program Kemenparekraf yang dapat dikolaborasikan dengan para pelaku UMKM.\n
+            "Kampung Singkong Argowiyoto Salatiga" dikenal ketika local champion setempat, seorang pengusaha inspiratif bernama Hardadi berhasil menciptakan varietas singkong D9. Hal ini kemudian menginspirasi pelaku UMKM lainnya di Kota Salatiga.\n
+            Hardadi mampu mengangkat Singkong yang sebelumnya hanya dipandang sebelah mata, menjadi kuliner khas bahkan ikon wisata kuliner di Kota Salatiga dan Jawa Tengah.
+            Beragam makanan berbasis singkong berhasil dikembangkan Hardadi dan bersama para pengrajinnya. Seperti Enting-Enting Gepuk, Keripik paru, Kripik Ceker, Onde-onde, Gelek, dan aneka sajian berbasis singkong ada di D9. Maka kemudian, wisatawan ke Salatiga belum lengkap kalau belum mencicipi Singkong Keju D9 milik Hardadi.\n
+        </item>
+        <item>
+            Bandarlampung: Pemerintah Provinsi (Pemprov) Lampung siap untuk menggeliatkan dan meningkatkan produksi mocaf atau tepung singkong di daerahnya guna mengurangi ketergantungan akan tepung terigu.
+            "Dampak sekunder atas adanya pemberhentian pengiriman gandum dari India, ataupun dari negara yang sedang konflik tentu mempengaruhi pasokan yang pasti akan berkurang. Ini jadi peluang kita untuk mengembangkan komoditas substitusi," ujar Asisten II Bidang Ekonomi dan Pembangunan Provinsi Lampung, Kusnardi, di Bandarlampung, dikutip dari Antara, Rabu, 25 Mei 2022.
+            Kusnardi mengatakan pengembangan komoditas substitusi yang dapat dilakukan di provinsi tersebut yaitu mengembangkan dan menambah produksi mocaf.
+            "Lampung ini penghasil singkong yang cukup banyak, bahkan 95 persen diolah jadi tapioka. Ini saat yang tepat untuk mengelola potensi itu, agar ada keberagaman dan mengurangi ketergantungan akan tepung terigu," katanya.
+            Menurutnya, untuk mengimplementasikan hal itu Lampung siap untuk meningkatkan produksi mocaf yang tengah terus dikembangkan di daerahnya.
+        </item>
+        <item>
+            TRIBUNNEWSBOGOR.COM - Singkong menjadi salah satu bahan pangan favorit bagi masyarakat Indonesia. Selain dikenal mudah diolah, cara tanamnya dinilai tidak terlalu sulit.
+            Tanaman singkong sebenarnya merupakan tanaman asli Amerika yang didatangkan oleh pedagang Portugis dan Spanyol ke Afrika dan Asia.
+            Singkong tahan kekeringan namun tidak tahan genangan. Singkong juga tahan hidup di berbagai kondisi tanah masam dan miskin hara, namun kurang tahan salinitas.
+            Ahli Entomologi Departemen Proteksi Tanaman Fakultas Pertanian IPB University, Bonjok Istiaji MSi, menyebutkan kekurangan lahan menyebabkan singkong semakin susah bersaing dengan komoditas lain.
+            Petani singkong juga sering menganggap bahwa singkong merupakan tanaman yang mudah ditanam dan bebas dari hama penyakit.
+            “Padahal, tanaman singkong yang sehat diperoleh karena perlakuan yang sesuai. Seharusnya petani juga memiliki cara pandang bahwa singkong juga harus memiliki produktivitas tinggi seperti komoditas unggulan lainnya,” ujarnya.
+            Menurutnya, pada umumnya hama penyakit pada singkong di Indonesia tidak terlalu parah. Hama penyakit jarang terjadi pada tanaman rakyat ini.
+            Namun bisa menjadi ancaman serius pada pertanaman skala luas dan intensif. Singkong bisa mengalami gejala umbi, daun layu disebabkan oleh cendawan, hingga virus.
+        </item>
+        <item>
+           REPUBLIKA.CO.ID, KARAWANG — Pemerintah Kabupaten (Pemkab) Karawang berupaya mendukung petani untuk dapat meningkatkan hasil produksi pertanian. Dengan dukungan ini, diharapkan Kabupaten Karawang nantinya bisa swasembada produk pertanian, khususnya sayuran.
+            Untuk mewujudkan itu, Pemkab Karawang melalui Dinas Pertanian dan Ketahanan Pangan (DPKP) menyusun program kerja sama dengan sejumlah pihak, antara lain dengan Taiwan Technical Mission (TTM), difasilitasi oleh Kementerian Pertanian (Kementan) RI. Tujuan program kerja sama ini adalah untuk mendongkrak hasil produksi petani binaan.
+            “Selama ini, untuk memenuhi kebutuhan sayur, Karawang dipasok oleh daerah lain. Pemda (pemerintah daerah) tengah berupaya agar Karawang bisa swasembada sayuran,” kata Bupati Karawang Cellica Nurrachadiana.
+            Terkait hal itu, pada Rabu (25/5/2022), Bupati Karawang meresmikan greenhouse dan packing house di lahan 500 meter persegi dan gudang 200 meter persegi, dengan total luas lahan sekitar dua hektare. Nilai investasi infrastruktur tersebut diperkirakan mencapai sekitar 310 ribu dolar Amerika Serikat (AS).
+            Diresmikan juga dua smart greenhouse Project Hortikultura Karawang seluas 1.200 meter persegi, dengan total investasi mencapai sekitar 320 ribu dolar AS. “Dua infrastruktur ini dibuat guna mendukung pengemasan hasil produksi, serta pengembangannya,” kata Bupati.
+        </item>
+        <item>
+            REPUBLIKA.CO.ID, TRENGGALEK -- Harga sejumlah sayuran di Kabupaten Trenggalek, Jawa Timur, mengalami kenaikan hingga dua kali lipat semenjak menjelang Lebaran lalu. Kenaikan harga diduga akibat minimnya pasokan dalam sebulan terakhir.
+            Komoditas yang terus naik dalam dua pekan terakhir adalah cabai dan bawang putih. Harga cabai rawit yang semula, Rp 24 ribu per kilogram kini naik menjadi R p60 ribu per kilogram. Sedangkan harga bawang merah yang semula Rp 25 ribu per kilogram naik menjadi Rp 40 ribu per kilogram.
+            "Cabai rawit dan bawang merah naik hingga dua kali lipat akibat minimnya pasokan," katanya.
+            Harga terong satu kilogram yang biasanya di jual dengan harga Rp 4.000 per kilogram kini naik menjadi Rp 10 ribu. Sedangkan buncis naiknya hampir tiga kali lipat, yakni dari biasanya pedagang menjual Rp 6.000 per kilogram sekarang naik menjadi Rp 16 ribu per kilogram.
+            Kenaikan harga tersebut berimbas pada daya beli masyarakat untuk membeli bahan pokok. "Biasanya banyak yang beli setengah kilogram cabai rawit atau bawang merah, tapi sekarang pembeli hanya membeli seperempat kilogram," ujar Marmi, pedagang sembako di pasar yang sama.
+        </item>
+        <item>
+            AMBON, TRIBUNAMBON.COM -Menjelang akhir Mei 2022, harga sejumlah sayur masih alami kenaikan.
+            Dalam tiga hari ini harga tomat di Pasar Mardika Ambon naik dua kali lipat dari Rp 8.000 per kg jadi 20.000 per kg, baik tomat sayur maupun tomat besar.
+            “Sudah tiga hari ini harga tomat di angka Rp 20.000 per kg naik dari Rp 8.000 per kg,” ujar Moxin, pedagang sayur mayur kepada TribunAmbon, Selasa (29/5/2022).
+            Lanjut dikatakan, dengan mahalnya harga tomat maka penjualan bagi warga yang hendak membeli eceran hanya diberikan 6 buah Rp 5.000 ribu untuk tomat berukuran sedang.
+            Sementara tomat bekururan besar di jual 4 buah Rp 5.000.Meroketnya harga tomat tersebut diakibatkan pasokan dari petani berkurang.
+            Untuk tomat yang dijual di Pasar Mardika Ambon kebanyakan didatangkan dari Namlea (Kabupaten Buru), Kobisonta (Kabupaten SBT) dan Surabaya.
+            "Katanya pasokan tomat dari petani menurun akibat terganggunya hasil panen oleh cuaca hujan ektreem," terangnya.
+        </item>
+    </string-array>
+    <string-array name="news_date">
+        <item>Selasa, 24 Mei 2022</item>
+        <item>Jumat, 27 Mei 2022</item>
+        <item>Rabu, 25 Mei 2022</item>
+        <item>Selasa 17 Mei 2022</item>
+        <item>Rabu, 25 Mei 2022</item>
+        <item>Selasa, 24 Mei 2022</item>
+        <item>Sabtu, 28 Mei 2022</item>
+        <item>Kamis 26 Mei 2022</item>
+        <item>Minggu, 29 Mei 2022</item>
+    </string-array>
 
 </resources>
