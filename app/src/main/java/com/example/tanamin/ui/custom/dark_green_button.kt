@@ -23,7 +23,6 @@ class dark_green_button: AppCompatButton {
         init()
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         background =  enabledBackground
@@ -32,6 +31,5 @@ class dark_green_button: AppCompatButton {
 
     private fun init() {
         enabledBackground = ContextCompat.getDrawable(context, R.drawable.round_button_green) as Drawable
-
     }
 }

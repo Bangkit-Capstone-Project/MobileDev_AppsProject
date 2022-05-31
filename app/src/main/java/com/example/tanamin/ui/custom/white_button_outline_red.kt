@@ -11,7 +11,6 @@ import com.example.tanamin.R
 class white_button_outline_red : AppCompatButton{
     private lateinit var enabledBackground: Drawable
 
-
     constructor(context: Context) : super(context) {
         init()
     }
