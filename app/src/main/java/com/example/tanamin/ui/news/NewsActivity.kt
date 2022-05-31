@@ -24,6 +24,12 @@ class NewsActivity : AppCompatActivity() {
         rvNews.layoutManager = LinearLayoutManager(this)
         list.addAll(listNews)
         showRecyclerList()
+
+        //Handling Backbutton
+        val actionbar = supportActionBar
+        actionbar!!.title = "TANAMIN"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
     }
     private val listNews: ArrayList<News> get() {
         val dataNewsTitle = resources.getStringArray(R.array.news_tittle)
@@ -49,5 +55,11 @@ class NewsActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
