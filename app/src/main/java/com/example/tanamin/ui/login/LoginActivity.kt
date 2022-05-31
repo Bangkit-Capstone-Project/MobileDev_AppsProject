@@ -1,5 +1,6 @@
 package com.example.tanamin.ui.login
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 
