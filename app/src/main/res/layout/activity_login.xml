@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/email"
+        android:text="User Name"
         android:textSize="16sp"
         android:fontFamily="@font/poppins_regular"
         android:textStyle="bold"
@@ -60,7 +60,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_text_input_name"
+        android:id="@+id/login_text_input_user_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,15 +71,15 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/textview1"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
-        app:startIconDrawable="@drawable/ic_baseline_email_24">
+        app:startIconDrawable="@drawable/ic_baseline_assignment_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_text_edit_name"
+            android:id="@+id/login_text_edit_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:fontFamily="@font/poppins_regular"
-            android:hint="@string/hint_email"
+            android:hint="Masukkan user name kamu"
             android:inputType="textEmailAddress"
             tools:ignore="SpeakableTextPresentCheck"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -96,11 +96,11 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_text_input_name"
-        app:layout_constraintTop_toBottomOf="@+id/login_text_input_name" />
+        app:layout_constraintStart_toStartOf="@+id/login_text_input_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_input_user_name" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login_text_input_email"
+        android:id="@+id/login_text_input_password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:passwordToggleEnabled="true"
         android:layout_width="0dp"
@@ -115,7 +115,7 @@
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_text_edit_email"
+            android:id="@+id/login_text_edit_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true"
@@ -139,7 +139,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/copyrightTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text_input_email"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_input_password"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView

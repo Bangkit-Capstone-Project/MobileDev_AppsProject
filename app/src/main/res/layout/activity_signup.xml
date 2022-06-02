@@ -52,8 +52,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/login_text_input_name"
-            app:layout_constraintTop_toBottomOf="@+id/login_text_input_name" />
+            app:layout_constraintStart_toStartOf="@+id/login_text_input_user_name"
+            app:layout_constraintTop_toBottomOf="@+id/login_text_input_user_name" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutemail"
@@ -197,8 +197,8 @@
             android:fontFamily="@font/poppins_regular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/login_text_input_email"
-            app:layout_constraintTop_toBottomOf="@+id/login_text_input_email" />
+            app:layout_constraintStart_toStartOf="@+id/login_text_input_password"
+            app:layout_constraintTop_toBottomOf="@+id/login_text_input_password" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutpassword"

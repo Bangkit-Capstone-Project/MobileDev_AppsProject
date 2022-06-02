@@ -1,17 +1,30 @@
 package com.example.tanamin.ui.welcomingpage
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityWelcomingPageBinding
+import com.example.tanamin.nonui.userpreference.UserPreferences
+import com.example.tanamin.ui.ViewModelFactory
+import com.example.tanamin.ui.bottomnavigation.BottomNavigationActivity
 import com.example.tanamin.ui.login.LoginActivity
+import com.example.tanamin.ui.login.LoginViewModel
 import com.example.tanamin.ui.signup.SignupActivity
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class WelcomingPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomingPageBinding
+    private lateinit var viewModel: WelcomingPageViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +33,9 @@ class WelcomingPageActivity : AppCompatActivity() {
 
         //ANIMATION
         playAnimation()
+
+        //SESSION CHECKER
+        setupViewModel()
 
         //BUTTON HANDLER
         binding.welcomingBtnLogin.setOnClickListener{
@@ -40,5 +56,21 @@ class WelcomingPageActivity : AppCompatActivity() {
             repeatCount = ObjectAnimator.INFINITE
             repeatMode = ObjectAnimator.REVERSE
         }.start()
+    }
+
+    //SESSION CHECKER
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[WelcomingPageViewModel::class.java]
+
+        viewModel.getSession().observe(this) { session ->
+            if (session) {
+                val mainIntent = Intent(this, BottomNavigationActivity::class.java)
+                startActivity(mainIntent)
+                finish()
+            }
+        }
     }
 }
