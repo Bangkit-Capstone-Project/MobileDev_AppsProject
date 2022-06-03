@@ -44,6 +44,11 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
             startCamera()
         }
 
+        //BACBUTTON HANDLER
+        binding.backButtonImage.setOnClickListener{
+            finish()
+        }
+
     }
 
     public override fun onResume() {

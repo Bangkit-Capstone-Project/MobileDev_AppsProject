@@ -17,7 +17,7 @@ object ApiConfig {
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("")
+            .baseUrl("http://tanamin.herokuapp.com:80/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

@@ -15,6 +15,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.tanamin.databinding.ActivityCameraCassavaPlantBinding
 import com.example.tanamin.ui.mainfeature.camerautil.createFile
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -38,6 +39,11 @@ class CameraCassavaPlantActivity : AppCompatActivity() {
             cameraSelector = if (cameraSelector.equals(CameraSelector.DEFAULT_BACK_CAMERA)) CameraSelector.DEFAULT_FRONT_CAMERA
             else CameraSelector.DEFAULT_BACK_CAMERA
             startCamera()
+        }
+
+        //BACBUTTON HANDLER
+        binding.backButtonImage.setOnClickListener{
+            finish()
         }
     }
 

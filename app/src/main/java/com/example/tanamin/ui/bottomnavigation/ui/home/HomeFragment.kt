@@ -59,7 +59,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val allNews = Intent(this@HomeFragment.requireContext(), NewsActivity::class.java)
                 startActivity(allNews)
             }
-
         }
     }
     private val listNews: ArrayList<News> get() {

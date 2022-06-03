@@ -28,5 +28,17 @@ class DetailNewsActivity : AppCompatActivity() {
         tvNewsTittle.text = data.newsTittle
         tvNewsDate.text = data.newsDate
         tvNewsDesc.text = data.newsDesc
+
+        //Handling Backbutton
+        val actionbar = supportActionBar
+        actionbar!!.title = "TANAMIN"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
+    }
+
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

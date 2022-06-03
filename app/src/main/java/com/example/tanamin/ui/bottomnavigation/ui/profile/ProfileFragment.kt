@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.FragmentProfileBinding
@@ -25,14 +26,14 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
+        val viewModel =
             ViewModelProvider(this).get(ProfileViewModel::class.java)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.tvName
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        viewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
@@ -41,6 +42,12 @@ class ProfileFragment : Fragment() {
             requireActivity().run{
                 startActivity(Intent(this, CreditActivity::class.java))
             }
+        }
+
+        //TO LOG OUT
+        binding.btnLogout.setOnClickListener{
+
+
         }
         return root
     }
