@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tanamin.R
 import com.example.tanamin.databinding.FragmentHomeBinding
 import com.example.tanamin.nonui.data.News
+import com.example.tanamin.ui.alldesease.AllDeseaseActivity
 import com.example.tanamin.ui.bottomnavigation.ui.profile.ProfileFragment
 import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
@@ -58,6 +59,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             cvAllNews.setOnClickListener {
                 val allNews = Intent(this@HomeFragment.requireContext(), NewsActivity::class.java)
                 startActivity(allNews)
+            }
+            cvSearch.setOnClickListener {
+                val alldesease = Intent(this@HomeFragment.requireContext(), AllDeseaseActivity::class.java)
+                startActivity(alldesease)
             }
         }
     }

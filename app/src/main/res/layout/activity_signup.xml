@@ -23,13 +23,14 @@
 
         <TextView
             android:id="@+id/signup_description"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/register_desc"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginStart="16dp" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/signup_image"
@@ -71,22 +72,22 @@
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/constrainlayoutemail"
                 app:layout_constraintEnd_toEndOf="@id/constrainlayoutemail"
                 app:layout_constraintStart_toStartOf="@id/constrainlayoutemail"
-                app:layout_constraintBottom_toBottomOf="@id/constrainlayoutemail"
                 app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_text_edit_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:fontFamily="@font/poppins_regular"
                     android:ems="10"
-                    tools:ignore="SpeakableTextPresentCheck"
-
+                    android:fontFamily="@font/poppins_regular"
                     android:hint="@string/hint_email"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+
+                    android:singleLine="true"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,7 +4,7 @@
     <string name="title_home">Beranda</string>
     <string name="title_my_plant">Tanamanku</string>
     <string name="title_profile">Profil</string>
-    <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen\nhasilnya sekarang!</string>
+    <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen hasilnya sekarang!</string>
     <string name="login">Masuk</string>
     <string name="register">Daftar</string>
     <string name="welcome_tittle">Selamat datang di Tanamin</string>
@@ -40,6 +40,7 @@
     <string name="bannerOne_Capt">Rawat\nTanaman Kamu\nDisini</string>
     <string name="bannerThree_Capt">Anti\nGagal Panen</string>
     <string name="news_tittle_activity">Tanamin News</string>
+    <string name="search">Cari jenis penyakit tanaman</string>
 
 
     <string-array name="news_tittle">
