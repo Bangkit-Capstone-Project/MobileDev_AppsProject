@@ -137,6 +137,8 @@ class LoginActivity : AppCompatActivity() {
             setPositiveButton("Next") { _, _ ->
                 val homeIntent = Intent(this@LoginActivity, BottomNavigationActivity::class.java)
                 homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                //USERNAME DATA IS HERE
                 homeIntent.putExtra(BottomNavigationActivity.EXTRA_USERNAME, userName)
                 Log.d(this@LoginActivity.toString(), "sendIntent: $userName")
                 startActivity(homeIntent)

@@ -15,6 +15,11 @@ class BottomNavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBottomNavigationBinding
 
+    companion object {
+        //KEY TO GET THE USERNAME DATA FROM LOGINACTIVITY.KT
+        const val EXTRA_USERNAME = "extra_username"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
