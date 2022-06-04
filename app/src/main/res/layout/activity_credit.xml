@@ -148,6 +148,18 @@
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
+        <com.example.tanamin.ui.custom.white_button_outline_red
+            android:id="@+id/btn_logout"
+            android:layout_width="281dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/round_outline_red_button"
+            android:text="@string/logout"
+            android:textColor="@color/black"
+            android:layout_gravity="center">
+        </com.example.tanamin.ui.custom.white_button_outline_red>
+
 
     </LinearLayout>
 

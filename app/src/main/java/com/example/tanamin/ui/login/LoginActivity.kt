@@ -109,7 +109,8 @@ class LoginActivity : AppCompatActivity() {
                             onToast("${responseBody?.message}")
                             viewModel.saveToken(responseBody?.data!!.accessToken)
                             Log.d(this@LoginActivity.toString(),"${responseBody?.message}")
-                            sendIntent(responseBody?.message.toString())
+
+                            sendIntent(responseBody?.message.toString(), userName)
                         } else {
                             onToast("${responseBody?.message}")
                             Log.d(this@LoginActivity.toString(), response.message())
@@ -129,14 +130,18 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun sendIntent(msg: String) {
+    private fun sendIntent(msg: String, userName: String) {
         AlertDialog.Builder(this).apply {
             setTitle("Yeah!")
             setMessage("$msg")
             setPositiveButton("Next") { _, _ ->
-                val storyIntent = Intent(this@LoginActivity, BottomNavigationActivity::class.java)
-                storyIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(storyIntent)
+                val homeIntent = Intent(this@LoginActivity, BottomNavigationActivity::class.java)
+                homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                //USERNAME DATA IS HERE
+                homeIntent.putExtra(BottomNavigationActivity.EXTRA_USERNAME, userName)
+                Log.d(this@LoginActivity.toString(), "sendIntent: $userName")
+                startActivity(homeIntent)
                 viewModel.login()
                 finish()
             }
