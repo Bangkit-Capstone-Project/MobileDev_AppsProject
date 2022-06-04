@@ -106,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
                     ) {
                         val responseBody = response.body()
                         if (response.isSuccessful) {
+                            onToast("${responseBody?.message}")
                             viewModel.saveToken(responseBody?.data!!.accessToken)
                             Log.d(this@LoginActivity.toString(),"${responseBody?.message}")
 
