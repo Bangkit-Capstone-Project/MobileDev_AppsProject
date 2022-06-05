@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tanamin.databinding.ActivityAllDeseaseBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.data.Diseases
@@ -78,7 +79,7 @@ class AllDeseaseActivity : AppCompatActivity() {
         if(applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             binding.rvDeseases.layoutManager = GridLayoutManager(this , 2)
         }else {
-            binding.rvDeseases.layoutManager = LinearLayoutManager(this)
+            binding.rvDeseases.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
 
         val listUserAdapter = DeseaseAdapter(listUser)

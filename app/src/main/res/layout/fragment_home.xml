@@ -430,35 +430,18 @@
             app:layout_constraintStart_toStartOf="@+id/tvMenuCapt"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvAllNews"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
+        <TextView
+            android:id="@+id/tvAllNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:cardBackgroundColor="@color/dark_green"
-            app:cardCornerRadius="3dp"
+            android:text="Lihat semua"
+            android:textColor="@color/dark_green"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/tvNews"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvNews" >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="semua"
-                    android:textSize="12sp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/poppins_regular"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="@+id/tvNews" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvNews"

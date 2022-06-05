@@ -56,7 +56,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val intentToTomato = Intent(this@HomeFragment.requireContext(), PlantsPredictionActivity::class.java)
                 startActivity(intentToTomato)
             }
-            cvAllNews.setOnClickListener {
+            tvAllNews.setOnClickListener {
                 val allNews = Intent(this@HomeFragment.requireContext(), NewsActivity::class.java)
                 startActivity(allNews)
             }
