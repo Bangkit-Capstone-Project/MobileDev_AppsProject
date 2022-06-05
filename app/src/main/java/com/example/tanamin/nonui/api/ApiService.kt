@@ -1,8 +1,6 @@
 package com.example.tanamin.nonui.api
 
-import com.example.tanamin.nonui.response.AllDeseaseResponse
-import com.example.tanamin.nonui.response.LoginResponse
-import com.example.tanamin.nonui.response.RegisterResponse
+import com.example.tanamin.nonui.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -25,12 +23,13 @@ interface ApiService {
         @Field("password") password: String
     ): Call<LoginResponse>
 
-    //Desease
+    //DISEASE
     @GET("diseases")
-    fun getAllDeseases():Call<AllDeseaseResponse>
+    fun getAllDeseases(
+    ):Call<AllDiseasesResponse>
 
     @GET("diseases")
     fun searchDesease(
         @Query("q") query: String
-    ):Call<AllDeseaseResponse>
+    ):Call<DataDisease>
 }

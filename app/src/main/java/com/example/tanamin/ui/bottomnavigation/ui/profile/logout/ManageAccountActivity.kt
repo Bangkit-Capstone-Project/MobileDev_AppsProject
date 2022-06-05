@@ -28,6 +28,12 @@ class ManageAccountActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupViewModel()
 
+        //Handling Backbutton
+        val actionbar = supportActionBar
+        actionbar!!.title = "TANAMIN"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
+
         binding.cvLogout.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this@ManageAccountActivity, R.style.BottomSheetDialogTheme)
             val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_logout_dialog,
@@ -48,5 +54,11 @@ class ManageAccountActivity : AppCompatActivity() {
             ViewModelFactory(UserPreferences.getInstance(dataStore))
         )[ManageAccountViewModel::class.java]
 
+    }
+
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
