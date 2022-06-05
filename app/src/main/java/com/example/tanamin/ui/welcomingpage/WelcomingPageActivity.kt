@@ -30,6 +30,7 @@ class WelcomingPageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomingPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         //ANIMATION
         playAnimation()

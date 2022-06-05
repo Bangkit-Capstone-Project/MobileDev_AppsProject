@@ -8,8 +8,17 @@
     tools:context=".ui.welcomingpage.WelcomingPageActivity">
 
     <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <ImageView
         android:id="@+id/welcoming_image"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="250dp"
         android:layout_marginTop="80dp"
         android:contentDescription="A girl taking a picture of a plant"
