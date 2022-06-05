@@ -41,6 +41,13 @@ interface ApiService {
         @Part file: MultipartBody.Part
     ): Call<UploadFileResponse>
 
-
+    //FOR THE VEGETABLE FEATURE
+    @FormUrlEncoded
+    @POST("classifications")
+    fun vegetableClassification(
+        @Header("Authorization") token: String,
+        @Field("imgUrl") imgUrl: String,
+        @Field("endpoint") endpoint: String
+    ): Call<ClassificationsResponse>
 
 }

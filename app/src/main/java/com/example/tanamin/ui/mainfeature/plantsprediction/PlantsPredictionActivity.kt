@@ -1,6 +1,7 @@
 package com.example.tanamin.ui.mainfeature.plantsprediction
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -12,9 +13,16 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
+import com.example.tanamin.nonui.response.ClassificationsResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
+import com.example.tanamin.nonui.userpreference.UserPreferences
+import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
@@ -26,11 +34,15 @@ import java.io.File
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Url
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class PlantsPredictionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlantsPredictionBinding
+    private lateinit var viewModel: PlantsPredictionActivityViewModel
     private var mFile: File? = null
-
+    private lateinit var token: String
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -74,6 +86,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
             )
         }
 
+        setupModel()
+
         binding.cameraXButton.setOnClickListener { startCameraX() }
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
@@ -103,7 +117,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 BitmapFactory.decodeFile(mFile?.path),
                 isBackCamera
             )
-
             binding.previewImageView.setImageBitmap(result)
         }
     }
@@ -154,34 +167,71 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd(responseBody.toString())
+                            logd("THEBIGINNING " + responseBody.toString())
                             plantsPrediction(responseBody.data.toString())
                         }
                     }else{
-                        logd("bangsatlah ${response.toString()}")
+                        logd("ngeselin ${response.toString()}")
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("Bangsat lah ini ${responseBody.status}")
+                            logd("ngeselin lah ini ${responseBody.status}")
                         }
                     }
                 }
                 override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
                     logd("Retrofit Failed")
                 }
-
             })
-
         } else {
             logd("Input Image first")
         }
     }
 
+
     //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER TO GET THE PREDICTION
-    private fun plantsPrediction(Url: String){
+    private fun plantsPrediction(theUrl: String){
         val endpoint = "5666821356906348544"
+        val userToken = "Bearer $token"
 
+        //GETTING JUST THE LINK BY PARSING
+        val beforeParsedUrl: String = theUrl
+        val yourArray: List<String> = beforeParsedUrl.split("=")
+        val url = yourArray[1]
 
+        logd("UserToken: $userToken")
+        logd("imageURL: $url")
+        logd("endpoint: $endpoint")
 
+        val service = ApiConfig.getApiService().vegetableClassification(userToken, url, endpoint)
+        service.enqueue(object : Callback<ClassificationsResponse>{
+            override fun onResponse(
+                call: Call<ClassificationsResponse>,
+                response: Response<ClassificationsResponse>
+            ) {
+                logd(response.body()?.data.toString())
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    logd("PREDICTION CHECKER: ${responseBody.data}")
+                }else{
+                    logd("Respones Message ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<ClassificationsResponse>, t: Throwable) {
+                logd("Checking Failed")
+            }
+        })
+    }
+
+    //TO GET THE TOKEN
+    private fun setupModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[PlantsPredictionActivityViewModel::class.java]
+
+        viewModel.getToken().observe(this) { userToken ->
+            token = userToken
+        }
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)
