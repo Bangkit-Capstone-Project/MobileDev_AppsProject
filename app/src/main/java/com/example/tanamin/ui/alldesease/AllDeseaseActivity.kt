@@ -1,76 +1,93 @@
 package com.example.tanamin.ui.alldesease
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tanamin.databinding.ActivityAllDeseaseBinding
 import com.example.tanamin.nonui.api.ApiConfig
-import com.example.tanamin.nonui.response.AllDeseaseResponse
+import com.example.tanamin.nonui.data.Diseases
+import com.example.tanamin.nonui.response.AllDiseasesResponse
+import com.example.tanamin.nonui.response.DiseasesItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AllDeseaseActivity : AppCompatActivity() {
-    private lateinit var adapter: DeseaseAdapter
+
     private lateinit var binding: ActivityAllDeseaseBinding
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAllDeseaseBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = DeseaseAdapter()
-        adapter.notifyDataSetChanged()
+        getDiseaseFromApi()
 
-
-        binding.apply {
-            rvDeseases.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            rvDeseases.setHasFixedSize(true)
-            rvDeseases.adapter = adapter
-        }
-        getDataFromApi()
-
-
-
-
-
-
+        //Handling Backbutton
+        val actionbar = supportActionBar
+        actionbar!!.title = "TANAMIN"
+        actionbar.setDisplayHomeAsUpEnabled(true)
+        actionbar.setDisplayHomeAsUpEnabled(true)
     }
-    private fun getDataFromApi(){
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    private fun getDiseaseFromApi(){
         showLoading(true)
-        ApiConfig.getApiService().getAllDeseases()
-            .enqueue(object : Callback<AllDeseaseResponse> {
-                override fun onFailure(call: Call<AllDeseaseResponse>, t: Throwable) {
-                    printLog( t.toString() )
+        val client = ApiConfig.getApiService().getAllDeseases()
+        client.enqueue(object: Callback<AllDiseasesResponse>{
+            override fun onResponse(call: Call<AllDiseasesResponse>, response: Response<AllDiseasesResponse>) {
+                if(response.isSuccessful){
                     showLoading(false)
-                }
-                override fun onResponse(
-                    call: Call<AllDeseaseResponse>,
-                    response: Response<AllDeseaseResponse>
-                ) {
-                    showLoading(false)
-                    if (response.isSuccessful) {
-                        showResult( response.body()!! )
+                    val responseBody = response.body()
+                    if(responseBody != null){
+                        getList(responseBody.dataDisease.diseases)
+                        Log.d(this@AllDeseaseActivity.toString(), "onResponse: ${responseBody.dataDisease.diseases}")
                     }
                 }
-            })
+            }
+            override fun onFailure(call: Call<AllDiseasesResponse>, t: Throwable) {
+                Log.d(this@AllDeseaseActivity.toString(), "onFailure: ${t.message}")
+            }
+        })
     }
+    private fun getList(diseases: List<DiseasesItem>){
+        val listDisease = ArrayList<Diseases>()
+        for(disease in diseases){
+            val diseaseItem = Diseases(
+                disease.id,
+                disease.name,
+                disease.description,
+                disease.imageUrl
+            )
+            listDisease.add(diseaseItem)
+        }
+        showRecyclerList(listDisease)
+    }
+
+    private fun showRecyclerList(listUser: ArrayList<Diseases>) {
+
+        if(applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            binding.rvDeseases.layoutManager = GridLayoutManager(this , 2)
+        }else {
+            binding.rvDeseases.layoutManager = LinearLayoutManager(this)
+        }
+
+        val listUserAdapter = DeseaseAdapter(listUser)
+        binding.rvDeseases.adapter = listUserAdapter
+    }
+
     private fun printLog(message: String) {
         Log.d(TAG, message)
     }
-    private fun showResult(listDeseases: AllDeseaseResponse) {
-        for (diseases in listDeseases.diseases) printLog( "title: ${diseases.name}" )
-        adapter.setListDesease(listDeseases.diseases)
-    }
-
-
-
-
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE
