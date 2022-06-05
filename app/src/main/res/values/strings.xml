@@ -41,6 +41,8 @@
     <string name="bannerThree_Capt">Anti\nGagal Panen</string>
     <string name="news_tittle_activity">Tanamin News</string>
     <string name="search">Cari jenis penyakit tanaman</string>
+    <string name="logout_capt">Kamu masih bisa masuk aplikasi lagi nanti</string>
+    <string name="logout_sure">Apakah kamu yakin ingin keluar dari aplikasi?</string>
 
 
     <string-array name="news_tittle">

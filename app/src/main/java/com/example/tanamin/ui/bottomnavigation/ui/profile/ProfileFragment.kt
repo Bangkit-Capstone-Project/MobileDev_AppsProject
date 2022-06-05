@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.FragmentProfileBinding
 import com.example.tanamin.ui.bottomnavigation.ui.profile.credit.CreditActivity
+import com.example.tanamin.ui.bottomnavigation.ui.profile.logout.ManageAccountActivity
 import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivity
 
 class ProfileFragment : Fragment() {
@@ -26,29 +27,28 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val viewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.tvName
-        viewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
 
         //HANDLIND TO CREDIT ACTIVITY
-        binding.credit.setOnClickListener {
+        binding.cvCredit.setOnClickListener {
             requireActivity().run{
                 startActivity(Intent(this, CreditActivity::class.java))
             }
         }
 
-        //TO LOG OUT
-        binding.btnLogout.setOnClickListener{
-
-
+        //GO TO LOGOUT ACTIVITY
+        binding.cvAccount.setOnClickListener {
+            startActivity(Intent(this.requireContext(), ManageAccountActivity::class.java))
         }
+
+
+        //TO LOG OUT
+
         return root
     }
 

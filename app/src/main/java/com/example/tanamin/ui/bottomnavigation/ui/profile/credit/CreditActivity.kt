@@ -30,10 +30,6 @@ class CreditActivity : AppCompatActivity() {
         actionbar!!.title = "TANAMIN"
         actionbar.setDisplayHomeAsUpEnabled(true)
 
-        setupViewModel()
-        binding.btnLogout.setOnClickListener {
-            dialogLogout()
-        }
     }
 
     //Handling onBackPressed for the Backbutton
@@ -42,26 +38,7 @@ class CreditActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[CreditViewModel::class.java]
 
-    }
 
-    private fun dialogLogout() {
-        AlertDialog.Builder(this).apply {
-            setTitle("Logout")
-            setPositiveButton("Yes") { _, _ ->
-                viewModel.logout()
-                startActivity(Intent(this@CreditActivity, LoginActivity::class.java))
-                finish()
-            }
-            setNegativeButton("No") { dialogInterface, _ ->
-                dialogInterface.dismiss()
-            }
-            show()
-        }
-    }
+
 }
