@@ -34,6 +34,7 @@ class ManageAccountActivity : AppCompatActivity() {
                 findViewById<LinearLayout>(R.id.bottomSheet)
             )
             bottomSheetView.findViewById<View>(R.id.btn_logout).setOnClickListener {
+                showLoading(true)
                 viewModel.logout()
                 startActivity(Intent(this, WelcomingPageActivity::class.java))
                 finish()
@@ -47,6 +48,11 @@ class ManageAccountActivity : AppCompatActivity() {
             this,
             ViewModelFactory(UserPreferences.getInstance(dataStore))
         )[ManageAccountViewModel::class.java]
+
+    }
+    private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
+        if (isLoading) View.VISIBLE
+        else View.GONE
 
     }
 }

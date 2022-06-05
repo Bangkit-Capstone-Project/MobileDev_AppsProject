@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.signup.SignupActivity">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -15,11 +15,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="33dp"
-            android:text="@string/register"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
+            android:text="@string/register"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:textColor="@color/black" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/signup_description"
@@ -30,38 +32,43 @@
             android:fontFamily="@font/poppins_regular"
             android:text="@string/register_desc"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_title" />
 
         <ImageView
             android:id="@+id/signup_image"
-            android:layout_width="315dp"
-            android:layout_height="188dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
-            android:src="@drawable/signup_image_one" />
+            android:src="@drawable/signup_image_one"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_description" />
 
         <TextView
             android:id="@+id/textview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="@string/email"
             android:textColor="@color/black"
-            android:fontFamily="@font/poppins_regular"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/login_text_input_user_name"
-            app:layout_constraintTop_toBottomOf="@+id/login_text_input_user_name" />
+            app:layout_constraintStart_toStartOf="@+id/textview5"
+            app:layout_constraintTop_toBottomOf="@+id/constrainlayoutusername" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginStart="48dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview2">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_text_input_email"
@@ -95,20 +102,24 @@
             android:id="@+id/textview1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/name"
+            android:layout_marginStart="16dp"
             android:fontFamily="@font/poppins_regular"
+            android:text="@string/name"
             android:textColor="@color/black"
-            android:layout_marginStart="48dp"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/signup_image" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutnama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview1">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_text_input_name"
@@ -119,22 +130,22 @@
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
-                app:startIconDrawable="@drawable/ic_baseline_notes_24"
                 app:layout_constraintBottom_toBottomOf="@id/constrainlayoutnama"
-                app:layout_constraintTop_toTopOf="@id/constrainlayoutnama"
+                app:layout_constraintEnd_toEndOf="@id/constrainlayoutnama"
                 app:layout_constraintStart_toStartOf="@id/constrainlayoutnama"
-                app:layout_constraintEnd_toEndOf="@id/constrainlayoutnama">
+                app:layout_constraintTop_toTopOf="@id/constrainlayoutnama"
+                app:startIconDrawable="@drawable/ic_baseline_notes_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_text_edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:ems="10"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/hint_name"
-                    android:ems="10"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:singleLine="true"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -142,20 +153,24 @@
             android:id="@+id/textview5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="User Name"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins_regular"
+            android:text="User Name"
             android:textColor="@color/black"
-            android:layout_marginStart="48dp"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/textview1"
+            app:layout_constraintTop_toBottomOf="@+id/constrainlayoutnama" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutusername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview5">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_text_input_user_name"
@@ -166,22 +181,22 @@
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
-                app:startIconDrawable="@drawable/ic_baseline_assignment_24"
                 app:layout_constraintBottom_toBottomOf="@id/constrainlayoutusername"
-                app:layout_constraintTop_toTopOf="@id/constrainlayoutusername"
+                app:layout_constraintEnd_toEndOf="@id/constrainlayoutusername"
                 app:layout_constraintStart_toStartOf="@id/constrainlayoutusername"
-                app:layout_constraintEnd_toEndOf="@id/constrainlayoutusername">
+                app:layout_constraintTop_toTopOf="@id/constrainlayoutusername"
+                app:startIconDrawable="@drawable/ic_baseline_assignment_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_text_edit_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:ems="10"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="Masukkan user name kamu"
-                    android:ems="10"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:singleLine="true"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -189,49 +204,49 @@
             android:id="@+id/textview3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins_regular"
             android:text="@string/password"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_regular"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/login_text_input_password"
-            app:layout_constraintTop_toBottomOf="@+id/login_text_input_password" />
+            app:layout_constraintStart_toStartOf="@+id/textview2"
+            app:layout_constraintTop_toBottomOf="@+id/constrainlayoutemail" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="48dp"
-            android:layout_marginStart="48dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview3">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_text_input_password"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:passwordToggleEnabled="true"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/constrainlayoutpassword"
                 app:layout_constraintEnd_toEndOf="@+id/constrainlayoutpassword"
                 app:layout_constraintStart_toStartOf="@+id/constrainlayoutpassword"
-                app:layout_constraintBottom_toBottomOf="@+id/constrainlayoutpassword"
+                app:passwordToggleEnabled="true"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/register_text_edit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:ems="10"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="@string/hint_password"
-                    android:ems="10"
                     android:inputType="textPassword"
+                    android:singleLine="true"
                     app:passwordToggleEnabled="true"
                     tools:ignore="SpeakableTextPresentCheck" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -239,27 +254,42 @@
 
         <com.example.tanamin.ui.custom.dark_green_button
             android:id="@+id/signup_btn_signup"
-            android:layout_width="315dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/round_button_green"
             android:text="@string/register"
             android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constrainlayoutpassword" />
 
         <TextView
             android:id="@+id/copyrightTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             android:text="© 2022 TANAMIN"
             android:textSize="14sp"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="@+id/signup_btn_signup"
+            app:layout_constraintStart_toStartOf="@+id/signup_btn_signup"
+            app:layout_constraintTop_toBottomOf="@+id/signup_btn_signup" />
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/progressBar"
+            style="@style/SpinKitView.Large.ThreeBounce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:SpinKit_Color="@color/dark_green"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginBtnLogin.setOnClickListener {
             loginUser()
+            showLoading(true)
         }
     }
 
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginTextEditPassword.requestFocus()
             }
             else -> {
+                showLoading(true)
                 val service = ApiConfig.getApiService().loginUser(userName, password)
                 service.enqueue(object: Callback<LoginResponse>{
                     override fun onResponse(
@@ -105,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
                         response: Response<LoginResponse>
                     ) {
                         val responseBody = response.body()
+                        showLoading(false)
                         if (response.isSuccessful) {
                             onToast("${responseBody?.message}")
                             viewModel.saveToken(responseBody?.data!!.accessToken)
@@ -118,6 +121,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        showLoading(false)
                         onToast("${t.message}")
                         Log.d(this@LoginActivity.toString(), "${t.message}")
                     }
@@ -148,6 +152,11 @@ class LoginActivity : AppCompatActivity() {
             create()
             show()
         }
+    }
+    private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
+        if (isLoading) View.VISIBLE
+        else View.GONE
+
     }
 
 }

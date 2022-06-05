@@ -1,21 +1,14 @@
 package com.example.tanamin.ui.alldesease
 
 import android.annotation.SuppressLint
-import android.app.SearchManager
 import android.content.ContentValues.TAG
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.View
-import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityAllDeseaseBinding
 import com.example.tanamin.nonui.api.ApiConfig
-import com.example.tanamin.nonui.api.ApiService
 import com.example.tanamin.nonui.response.AllDeseaseResponse
 import retrofit2.Call
 import retrofit2.Callback

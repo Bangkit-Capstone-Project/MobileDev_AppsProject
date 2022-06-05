@@ -33,7 +33,13 @@ class SignupActivity : AppCompatActivity() {
 
         binding.signupBtnSignup.setOnClickListener{
             registerUser()
+            showLoading(true)
         }
+    }
+    private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
+        if (isLoading) View.VISIBLE
+        else View.GONE
+
     }
 
     //Handling onBackPressed for the Backbutton
@@ -75,6 +81,7 @@ class SignupActivity : AppCompatActivity() {
                 binding.registerTextInputPassword.requestFocus()
             }
             else -> {
+                showLoading(true)
                 val client = ApiConfig.getApiService().registerUser(email, name, userName, password)
 
                 client.enqueue(object : Callback<RegisterResponse> {
@@ -83,6 +90,7 @@ class SignupActivity : AppCompatActivity() {
                         response: Response<RegisterResponse>
                     ) {
                         val responseBody = response.body()
+                        showLoading(false)
                         if (response.isSuccessful) {
                             onToast("${responseBody?.message}")
                             Log.d(this@SignupActivity.toString(), response.message())
@@ -94,6 +102,7 @@ class SignupActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                        showLoading(false)
                         onToast("${t.message}")
                         Log.d(this@SignupActivity.toString(), "${t.message}")
                     }
@@ -102,8 +111,10 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
+
     private fun onToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
 
 }
