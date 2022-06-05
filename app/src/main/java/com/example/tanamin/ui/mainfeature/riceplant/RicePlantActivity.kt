@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tanamin.databinding.ActivityRicePlantBinding
+import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import java.io.File
@@ -22,6 +23,8 @@ import java.io.File
 class RicePlantActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRicePlantBinding
+    private var mFile: File? = null
+
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -67,6 +70,7 @@ class RicePlantActivity : AppCompatActivity() {
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
         binding.galleryButton.setOnClickListener { startGallery() }
+        binding.uploadButton.setOnClickListener {  }
 
         //Handling Backbutton
         val actionbar = supportActionBar
@@ -86,6 +90,8 @@ class RicePlantActivity : AppCompatActivity() {
         if (it.resultCode == CAMERA_X_RESULT) {
             val myFile = it.data?.getSerializableExtra("picture") as File
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+
+            mFile = myFile
             val result = rotateBitmap(
                 BitmapFactory.decodeFile(myFile.path),
                 isBackCamera
@@ -109,9 +115,14 @@ class RicePlantActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@RicePlantActivity)
+            mFile = myFile
             binding.previewImageView.setImageURI(selectedImg)
         }
     }
+
+
+
+
 
 
 

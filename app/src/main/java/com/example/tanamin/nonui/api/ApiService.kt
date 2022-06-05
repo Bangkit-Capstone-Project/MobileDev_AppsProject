@@ -1,6 +1,7 @@
 package com.example.tanamin.nonui.api
 
 import com.example.tanamin.nonui.response.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -32,4 +33,14 @@ interface ApiService {
     fun searchDesease(
         @Query("q") query: String
     ):Call<DataDisease>
+
+    //UPLOAD PHOTO
+    @Multipart
+    @POST("upload/pictures")
+    fun uploadPhoto(
+        @Part file: MultipartBody.Part
+    ): Call<UploadFileResponse>
+
+
+
 }
