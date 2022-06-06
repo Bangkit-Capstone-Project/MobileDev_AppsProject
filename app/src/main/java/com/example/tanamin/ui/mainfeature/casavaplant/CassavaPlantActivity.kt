@@ -1,25 +1,49 @@
 package com.example.tanamin.ui.mainfeature.casavaplant
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityCassavaPlantBinding
+import com.example.tanamin.nonui.api.ApiConfig
+import com.example.tanamin.nonui.response.CassavaDiseaseResponse
+import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.UploadFileResponse
+import com.example.tanamin.nonui.userpreference.UserPreferences
+import com.example.tanamin.ui.ViewModelFactory
+import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class CassavaPlantActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCassavaPlantBinding
+    private lateinit var viewModel: CassavaPlantActivityViewModel
+    private var mFile: File? = null
+    private lateinit var token: String
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -63,9 +87,11 @@ class CassavaPlantActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+        setupModel()
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
         binding.galleryButton.setOnClickListener { startGallery() }
+        binding.uploadButton.setOnClickListener { uploadImage() }
 
         //Handling Backbutton
         val actionbar = supportActionBar
@@ -85,6 +111,7 @@ class CassavaPlantActivity : AppCompatActivity() {
         if (it.resultCode == CAMERA_X_RESULT) {
             val myFile = it.data?.getSerializableExtra("picture") as File
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
+            mFile = myFile
             val result = rotateBitmap(
                 BitmapFactory.decodeFile(myFile.path),
                 isBackCamera
@@ -108,8 +135,107 @@ class CassavaPlantActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this@CassavaPlantActivity)
+            mFile = myFile
             binding.previewImageView.setImageURI(selectedImg)
         }
+    }
+
+    //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
+    private fun uploadImage(){
+        logd(mFile.toString())
+        if(mFile != null){
+            val file = reduceFileImage(mFile as File)
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "data",
+                file.name,
+                requestImageFile
+            )
+            val service = ApiConfig.getApiService().uploadPhoto(imageMultipart)
+
+            service.enqueue(object : Callback<UploadFileResponse> {
+                override fun onResponse(
+                    call: Call<UploadFileResponse>,
+                    response: Response<UploadFileResponse>
+                ) {
+                    if(response.isSuccessful){
+                        val responseBody = response.body()
+                        if(responseBody != null){
+                            logd("THEBIGINNING " + responseBody.toString())
+                            logd("Another thebiginning " + responseBody.data.toString())
+                            cassavaDiseasePrediction(responseBody.data.toString())
+                        }
+                    }else{
+                        logd("ngeselin ${response.toString()}")
+                        val responseBody = response.body()
+                        if(responseBody != null){
+                            logd("ngeselin lah ini ${responseBody.status}")
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
+                    logd("Retrofit Failed")
+                }
+            })
+        } else {
+            logd("Input Image first")
+        }
+    }
+
+    //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER TO GET THE PREDICTION
+    private fun cassavaDiseasePrediction(theUrl: String){
+        val endpoint = "4257194673539383296"
+        val userToken = "Bearer $token"
+
+        //GETTING JUST THE LINK BY PARSING
+        val beforeParsedUrl: String = theUrl
+        val firstArray: List<String> = beforeParsedUrl.split("=")
+        val beforeSecondParsing: String = firstArray[1]
+
+        //this one is to erase the ')'
+        val secondArray: List<String> = beforeSecondParsing.split(")")
+        val url = secondArray[0]
+
+        logd("UserToken: $userToken")
+        logd("imageURL: $url")
+        logd("endpoint: $endpoint")
+
+        val service = ApiConfig.getApiService().getCassavaDisease(userToken, url, endpoint)
+        service.enqueue(object : Callback<CassavaDiseaseResponse>{
+            override fun onResponse(
+                call: Call<CassavaDiseaseResponse>,
+                response: Response<CassavaDiseaseResponse>
+            ) {
+                logd(response.body()?.data.toString())
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    logd("PREDICTION CHECKER: ${responseBody.data}")
+
+                }else{
+                    logd("Respones Message ${response.message()}")
+                }
+            }
+            override fun onFailure(call: Call<CassavaDiseaseResponse>, t: Throwable) {
+                logd("Checking Failed")
+            }
+        })
+    }
+
+    //TO GET THE TOKEN
+    private fun setupModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[CassavaPlantActivityViewModel::class.java]
+
+        viewModel.getToken().observe(this) { userToken ->
+            token = userToken
+        }
+    }
+
+    //THIS FUNCTION IS FOR DEBUGGING :)
+    private fun logd(msg: String) {
+        Log.d(this@CassavaPlantActivity.toString(), "$msg")
     }
 
     //Handling onBackPressed for the Backbutton
