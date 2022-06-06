@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.mainfeature.plantsprediction
+package com.example.tanamin.ui.mainfeature.tomatoplant
 
 import android.Manifest
 import android.content.Context
@@ -17,33 +17,37 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
+import com.example.tanamin.databinding.ActivityTomatoPlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.TomatoDiseaseResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-
-import java.io.File
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Url
+import java.io.File
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class PlantsPredictionActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityPlantsPredictionBinding
-    private lateinit var viewModel: PlantsPredictionActivityViewModel
+class TomatoPlantActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityTomatoPlantBinding
+    private lateinit var viewModel: TomatoPlantActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
-
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -73,9 +77,10 @@ class PlantsPredictionActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlantsPredictionBinding.inflate(layoutInflater)
+        binding = ActivityTomatoPlantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //CHECKING CAMERA PERMISSION
@@ -101,10 +106,15 @@ class PlantsPredictionActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
     }
 
+    //HANDLING ONBACKPRESSED FOR THE BACKBUTTON
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
         launcherIntentCameraX.launch(intent)
-
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -135,22 +145,27 @@ class PlantsPredictionActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
-            val myFile = uriToFile(selectedImg, this@PlantsPredictionActivity)
+            val myFile = uriToFile(selectedImg, this@TomatoPlantActivity)
             mFile = myFile
             binding.previewImageView.setImageURI(selectedImg)
         }
     }
 
-    //HANDLING BACKPRESSEN ON THE BACKBUTTON
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    //TO GET THE TOKEN
+    private fun setupModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[TomatoPlantActivityViewModel::class.java]
+
+        viewModel.getToken().observe(this) { userToken ->
+            token = userToken
+        }
     }
 
-    //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
     private fun uploadImage(){
         logd(mFile.toString())
-        if(mFile != null){
+        if(mFile != null) {
             val file = reduceFileImage(mFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
@@ -158,9 +173,10 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
+
             val service = ApiConfig.getApiService().uploadPhoto(imageMultipart)
 
-            service.enqueue(object : Callback<UploadFileResponse>{
+            service.enqueue(object : Callback<UploadFileResponse> {
                 override fun onResponse(
                     call: Call<UploadFileResponse>,
                     response: Response<UploadFileResponse>
@@ -170,7 +186,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                         if(responseBody != null){
                             logd("THEBIGINNING " + responseBody.toString())
                             logd("Another thebiginning " + responseBody.data.toString())
-                            plantsPrediction(responseBody.data.toString())
+                            tomatoDisease(responseBody.data.toString())
                         }
                     }else{
                         logd("ngeselin ${response.toString()}")
@@ -187,12 +203,12 @@ class PlantsPredictionActivity : AppCompatActivity() {
         } else {
             logd("Input Image first")
         }
+
     }
 
-
-    //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER TO GET THE PREDICTION
-    private fun plantsPrediction(theUrl: String){
-        val endpoint = "5666821356906348544"
+    //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER WITH ITS TOKEN TO GET THE PREDICTION
+    private fun tomatoDisease(theUrl: String){
+        val endpoint = "9197643464764817408"
         val userToken = "Bearer $token"
 
         //GETTING JUST THE LINK BY PARSING
@@ -207,12 +223,11 @@ class PlantsPredictionActivity : AppCompatActivity() {
         logd("UserToken: $userToken")
         logd("imageURL: $url")
         logd("endpoint: $endpoint")
-
-        val service = ApiConfig.getApiService().getVegetableClassification(userToken, url, endpoint)
-        service.enqueue(object : Callback<ClassificationsResponse>{
+        val service = ApiConfig.getApiService().getTomatoDisease(userToken, url, endpoint)
+        service.enqueue(object : Callback<TomatoDiseaseResponse>{
             override fun onResponse(
-                call: Call<ClassificationsResponse>,
-                response: Response<ClassificationsResponse>
+                call: Call<TomatoDiseaseResponse>,
+                response: Response<TomatoDiseaseResponse>
             ) {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
@@ -223,26 +238,15 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     logd("Respones Message ${response.message()}")
                 }
             }
-            override fun onFailure(call: Call<ClassificationsResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TomatoDiseaseResponse>, t: Throwable) {
                 logd("Checking Failed")
             }
         })
     }
 
-    //TO GET THE TOKEN
-    private fun setupModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[PlantsPredictionActivityViewModel::class.java]
-
-        viewModel.getToken().observe(this) { userToken ->
-            token = userToken
-        }
-    }
-
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
-        Log.d(this@PlantsPredictionActivity.toString(), "$msg")
+        Log.d(this@TomatoPlantActivity.toString(), "$msg")
     }
+
 }

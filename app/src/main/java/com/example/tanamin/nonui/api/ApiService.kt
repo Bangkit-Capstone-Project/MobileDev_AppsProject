@@ -50,4 +50,14 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<ClassificationsResponse>
 
+    //FOR THE TOMATODESEASE FEATURE
+    @FormUrlEncoded
+    @POST("predictions/tomato")
+    fun getTomatoDisease(
+        @Header("Authorization") token: String,
+        @Field("imgUrl") imgUrl: String,
+        @Field("endpoint") endpoint: String
+    ): Call<TomatoDiseaseResponse>
+
+
 }
