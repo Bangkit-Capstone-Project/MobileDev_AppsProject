@@ -44,7 +44,7 @@ interface ApiService {
     //FOR THE VEGETABLE FEATURE
     @FormUrlEncoded
     @POST("classifications")
-    fun vegetableClassification(
+    fun getVegetableClassification(
         @Header("Authorization") token: String,
         @Field("imgUrl") imgUrl: String,
         @Field("endpoint") endpoint: String

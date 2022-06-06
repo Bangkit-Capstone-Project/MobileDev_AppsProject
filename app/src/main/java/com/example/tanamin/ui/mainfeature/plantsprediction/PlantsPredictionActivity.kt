@@ -44,6 +44,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private var mFile: File? = null
     private lateinit var token: String
 
+
     companion object {
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -168,6 +169,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if(responseBody != null){
                             logd("THEBIGINNING " + responseBody.toString())
+                            logd("Another thebiginning " + responseBody.data.toString())
                             plantsPrediction(responseBody.data.toString())
                         }
                     }else{
@@ -195,14 +197,17 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
         //GETTING JUST THE LINK BY PARSING
         val beforeParsedUrl: String = theUrl
-        val yourArray: List<String> = beforeParsedUrl.split("=")
-        val url = yourArray[1]
+        val firstArray: List<String> = beforeParsedUrl.split("=")
+        val beforeSecondParsing: String = firstArray[1]
+        //this one is to erase the ')'
+        val secondArray: List<String> = beforeSecondParsing.split(")")
+        val url = secondArray[0]
 
         logd("UserToken: $userToken")
         logd("imageURL: $url")
         logd("endpoint: $endpoint")
 
-        val service = ApiConfig.getApiService().vegetableClassification(userToken, url, endpoint)
+        val service = ApiConfig.getApiService().getVegetableClassification(userToken, url, endpoint)
         service.enqueue(object : Callback<ClassificationsResponse>{
             override fun onResponse(
                 call: Call<ClassificationsResponse>,

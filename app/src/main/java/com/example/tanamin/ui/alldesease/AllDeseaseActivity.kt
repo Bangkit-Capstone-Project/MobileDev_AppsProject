@@ -44,9 +44,6 @@ class AllDeseaseActivity : AppCompatActivity() {
     private fun getDiseaseFromApi(){
         showLoading(true)
         val client = ApiConfig.getApiService().getAllDeseases()
-
-
-
         client.enqueue(object: Callback<AllDiseasesResponse>{
             override fun onResponse(call: Call<AllDiseasesResponse>, response: Response<AllDiseasesResponse>) {
                 if(response.isSuccessful){
