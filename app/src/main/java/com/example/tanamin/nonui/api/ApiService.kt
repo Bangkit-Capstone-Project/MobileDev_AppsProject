@@ -59,5 +59,13 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<TomatoDiseaseResponse>
 
+    @FormUrlEncoded
+    @POST("predictions/rice")
+    fun getRiceDisease(
+        @Header("Authorization") token: String,
+        @Field("imgUrl") imgUrl: String,
+        @Field("endpoint") endpoint: String
+    ): Call<RiceDiseaseResponse>
+
 
 }

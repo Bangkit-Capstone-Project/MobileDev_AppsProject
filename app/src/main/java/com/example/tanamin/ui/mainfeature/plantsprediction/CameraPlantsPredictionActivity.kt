@@ -135,6 +135,4 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
-
-
 }
