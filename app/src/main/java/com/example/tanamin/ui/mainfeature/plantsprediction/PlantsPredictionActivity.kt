@@ -27,6 +27,7 @@ import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import com.example.tanamin.ui.mainfeature.plantsprediction.result.PlantsPredictionDetailResultActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -45,6 +46,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private var mFile: File? = null
     private lateinit var token: String
     private lateinit var refreshToken: String
+    private lateinit var theResultData: String
+
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -170,6 +173,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
+//                            sendIntent(responseBody.data.toString())
                             plantsPrediction(responseBody.data.toString())
                         }
                     }else{
@@ -215,6 +219,9 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
+                    prepareToSendData(responseBody.data.toString())
+                    theResultData = responseBody.data.toString()
+                    plantsPrediction(responseBody.data.toString())
                 }else{
                     logd("Respones Message ${response.message()}")
                 }
@@ -266,8 +273,59 @@ class PlantsPredictionActivity : AppCompatActivity() {
         })
     }
 
+
+    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
+    private fun prepareToSendData(theData: String){
+        /*
+        Karena ada 5 data yang mau di send (createdAt, vegetableName, imageUrl, accuracy, description)
+        kita buat parsing untuk setiap lima limanya. Kemudian, karena setiap datanya itu memiliki kesamaan
+        dalam struktur, kita parsing dari belakang :)
+         */
+
+        val intentPlantsPredictionDetailResultActivity = Intent(this@PlantsPredictionActivity, PlantsPredictionDetailResultActivity::class.java)
+
+        //UNTUK DESCRIPTION
+        val firstArrayDescription: List<String> = theData.split("))")
+        val secondParsingDescription: String = firstArrayDescription[0]
+        val secondArrayDescription: List<String> = secondParsingDescription.split(", description=")
+        val theDescription: String = secondArrayDescription[1]
+        logd("theDescription: $theDescription")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
+
+        //UNTUK ACCURACY
+        val prepareAccuracy: String = secondArrayDescription[0]
+        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
+        val theAccuracy: String = firstArrayAccuracy[1]
+        logd("theAccuracy: $theAccuracy")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
+
+        //UNTUK IMAGEURL
+        val prepareImageUrl: String = firstArrayAccuracy[0]
+        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
+        val theImageUrl: String = firstArrayImageUrl[1]
+        logd("theImageUrl: $theImageUrl")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
+
+        //UNTUK VEGETABLE NAME
+        val prepareVegetableName: String = firstArrayImageUrl[0]
+        val firstArrayVegetableName: List<String> = prepareVegetableName.split(", vegetableName=")
+        val theVegetableName: String = firstArrayVegetableName[1]
+        logd("theVegetableName: $theVegetableName")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_VEGETABLENAME, theVegetableName)
+
+        //UNTUK WAKTU PEMBUATAN
+        val prepareCreatedAt: String = firstArrayVegetableName[0]
+        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataResult(result=Result(createdAt=")
+        val theCreatedAt: String = firstArrayCreatedAt[1]
+        logd("theCreatedAt: $theCreatedAt")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
+
+        startActivity(intentPlantsPredictionDetailResultActivity)
+    }
+
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.mainfeature.plantsprediction
+package com.example.tanamin.ui.mainfeature.plantsprediction.result
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import kotlinx.coroutines.launch
 
-class PlantsPredictionActivityViewModel(private val preferences: UserPreferences) : ViewModel() {
+class PlantsPredictionDetailResultViewModel(private val preferences: UserPreferences) : ViewModel() {
     fun getToken() : LiveData<String> {
         return preferences.getToken().asLiveData()
     }
@@ -21,5 +21,4 @@ class PlantsPredictionActivityViewModel(private val preferences: UserPreferences
             preferences.setToken(token)
         }
     }
-
 }
