@@ -13,6 +13,7 @@ import com.example.tanamin.nonui.data.News
 import com.example.tanamin.ui.alldesease.AllDeseaseActivity
 import com.example.tanamin.ui.bottomnavigation.ui.profile.ProfileFragment
 import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivity
 import com.example.tanamin.ui.news.DetailNewsActivity

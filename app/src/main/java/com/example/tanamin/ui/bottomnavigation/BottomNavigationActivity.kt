@@ -25,6 +25,7 @@ class BottomNavigationActivity : AppCompatActivity() {
 
         binding = ActivityBottomNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         //GETTING THE DATA FROM LOGINACTIVITY
         val userName = intent.getStringExtra(EXTRA_USERNAME)

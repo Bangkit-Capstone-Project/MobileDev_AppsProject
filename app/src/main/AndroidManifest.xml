@@ -16,9 +16,14 @@
         android:theme="@style/Theme.TANAMIN"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.mainfeature.plantsprediction.ResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.plantsprediction.ResultVegetableActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.bottomnavigation.ui.profile.logout.ManageAccountActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".ui.alldesease.AllDeseaseActivity"
             android:exported="false" />
