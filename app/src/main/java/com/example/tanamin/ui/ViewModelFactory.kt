@@ -6,7 +6,10 @@ import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.bottomnavigation.ui.profile.credit.CreditViewModel
 import com.example.tanamin.ui.bottomnavigation.ui.profile.logout.ManageAccountViewModel
 import com.example.tanamin.ui.login.LoginViewModel
+import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivityViewModel
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
+import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivityViewModel
+import com.example.tanamin.ui.mainfeature.tomatoplant.TomatoPlantActivityViewModel
 import com.example.tanamin.ui.welcomingpage.WelcomingPageViewModel
 
 class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.NewInstanceFactory() {
@@ -24,6 +27,15 @@ class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.Ne
             }
             modelClass.isAssignableFrom(PlantsPredictionActivityViewModel::class.java) -> {
                 PlantsPredictionActivityViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(TomatoPlantActivityViewModel::class.java) -> {
+                TomatoPlantActivityViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(RicePlantActivityViewModel::class.java) -> {
+                RicePlantActivityViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(CassavaPlantActivityViewModel::class.java) -> {
+                CassavaPlantActivityViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

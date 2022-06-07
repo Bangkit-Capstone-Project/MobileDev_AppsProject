@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.mainfeature.plantsprediction
+package com.example.tanamin.ui.mainfeature.tomatoplant
 
 import android.content.Intent
 import android.os.Build
@@ -15,15 +15,14 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityCameraPlantsPredictionBinding
-import com.example.tanamin.databinding.ActivityCameraRiceBinding
+import com.example.tanamin.databinding.ActivityCameraTomatoPlantBinding
 import com.example.tanamin.ui.mainfeature.camerautil.createFile
-import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class CameraPlantsPredictionActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityCameraPlantsPredictionBinding
+class CameraTomatoPlantActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCameraTomatoPlantBinding
     private lateinit var cameraExecutor: ExecutorService
 
     private var imageCapture: ImageCapture? = null
@@ -31,8 +30,7 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = ActivityCameraPlantsPredictionBinding.inflate(layoutInflater)
+        binding = ActivityCameraTomatoPlantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -48,7 +46,6 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
         binding.backButtonImage.setOnClickListener{
             finish()
         }
-
     }
 
     public override fun onResume() {
@@ -73,7 +70,7 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
                     Toast.makeText(
-                        this@CameraPlantsPredictionActivity,
+                        this@CameraTomatoPlantActivity,
                         "Gagal mengambil gambar.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -115,7 +112,7 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
                 )
             } catch (exc: Exception) {
                 Toast.makeText(
-                    this@CameraPlantsPredictionActivity,
+                    this@CameraTomatoPlantActivity,
                     "Gagal memunculkan kamera.",
                     Toast.LENGTH_SHORT
                 ).show()

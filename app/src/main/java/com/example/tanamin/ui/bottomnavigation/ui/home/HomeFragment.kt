@@ -16,6 +16,7 @@ import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivity
+import com.example.tanamin.ui.mainfeature.tomatoplant.TomatoPlantActivity
 import com.example.tanamin.ui.news.DetailNewsActivity
 import com.example.tanamin.ui.news.NewsActivity
 import com.example.tanamin.ui.news.NewsAdapter
@@ -54,7 +55,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 startActivity(intentToVegetable)
             }
             cvTomato.setOnClickListener {
-                val intentToTomato = Intent(this@HomeFragment.requireContext(), PlantsPredictionActivity::class.java)
+                val intentToTomato = Intent(this@HomeFragment.requireContext(), TomatoPlantActivity::class.java)
                 startActivity(intentToTomato)
             }
             tvAllNews.setOnClickListener {

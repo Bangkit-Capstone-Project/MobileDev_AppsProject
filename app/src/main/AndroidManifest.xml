@@ -16,10 +16,10 @@
         android:theme="@style/Theme.TANAMIN"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.mainfeature.plantsprediction.ResultActivity"
+            android:name=".ui.mainfeature.tomatoplant.CameraTomatoPlantActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.mainfeature.plantsprediction.ResultVegetableActivity"
+            android:name=".ui.mainfeature.tomatoplant.TomatoPlantActivity"
             android:exported="false" />
         <activity
             android:name=".ui.bottomnavigation.ui.profile.logout.ManageAccountActivity"

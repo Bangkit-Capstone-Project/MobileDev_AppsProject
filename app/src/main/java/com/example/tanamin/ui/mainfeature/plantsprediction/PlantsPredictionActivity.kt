@@ -200,6 +200,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         val beforeParsedUrl: String = theUrl
         val firstArray: List<String> = beforeParsedUrl.split("=")
         val beforeSecondParsing: String = firstArray[1]
+
         //this one is to erase the ')'
         val secondArray: List<String> = beforeSecondParsing.split(")")
         val url = secondArray[0]
@@ -218,6 +219,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
+
                 }else{
                     logd("Respones Message ${response.message()}")
                 }

@@ -1,4 +1,4 @@
-package com.example.tanamin.ui.mainfeature.casavaplant
+package com.example.tanamin.ui.mainfeature.tomatoplant
 
 import android.Manifest
 import android.content.Context
@@ -18,16 +18,20 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.R
-import com.example.tanamin.databinding.ActivityCassavaPlantBinding
+import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
+import com.example.tanamin.databinding.ActivityTomatoPlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
-import com.example.tanamin.nonui.response.CassavaDiseaseResponse
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.TomatoDiseaseResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
+import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -38,10 +42,10 @@ import java.io.File
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-class CassavaPlantActivity : AppCompatActivity() {
+class TomatoPlantActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCassavaPlantBinding
-    private lateinit var viewModel: CassavaPlantActivityViewModel
+    private lateinit var binding: ActivityTomatoPlantBinding
+    private lateinit var viewModel: TomatoPlantActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
 
@@ -73,10 +77,10 @@ class CassavaPlantActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCassavaPlantBinding.inflate(layoutInflater)
-
+        binding = ActivityTomatoPlantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //CHECKING CAMERA PERMISSION
@@ -87,21 +91,29 @@ class CassavaPlantActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+
         setupModel()
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
 
-        //Handling Backbutton
+
+        //HANDLING BACKBUTTON
         val actionbar = supportActionBar
         actionbar!!.title = "TANAMIN"
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
     }
 
+    //HANDLING ONBACKPRESSED FOR THE BACKBUTTON
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     private fun startCameraX() {
-        val intent = Intent(this, CameraCassavaPlantActivity::class.java)
+        val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
         launcherIntentCameraX.launch(intent)
     }
 
@@ -113,10 +125,9 @@ class CassavaPlantActivity : AppCompatActivity() {
             val isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
             mFile = myFile
             val result = rotateBitmap(
-                BitmapFactory.decodeFile(myFile.path),
+                BitmapFactory.decodeFile(mFile?.path),
                 isBackCamera
             )
-
             binding.previewImageView.setImageBitmap(result)
         }
     }
@@ -134,16 +145,27 @@ class CassavaPlantActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
-            val myFile = uriToFile(selectedImg, this@CassavaPlantActivity)
+            val myFile = uriToFile(selectedImg, this@TomatoPlantActivity)
             mFile = myFile
             binding.previewImageView.setImageURI(selectedImg)
         }
     }
 
-    //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
+    //TO GET THE TOKEN
+    private fun setupModel() {
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelFactory(UserPreferences.getInstance(dataStore))
+        )[TomatoPlantActivityViewModel::class.java]
+
+        viewModel.getToken().observe(this) { userToken ->
+            token = userToken
+        }
+    }
+
     private fun uploadImage(){
         logd(mFile.toString())
-        if(mFile != null){
+        if(mFile != null) {
             val file = reduceFileImage(mFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
@@ -151,6 +173,7 @@ class CassavaPlantActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
+
             val service = ApiConfig.getApiService().uploadPhoto(imageMultipart)
 
             service.enqueue(object : Callback<UploadFileResponse> {
@@ -163,7 +186,7 @@ class CassavaPlantActivity : AppCompatActivity() {
                         if(responseBody != null){
                             logd("THEBIGINNING " + responseBody.toString())
                             logd("Another thebiginning " + responseBody.data.toString())
-                            cassavaDiseasePrediction(responseBody.data.toString())
+                            tomatoDisease(responseBody.data.toString())
                         }
                     }else{
                         logd("ngeselin ${response.toString()}")
@@ -180,11 +203,12 @@ class CassavaPlantActivity : AppCompatActivity() {
         } else {
             logd("Input Image first")
         }
+
     }
 
-    //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER TO GET THE PREDICTION
-    private fun cassavaDiseasePrediction(theUrl: String){
-        val endpoint = "4257194673539383296"
+    //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER WITH ITS TOKEN TO GET THE PREDICTION
+    private fun tomatoDisease(theUrl: String){
+        val endpoint = "9197643464764817408"
         val userToken = "Bearer $token"
 
         //GETTING JUST THE LINK BY PARSING
@@ -199,12 +223,11 @@ class CassavaPlantActivity : AppCompatActivity() {
         logd("UserToken: $userToken")
         logd("imageURL: $url")
         logd("endpoint: $endpoint")
-
-        val service = ApiConfig.getApiService().getCassavaDisease(userToken, url, endpoint)
-        service.enqueue(object : Callback<CassavaDiseaseResponse>{
+        val service = ApiConfig.getApiService().getTomatoDisease(userToken, url, endpoint)
+        service.enqueue(object : Callback<TomatoDiseaseResponse>{
             override fun onResponse(
-                call: Call<CassavaDiseaseResponse>,
-                response: Response<CassavaDiseaseResponse>
+                call: Call<TomatoDiseaseResponse>,
+                response: Response<TomatoDiseaseResponse>
             ) {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
@@ -215,32 +238,15 @@ class CassavaPlantActivity : AppCompatActivity() {
                     logd("Respones Message ${response.message()}")
                 }
             }
-            override fun onFailure(call: Call<CassavaDiseaseResponse>, t: Throwable) {
+            override fun onFailure(call: Call<TomatoDiseaseResponse>, t: Throwable) {
                 logd("Checking Failed")
             }
         })
     }
 
-    //TO GET THE TOKEN
-    private fun setupModel() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(UserPreferences.getInstance(dataStore))
-        )[CassavaPlantActivityViewModel::class.java]
-
-        viewModel.getToken().observe(this) { userToken ->
-            token = userToken
-        }
-    }
-
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
-        Log.d(this@CassavaPlantActivity.toString(), "$msg")
+        Log.d(this@TomatoPlantActivity.toString(), "$msg")
     }
 
-    //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
 }
