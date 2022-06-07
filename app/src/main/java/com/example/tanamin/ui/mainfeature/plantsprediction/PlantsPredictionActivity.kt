@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
@@ -43,7 +44,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private lateinit var viewModel: PlantsPredictionActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
-
+    private lateinit var refreshToken: String
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -86,7 +87,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
         setupModel()
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
@@ -101,10 +101,12 @@ class PlantsPredictionActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
     }
 
+
+
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
         launcherIntentCameraX.launch(intent)
-
+        refreshTokenin()
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -128,6 +130,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+        refreshTokenin()
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -149,7 +152,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
     private fun uploadImage(){
-        logd(mFile.toString())
         if(mFile != null){
             val file = reduceFileImage(mFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -168,12 +170,9 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("THEBIGINNING " + responseBody.toString())
-                            logd("Another thebiginning " + responseBody.data.toString())
                             plantsPrediction(responseBody.data.toString())
                         }
                     }else{
-                        logd("ngeselin ${response.toString()}")
                         val responseBody = response.body()
                         if(responseBody != null){
                             logd("ngeselin lah ini ${responseBody.status}")
@@ -204,9 +203,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         val secondArray: List<String> = beforeSecondParsing.split(")")
         val url = secondArray[0]
 
-        logd("UserToken: $userToken")
-        logd("imageURL: $url")
-        logd("endpoint: $endpoint")
+        logd("UserToken di sending data: $userToken")
 
         val service = ApiConfig.getApiService().getVegetableClassification(userToken, url, endpoint)
         service.enqueue(object : Callback<ClassificationsResponse>{
@@ -218,7 +215,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
-
                 }else{
                     logd("Respones Message ${response.message()}")
                 }
@@ -238,7 +234,36 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
+            logd("Token sebelum diubah di fungsi setup model $token")
         }
+        viewModel.getRefreshToken().observe(this){ userRefreshToken ->
+            refreshToken = userRefreshToken
+        }
+    }
+
+    private fun refreshTokenin(){
+        val service = ApiConfig.getApiService().getRefreshedToken(refreshToken)
+        service.enqueue(object: Callback<RefreshTokenResponse>{
+            override fun onResponse(
+                call: Call<RefreshTokenResponse>,
+                response: Response<RefreshTokenResponse>
+            ) {
+                val responseBody = response.body()
+                if(response.isSuccessful){
+                    viewModel.saveToken(responseBody?.data!!.accessToken)
+                    logd("Token sesudah diubah $token")
+                    logd("Ini token yang di get dari viewmodel ${token}")
+                    Log.d(this@PlantsPredictionActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
+                }else{
+                    logd("data yang di ambil itu ${responseBody?.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                Log.d(this@PlantsPredictionActivity.toString(), "${t.message}")
+            }
+
+        })
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)

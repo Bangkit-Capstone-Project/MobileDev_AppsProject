@@ -22,6 +22,7 @@ import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.databinding.ActivityTomatoPlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.TomatoDiseaseResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
@@ -48,6 +49,8 @@ class TomatoPlantActivity : AppCompatActivity() {
     private lateinit var viewModel: TomatoPlantActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
+    private lateinit var refreshToken: String
+
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -115,6 +118,7 @@ class TomatoPlantActivity : AppCompatActivity() {
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
         launcherIntentCameraX.launch(intent)
+        refreshTokenin()
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -138,6 +142,7 @@ class TomatoPlantActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+        refreshTokenin()
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -160,6 +165,10 @@ class TomatoPlantActivity : AppCompatActivity() {
 
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
+        }
+
+        viewModel.getRefreshToken().observe(this){ userRefreshToken ->
+            refreshToken = userRefreshToken
         }
     }
 
@@ -241,6 +250,29 @@ class TomatoPlantActivity : AppCompatActivity() {
             override fun onFailure(call: Call<TomatoDiseaseResponse>, t: Throwable) {
                 logd("Checking Failed")
             }
+        })
+    }
+
+    //TO REFRESH THE TOKEN
+    private fun refreshTokenin(){
+        val service = ApiConfig.getApiService().getRefreshedToken(refreshToken)
+        service.enqueue(object: Callback<RefreshTokenResponse>{
+            override fun onResponse(
+                call: Call<RefreshTokenResponse>,
+                response: Response<RefreshTokenResponse>
+            ) {
+                val responseBody = response.body()
+                if(response.isSuccessful){
+                    viewModel.saveToken(responseBody?.data!!.accessToken)
+                }else{
+                    logd("data yang di ambil itu ${responseBody?.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                Log.d(this@TomatoPlantActivity.toString(), "${t.message}")
+            }
+
         })
     }
 

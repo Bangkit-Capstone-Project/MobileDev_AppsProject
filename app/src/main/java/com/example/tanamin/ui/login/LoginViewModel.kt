@@ -15,6 +15,12 @@ class LoginViewModel(private val preferences: UserPreferences) : ViewModel() {
         }
     }
 
+    fun saveRefreshToken(refreshToken: String){
+        viewModelScope.launch {
+            preferences.setRefreshToken(refreshToken)
+        }
+    }
+
     fun getSession(): LiveData<Boolean> = preferences.getSession().asLiveData()
 
     fun login(){

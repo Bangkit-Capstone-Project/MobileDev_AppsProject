@@ -16,6 +16,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    fun getRefreshToken(): Flow<String>{
+        return dataStore.data.map {
+            it[REFRESH_TOKEN_KEY] ?: ""
+        }
+    }
+
     fun getSession() : Flow<Boolean> {
         return dataStore.data.map {
             it[STATE_KEY] ?: false
@@ -25,6 +31,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun setToken(token: String){
         dataStore.edit {
             it[TOKEN_KEY] = token
+        }
+    }
+
+    suspend fun setRefreshToken(refreshToken: String){
+        dataStore.edit {
+            it[REFRESH_TOKEN_KEY] = refreshToken
         }
     }
 
@@ -46,6 +58,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private var INSTANCE: UserPreferences? = null
         private val STATE_KEY = booleanPreferencesKey("state")
         private val TOKEN_KEY = stringPreferencesKey("token")
+        private val REFRESH_TOKEN_KEY = stringPreferencesKey("refresh_token")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {
