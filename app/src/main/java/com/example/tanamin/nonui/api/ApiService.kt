@@ -77,11 +77,16 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<CassavaDiseaseResponse>
 
-
-    //FOR THE REFRESH TOKEN
+    //TO GET THE REFRESH TOKEN
     @FormUrlEncoded
     @PUT("authentications")
     fun getRefreshedToken(
-        @Field("refreshToken") refreshToken: String,
+        @Field("refreshToken") refreshToken: String
     ): Call<RefreshTokenResponse>
+
+    //TO DELETE THE REFRESH TOKEN
+//    @DELETE("authentications")
+//    fun deleteRefreshToken(
+//        @Body(S) ,
+//    ): Call<DeleteRefreshTokenResponse>
 }
