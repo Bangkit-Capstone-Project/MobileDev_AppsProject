@@ -85,8 +85,9 @@ interface ApiService {
     ): Call<RefreshTokenResponse>
 
     //TO DELETE THE REFRESH TOKEN
-//    @DELETE("authentications")
-//    fun deleteRefreshToken(
-//        @Body(S) ,
-//    ): Call<DeleteRefreshTokenResponse>
+    @FormUrlEncoded
+    @POST("authentications/delete")
+    fun deleteRefreshToken(
+        @Field("refreshToken") refreshToken: String
+    ): Call<DeleteRefreshTokenResponse>
 }

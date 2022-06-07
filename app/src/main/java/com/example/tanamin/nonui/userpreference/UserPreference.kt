@@ -50,6 +50,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         dataStore.edit { preferences ->
             preferences[STATE_KEY] = false
             preferences[TOKEN_KEY] = ""
+            preferences[REFRESH_TOKEN_KEY] = ""
         }
     }
 
