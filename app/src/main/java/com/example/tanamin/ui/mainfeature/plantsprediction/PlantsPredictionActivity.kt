@@ -20,12 +20,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import com.example.tanamin.ui.mainfeature.plantsprediction.result.PlantsPredictionDetailResultActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -41,6 +43,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private lateinit var viewModel: PlantsPredictionActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
+    private lateinit var refreshToken: String
+    private lateinit var theResultData: String
 
 
     companion object {
@@ -84,7 +88,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
-
         setupModel()
 
         binding.cameraXButton.setOnClickListener { startCameraX() }
@@ -102,10 +105,12 @@ class PlantsPredictionActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
     }
 
+
+
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
         launcherIntentCameraX.launch(intent)
-
+        refreshTokenin()
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -129,6 +134,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+        refreshTokenin()
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -150,7 +156,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
     private fun uploadImage(){
-        logd(mFile.toString())
         if(mFile != null){
             val file = reduceFileImage(mFile as File)
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -169,12 +174,10 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("THEBIGINNING " + responseBody.toString())
-                            logd("Another thebiginning " + responseBody.data.toString())
+//                            sendIntent(responseBody.data.toString())
                             plantsPrediction(responseBody.data.toString())
                         }
                     }else{
-                        logd("ngeselin ${response.toString()}")
                         val responseBody = response.body()
                         if(responseBody != null){
                             logd("ngeselin lah ini ${responseBody.status}")
@@ -205,9 +208,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         val secondArray: List<String> = beforeSecondParsing.split(")")
         val url = secondArray[0]
 
-        logd("UserToken: $userToken")
-        logd("imageURL: $url")
-        logd("endpoint: $endpoint")
+        logd("UserToken di sending data: $userToken")
 
         val service = ApiConfig.getApiService().getVegetableClassification(userToken, url, endpoint)
         service.enqueue(object : Callback<ClassificationsResponse>{
@@ -219,7 +220,9 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
-
+                    prepareToSendData(responseBody.data.toString())
+                    theResultData = responseBody.data.toString()
+                    plantsPrediction(responseBody.data.toString())
                 }else{
                     logd("Respones Message ${response.message()}")
                 }
@@ -239,11 +242,91 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
+            logd("Token sebelum diubah di fungsi setup model $token")
         }
+        viewModel.getRefreshToken().observe(this){ userRefreshToken ->
+            refreshToken = userRefreshToken
+        }
+    }
+
+    private fun refreshTokenin(){
+        val service = ApiConfig.getApiService().getRefreshedToken(refreshToken)
+        service.enqueue(object: Callback<RefreshTokenResponse>{
+            override fun onResponse(
+                call: Call<RefreshTokenResponse>,
+                response: Response<RefreshTokenResponse>
+            ) {
+                val responseBody = response.body()
+                if(response.isSuccessful){
+                    viewModel.saveToken(responseBody?.data!!.accessToken)
+                    logd("Token sesudah diubah $token")
+                    logd("Ini token yang di get dari viewmodel ${token}")
+                    Log.d(this@PlantsPredictionActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
+                }else{
+                    logd("data yang di ambil itu ${responseBody?.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                Log.d(this@PlantsPredictionActivity.toString(), "${t.message}")
+            }
+
+        })
+    }
+
+
+    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
+    private fun prepareToSendData(theData: String){
+        /*
+        Karena ada 5 data yang mau di send (createdAt, vegetableName, imageUrl, accuracy, description)
+        kita buat parsing untuk setiap lima limanya. Kemudian, karena setiap datanya itu memiliki kesamaan
+        dalam struktur, kita parsing dari belakang :)
+         */
+
+        val intentPlantsPredictionDetailResultActivity = Intent(this@PlantsPredictionActivity, PlantsPredictionDetailResultActivity::class.java)
+
+        //UNTUK DESCRIPTION
+        val firstArrayDescription: List<String> = theData.split("))")
+        val secondParsingDescription: String = firstArrayDescription[0]
+        val secondArrayDescription: List<String> = secondParsingDescription.split(", description=")
+        val theDescription: String = secondArrayDescription[1]
+        logd("theDescription: $theDescription")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
+
+        //UNTUK ACCURACY
+        val prepareAccuracy: String = secondArrayDescription[0]
+        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
+        val theAccuracy: String = firstArrayAccuracy[1]
+        logd("theAccuracy: $theAccuracy")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
+
+        //UNTUK IMAGEURL
+        val prepareImageUrl: String = firstArrayAccuracy[0]
+        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
+        val theImageUrl: String = firstArrayImageUrl[1]
+        logd("theImageUrl: $theImageUrl")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
+
+        //UNTUK VEGETABLE NAME
+        val prepareVegetableName: String = firstArrayImageUrl[0]
+        val firstArrayVegetableName: List<String> = prepareVegetableName.split(", vegetableName=")
+        val theVegetableName: String = firstArrayVegetableName[1]
+        logd("theVegetableName: $theVegetableName")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_VEGETABLENAME, theVegetableName)
+
+        //UNTUK WAKTU PEMBUATAN
+        val prepareCreatedAt: String = firstArrayVegetableName[0]
+        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataResult(result=Result(createdAt=")
+        val theCreatedAt: String = firstArrayCreatedAt[1]
+        logd("theCreatedAt: $theCreatedAt")
+        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
+
+        startActivity(intentPlantsPredictionDetailResultActivity)
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
+
 }

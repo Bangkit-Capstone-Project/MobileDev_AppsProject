@@ -50,7 +50,7 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<ClassificationsResponse>
 
-    //FOR THE TOMATODESEASE FEATURE
+    //FOR THE TOMATO DISEASE FEATURE
     @FormUrlEncoded
     @POST("predictions/tomato")
     fun getTomatoDisease(
@@ -59,6 +59,7 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<TomatoDiseaseResponse>
 
+    //FOR THE RICE DISEASE FEATURE
     @FormUrlEncoded
     @POST("predictions/rice")
     fun getRiceDisease(
@@ -67,6 +68,7 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<RiceDiseaseResponse>
 
+    //FOR THE CASSAVA DISEASE FEATURE
     @FormUrlEncoded
     @POST("predictions/cassava")
     fun getCassavaDisease(
@@ -75,5 +77,17 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<CassavaDiseaseResponse>
 
+    //TO GET THE REFRESH TOKEN
+    @FormUrlEncoded
+    @PUT("authentications")
+    fun getRefreshedToken(
+        @Field("refreshToken") refreshToken: String
+    ): Call<RefreshTokenResponse>
 
+    //TO DELETE THE REFRESH TOKEN
+    @FormUrlEncoded
+    @POST("authentications/delete")
+    fun deleteRefreshToken(
+        @Field("refreshToken") refreshToken: String
+    ): Call<DeleteRefreshTokenResponse>
 }

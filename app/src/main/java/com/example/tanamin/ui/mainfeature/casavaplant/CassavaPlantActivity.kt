@@ -22,6 +22,7 @@ import com.example.tanamin.databinding.ActivityCassavaPlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.CassavaDiseaseResponse
 import com.example.tanamin.nonui.response.ClassificationsResponse
+import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
@@ -44,6 +45,8 @@ class CassavaPlantActivity : AppCompatActivity() {
     private lateinit var viewModel: CassavaPlantActivityViewModel
     private var mFile: File? = null
     private lateinit var token: String
+    private lateinit var refreshToken: String
+
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -103,6 +106,7 @@ class CassavaPlantActivity : AppCompatActivity() {
     private fun startCameraX() {
         val intent = Intent(this, CameraCassavaPlantActivity::class.java)
         launcherIntentCameraX.launch(intent)
+        refreshTokenin()
     }
 
     private val launcherIntentCameraX = registerForActivityResult(
@@ -127,6 +131,7 @@ class CassavaPlantActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+        refreshTokenin()
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -221,7 +226,7 @@ class CassavaPlantActivity : AppCompatActivity() {
         })
     }
 
-    //TO GET THE TOKEN
+    //TO GET THE TOKEN AND THE REFRESH TOKEN KEY
     private fun setupModel() {
         viewModel = ViewModelProvider(
             this,
@@ -231,6 +236,36 @@ class CassavaPlantActivity : AppCompatActivity() {
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
         }
+
+        viewModel.getRefreshToken().observe(this){ userRefreshToken ->
+            refreshToken = userRefreshToken
+        }
+    }
+
+    //TO REFRESH THE TOKEN
+    private fun refreshTokenin(){
+        val service = ApiConfig.getApiService().getRefreshedToken(refreshToken)
+        service.enqueue(object: Callback<RefreshTokenResponse>{
+            override fun onResponse(
+                call: Call<RefreshTokenResponse>,
+                response: Response<RefreshTokenResponse>
+            ) {
+                val responseBody = response.body()
+                if(response.isSuccessful){
+                    viewModel.saveToken(responseBody?.data!!.accessToken)
+                    logd("Token sesudah diubah $token")
+                    logd("Ini token yang di get dari viewmodel ${token}")
+                    Log.d(this@CassavaPlantActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
+                }else{
+                    logd("data yang di ambil itu ${responseBody?.message}")
+                }
+            }
+
+            override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
+                Log.d(this@CassavaPlantActivity.toString(), "${t.message}")
+            }
+
+        })
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)

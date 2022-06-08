@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
 
-
         //ANIMATION
         playAnimation()
 
@@ -111,8 +110,10 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             onToast("${responseBody?.message}")
                             viewModel.saveToken(responseBody?.data!!.accessToken)
+                            viewModel.saveRefreshToken(responseBody?.data!!.refreshToken)
+                            Log.d(this@LoginActivity.toString(), "onResponse: ${responseBody?.data!!.refreshToken}")
+                            Log.d(this@LoginActivity.toString(), "Token: ${responseBody?.data!!.accessToken}")
                             Log.d(this@LoginActivity.toString(),"${responseBody?.message}")
-
                             sendIntent(responseBody?.message.toString(), userName)
                         } else {
                             onToast("${responseBody?.message}")
@@ -156,7 +157,6 @@ class LoginActivity : AppCompatActivity() {
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE
         else View.GONE
-
     }
 
 }
