@@ -78,7 +78,7 @@ class ManageAccountActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<DeleteRefreshTokenResponse>, t: Throwable) {
-                Log.d(this@ManageAccountActivity.toString(), "${t.message}")
+                Log.d(this@ManageAccountActivity.toString(), "Message if onFailure ${t.message}")
             }
         })
     }
