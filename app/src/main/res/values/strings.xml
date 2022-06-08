@@ -43,6 +43,8 @@
     <string name="search">Cari jenis penyakit tanaman</string>
     <string name="logout_capt">Kamu masih bisa masuk aplikasi lagi nanti</string>
     <string name="logout_sure">Apakah kamu yakin ingin keluar dari aplikasi?</string>
+    <string name="mantap">Mantap!</string>
+    <string name="register_success">Pendaftaran akun kamu berhasil. Silakan lanjutkan ke halaman login</string>
 
 
     <string-array name="news_tittle">

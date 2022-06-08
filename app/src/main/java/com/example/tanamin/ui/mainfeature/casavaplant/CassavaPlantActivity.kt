@@ -92,8 +92,8 @@ class CassavaPlantActivity : AppCompatActivity() {
         }
         setupModel()
 
-        binding.cameraXButton.setOnClickListener { startCameraX() }
-        binding.galleryButton.setOnClickListener { startGallery() }
+        binding.cvCamera.setOnClickListener { startCameraX() }
+        binding.cvGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
 
         //Handling Backbutton

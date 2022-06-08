@@ -36,27 +36,19 @@
         app:layout_constraintStart_toStartOf="@+id/title_credit"
         app:layout_constraintTop_toBottomOf="@+id/title_credit" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="350dp"
-        android:layout_height="250dp"
-        android:src="@drawable/login_image_one"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description_credit" />
-
     <TextView
         android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/poppins_regular"
         android:text="Username"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/description_credit" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/login_text_input_user_name"
@@ -65,11 +57,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textview1"
@@ -80,7 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:hint="Masukkan username kamu"
             android:inputType="textEmailAddress"
             android:singleLine="true"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -108,11 +98,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        app:boxCornerRadiusBottomEnd="8dp"
-        app:boxCornerRadiusBottomStart="8dp"
-        app:boxCornerRadiusTopEnd="8dp"
-        app:boxCornerRadiusTopStart="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:boxCornerRadiusBottomEnd="15dp"
+        app:boxCornerRadiusBottomStart="15dp"
+        app:boxCornerRadiusTopEnd="15dp"
+        app:boxCornerRadiusTopStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textview2"
         app:layout_constraintTop_toBottomOf="@+id/textview2"
         app:passwordToggleEnabled="true"
@@ -124,7 +114,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/poppins_regular"
-            android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:singleLine="true"
             app:passwordToggleEnabled="true"
@@ -143,7 +132,8 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/copyrightTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_input_password" />
 
     <TextView
         android:id="@+id/copyrightTextView"
@@ -151,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:text="© 2022 Tanamin"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:background="@drawable/bottom_sheet_background"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:src="@drawable/mantap" />
+
+    <TextView
+        android:id="@+id/tvMantap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:text="@string/mantap" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Kamu berhasil login. Sekarang kamu bisa rawat tanamanmu disini"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:background="@drawable/round_button_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
+        android:text="Lanjutkan" />
+</LinearLayout>

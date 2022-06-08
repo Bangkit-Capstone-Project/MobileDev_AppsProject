@@ -41,6 +41,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         showRecyclerList()
 
 
+
+
         binding.apply {
             cvRice.setOnClickListener {
                 val intentToRice = Intent(this@HomeFragment.requireContext(), RicePlantActivity::class.java)

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.signup.SignupActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -36,16 +34,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/signup_title" />
-
-        <ImageView
-            android:id="@+id/signup_image"
-            android:layout_width="350dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:src="@drawable/signup_image_one"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signup_description" />
 
         <TextView
             android:id="@+id/textview2"
@@ -90,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/hint_email"
+
                     android:inputType="textEmailAddress"
 
                     android:singleLine="true"
@@ -103,13 +91,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/name"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/signup_image" />
+            app:layout_constraintTop_toBottomOf="@+id/signup_description" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constrainlayoutnama"
@@ -142,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/hint_name"
+
                     android:inputType="text"
                     android:singleLine="true"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -193,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Masukkan username kamu"
+
                     android:inputType="text"
                     android:singleLine="true"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -244,7 +233,6 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="@string/hint_password"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     app:passwordToggleEnabled="true"
@@ -252,32 +240,34 @@
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.example.tanamin.ui.custom.dark_green_button
-            android:id="@+id/signup_btn_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/round_button_green"
-            android:text="@string/register"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constrainlayoutpassword" />
+    <com.example.tanamin.ui.custom.dark_green_button
+        android:id="@+id/signup_btn_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/round_button_green"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/copyrightTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constrainlayoutpassword" />
 
-        <TextView
-            android:id="@+id/copyrightTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="© 2022 TANAMIN"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="@+id/signup_btn_signup"
-            app:layout_constraintStart_toStartOf="@+id/signup_btn_signup"
-            app:layout_constraintTop_toBottomOf="@+id/signup_btn_signup" />
+    <TextView
+        android:id="@+id/copyrightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:text="© 2022 TANAMIN"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/progressBar"
             style="@style/SpinKitView.Large.ThreeBounce"
@@ -291,5 +281,3 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>

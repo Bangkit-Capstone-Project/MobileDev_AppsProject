@@ -8,6 +8,9 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +20,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.ClassificationsResponse
@@ -28,6 +32,8 @@ import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.plantsprediction.result.PlantsPredictionDetailResultActivity
+import com.example.tanamin.ui.welcomingpage.WelcomingPageActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -90,11 +96,14 @@ class PlantsPredictionActivity : AppCompatActivity() {
         }
         setupModel()
 
-        binding.cameraXButton.setOnClickListener { startCameraX() }
-        binding.galleryButton.setOnClickListener { startGallery() }
+        binding.cvCamera.setOnClickListener { startCameraX() }
+        binding.cvGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener {
             uploadImage()
-
+            beautifulUi()
+        }
+        binding.btnHelp.setOnClickListener {
+            help()
         }
 
 
@@ -103,6 +112,15 @@ class PlantsPredictionActivity : AppCompatActivity() {
         actionbar!!.title = "TANAMIN"
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
+    }
+    private fun help(){
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_help_vegetable,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
     }
 
 
@@ -328,5 +346,17 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private fun logd(msg: String) {
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
+    private fun beautifulUi(){
+
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_bottomsheet_upload,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+    }
+
 
 }

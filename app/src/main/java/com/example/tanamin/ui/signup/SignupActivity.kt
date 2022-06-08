@@ -1,16 +1,19 @@
 package com.example.tanamin.ui.signup
 
-import android.animation.ObjectAnimator
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivitySignupBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.RegisterResponse
 import com.example.tanamin.ui.login.LoginActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +26,7 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //ANIMATION
-        playAnimation()
+
 
         //Handling Backbutton
         val actionbar = supportActionBar
@@ -49,13 +52,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //ANIMATION
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.signupImage, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 3000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-        }.start()
-    }
+
 
     private fun registerUser(){
         val email = binding.registerTextEditEmail.text.toString()
@@ -92,11 +89,32 @@ class SignupActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         showLoading(false)
                         if (response.isSuccessful) {
-                            onToast("${responseBody?.message}")
+
                             Log.d(this@SignupActivity.toString(), response.message())
-                            startActivity(Intent(this@SignupActivity, LoginActivity::class.java))
+                            val bottomSheetDialog = BottomSheetDialog(this@SignupActivity, R.style.BottomSheetDialogTheme)
+                            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                                R.layout.item_bottomsheet_register,
+                                findViewById<LinearLayout>(R.id.bottomSheet)
+                            )
+                            bottomSheetDialog.setContentView(bottomSheetView)
+                            bottomSheetDialog.show()
+                            bottomSheetView.findViewById<View>(R.id.btn_next).setOnClickListener {
+                                val next  = Intent(this@SignupActivity, LoginActivity::class.java)
+                                startActivity(next)
+                            }
                         } else {
-                            onToast("${responseBody?.message}")
+
+                            val bottomSheetDialog = BottomSheetDialog(this@SignupActivity, R.style.BottomSheetDialogTheme)
+                            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                                R.layout.item_bottomsheet_failed,
+                                findViewById<LinearLayout>(R.id.bottomSheet)
+                            )
+                            bottomSheetDialog.setContentView(bottomSheetView)
+                            bottomSheetDialog.show()
+                            bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
+                                bottomSheetDialog.dismiss()
+                            }
+
                             Log.d(this@SignupActivity.toString(), response.message())
                         }
                     }

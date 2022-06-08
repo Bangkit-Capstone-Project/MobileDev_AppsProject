@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_my_plant"
-        android:icon="@drawable/ic_baseline_grass_grey"
+        android:icon="@drawable/ic_baseline_compost_24"
         android:title="@string/title_my_plant" />
 
     <item

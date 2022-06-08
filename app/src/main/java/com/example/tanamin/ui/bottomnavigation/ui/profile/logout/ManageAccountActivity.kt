@@ -43,9 +43,7 @@ class ManageAccountActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
 
-        binding.cvLogout.setOnClickListener {
-            beautifulUi()
-        }
+        binding.cvLogout.setOnClickListener { beautifulUi() }
     }
 
     //TO GET THE REFRESH TOKEN KEY

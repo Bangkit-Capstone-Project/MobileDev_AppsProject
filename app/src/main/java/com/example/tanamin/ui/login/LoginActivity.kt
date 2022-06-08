@@ -5,20 +5,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityLoginBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.LoginResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.bottomnavigation.BottomNavigationActivity
+import com.example.tanamin.ui.welcomingpage.WelcomingPageActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,20 +40,18 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         //ANIMATION
-        playAnimation()
+
 
         //SESSION CHECKER
         setupViewModel()
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+
 
         binding.loginBtnLogin.setOnClickListener {
             loginUser()
-            showLoading(true)
+
         }
     }
 
@@ -75,13 +78,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     //ANIMATION
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.imageView, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 3000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-        }.start()
-    }
+
 
     //LOGIN LOGIC
     private fun loginUser(){
@@ -108,16 +105,36 @@ class LoginActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         showLoading(false)
                         if (response.isSuccessful) {
-                            onToast("${responseBody?.message}")
+
                             viewModel.saveToken(responseBody?.data!!.accessToken)
                             viewModel.saveRefreshToken(responseBody?.data!!.refreshToken)
                             Log.d(this@LoginActivity.toString(), "onResponse: ${responseBody?.data!!.refreshToken}")
                             Log.d(this@LoginActivity.toString(), "Token: ${responseBody?.data!!.accessToken}")
                             Log.d(this@LoginActivity.toString(),"${responseBody?.message}")
-                            sendIntent(responseBody?.message.toString(), userName)
+                            val bottomSheetDialog = BottomSheetDialog(this@LoginActivity, R.style.BottomSheetDialogTheme)
+                            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                                R.layout.item_bottomsheet_login,
+                                findViewById<LinearLayout>(R.id.bottomSheet)
+                            )
+                            bottomSheetDialog.setContentView(bottomSheetView)
+                            bottomSheetDialog.show()
+                            bottomSheetView.findViewById<View>(R.id.btn_next).setOnClickListener {
+                                viewModel.login()
+                                val next  = Intent(this@LoginActivity, BottomNavigationActivity::class.java)
+                                startActivity(next)
+                            }
                         } else {
-                            onToast("${responseBody?.message}")
                             Log.d(this@LoginActivity.toString(), response.message())
+                            val bottomSheetDialog = BottomSheetDialog(this@LoginActivity, R.style.BottomSheetDialogTheme)
+                            val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+                                R.layout.item_bottomsheet_failed,
+                                findViewById<LinearLayout>(R.id.bottomSheet)
+                            )
+                            bottomSheetDialog.setContentView(bottomSheetView)
+                            bottomSheetDialog.show()
+                            bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
+                                bottomSheetDialog.dismiss()
+                            }
                         }
                     }
 
@@ -135,25 +152,8 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
-    private fun sendIntent(msg: String, userName: String) {
-        AlertDialog.Builder(this).apply {
-            setTitle("Yeah!")
-            setMessage("$msg")
-            setPositiveButton("Next") { _, _ ->
-                val homeIntent = Intent(this@LoginActivity, BottomNavigationActivity::class.java)
-                homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 
-                //USERNAME DATA IS HERE
-                homeIntent.putExtra(BottomNavigationActivity.EXTRA_USERNAME, userName)
-                Log.d(this@LoginActivity.toString(), "sendIntent: $userName")
-                startActivity(homeIntent)
-                viewModel.login()
-                finish()
-            }
-            create()
-            show()
-        }
-    }
+
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE
         else View.GONE
