@@ -340,7 +340,6 @@ class RicePlantActivity : AppCompatActivity() {
         logd("theDiseaseName: $theDiseaseName")
         intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_DISEASENAME, theDiseaseName)
 
-
         //UNTUK WAKTU PEMBUATAN
         val prepareCreatedAt: String = firstArrayDiseaseName[0]
         val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataRice(result=ResultRice(createdAt=")
@@ -349,8 +348,6 @@ class RicePlantActivity : AppCompatActivity() {
         intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
 
         startActivity(intentRicePlantDetailResultActivity)
-
-
 
     }
     private fun showLoading(b: Boolean){

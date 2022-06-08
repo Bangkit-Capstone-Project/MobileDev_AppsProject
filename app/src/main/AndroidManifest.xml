@@ -16,6 +16,9 @@
         android:theme="@style/Theme.TANAMIN"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.history.detail.HistoryDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.history.HistoryActivity"
             android:exported="false" />
         <activity

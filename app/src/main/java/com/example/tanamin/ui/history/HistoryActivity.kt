@@ -1,6 +1,7 @@
 package com.example.tanamin.ui.history
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.alldesease.DeseaseAdapter
+import com.example.tanamin.ui.history.detail.HistoryDetailActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,13 +62,14 @@ class HistoryActivity : AppCompatActivity() {
             ViewModelFactory(UserPreferences.getInstance(dataStore))
         )[HistoryActivityViewModel::class.java]
 
-        viewModel.getToken().observe(this) { userToken ->
-            var token = userToken
-            getHistory(token)
-        }
         viewModel.getRefreshToken().observe(this){ userRefreshToken ->
             val refreshToken = userRefreshToken
             refreshTokenin(refreshToken)
+        }
+
+        viewModel.getToken().observe(this) { userToken ->
+            var token = userToken
+            getHistory(token)
         }
     }
 
@@ -90,6 +93,7 @@ class HistoryActivity : AppCompatActivity() {
         })
     }
 
+    //TO GET THE HISTORY DATA
     private fun getHistory(token: String){
         val theToken ="Bearer $token"
         showLoading(true)
@@ -118,8 +122,9 @@ class HistoryActivity : AppCompatActivity() {
         for(history in History){
             val historyItem = History(
                 history.id,
-                history.plantId,
-                history.diseaseId,
+                history.plantName,
+                history.diseasesName,
+                history.diseasesDescription,
                 history.accuracy,
                 history.imageUrl,
                 history.createdAt
@@ -139,6 +144,17 @@ class HistoryActivity : AppCompatActivity() {
 
         val listHistoryAdapter = HistoryAdapter(listHistory)
         binding.rvDeseases.adapter = listHistoryAdapter
+
+        listHistoryAdapter.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback {
+            override fun onItemClicked(data: History) {
+
+
+                val intentDetail = Intent(this@HistoryActivity, HistoryDetailActivity::class.java)
+                intentDetail.putExtra(HistoryDetailActivity.EXTRA_DETAIL, listHistory)
+                startActivity(intentDetail)
+            }
+
+        })
     }
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =

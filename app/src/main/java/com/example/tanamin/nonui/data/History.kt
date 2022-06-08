@@ -6,9 +6,10 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class History(
     val createdAt: String,
+    val diseasesName: String,
+    val diseasesDescription: String,
     val imageUrl: String,
-    val plantId: String,
     val accuracy: String,
     val id: String,
-    val diseaseId: String
+    val plantName: String
 ): Parcelable
