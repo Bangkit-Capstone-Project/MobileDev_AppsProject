@@ -121,13 +121,13 @@ class HistoryActivity : AppCompatActivity() {
         val listHistory = ArrayList<History>()
         for(history in History){
             val historyItem = History(
-                history.id,
-                history.plantName,
+                history.createdAt,
                 history.diseasesName,
                 history.diseasesDescription,
-                history.accuracy,
                 history.imageUrl,
-                history.createdAt
+                history.accuracy,
+                history.id,
+                history.plantName
             )
             listHistory.add(historyItem)
         }
@@ -136,10 +136,11 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun showRecyclerList(listHistory: ArrayList<History>) {
 
-        if(applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-            binding.rvDeseases.layoutManager = GridLayoutManager(this , 2)
-        }else {
-            binding.rvDeseases.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.rvDeseases.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            binding.rvDeseases.layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
 
         val listHistoryAdapter = HistoryAdapter(listHistory)
@@ -148,14 +149,14 @@ class HistoryActivity : AppCompatActivity() {
         listHistoryAdapter.setOnItemClickCallback(object : HistoryAdapter.OnItemClickCallback {
             override fun onItemClicked(data: History) {
 
-
                 val intentDetail = Intent(this@HistoryActivity, HistoryDetailActivity::class.java)
-                intentDetail.putExtra(HistoryDetailActivity.EXTRA_DETAIL, listHistory)
+                intentDetail.putExtra(HistoryDetailActivity.EXTRA_DETAIL, data)
                 startActivity(intentDetail)
             }
 
         })
     }
+
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE
