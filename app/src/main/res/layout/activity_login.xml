@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_round_keyboard_backspace_24" />
+
     <TextView
         android:id="@+id/title_credit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/login"
         android:textColor="@color/black"
@@ -19,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_back" />
 
     <TextView
         android:id="@+id/description_credit"

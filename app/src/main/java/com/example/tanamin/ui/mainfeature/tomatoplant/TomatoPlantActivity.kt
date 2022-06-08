@@ -9,6 +9,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -33,7 +36,9 @@ import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
+import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivity
 import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -103,17 +108,14 @@ class TomatoPlantActivity : AppCompatActivity() {
 
 
         //HANDLING BACKBUTTON
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     //HANDLING ONBACKPRESSED FOR THE BACKBUTTON
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+
 
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
@@ -190,6 +192,7 @@ class TomatoPlantActivity : AppCompatActivity() {
                     call: Call<UploadFileResponse>,
                     response: Response<UploadFileResponse>
                 ) {
+                    showLoading(true)
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
@@ -245,6 +248,7 @@ class TomatoPlantActivity : AppCompatActivity() {
                     prepareToSendData(responseBody.data.toString())
 
                 }else{
+                    showFailed()
                     logd("Respones Message ${response.message()}")
                 }
             }
@@ -350,6 +354,32 @@ class TomatoPlantActivity : AppCompatActivity() {
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
         Log.d(this@TomatoPlantActivity.toString(), "$msg")
+    }
+    private fun showLoading(b: Boolean){
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_bottomsheet_upload,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetView.findViewById<View>(R.id.btn_close).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+    }
+    private fun showFailed(){
+
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_upload_failed,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+        bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
+            startActivity(Intent(this, TomatoPlantActivity::class.java))
+        }
     }
 
 }

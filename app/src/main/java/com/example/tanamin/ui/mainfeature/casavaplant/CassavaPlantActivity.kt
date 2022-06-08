@@ -9,6 +9,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -30,7 +33,9 @@ import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.casavaplant.result.CassavaPlantDetailResultActivity
+import com.example.tanamin.ui.mainfeature.riceplant.RicePlantActivity
 import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -99,10 +104,10 @@ class CassavaPlantActivity : AppCompatActivity() {
         binding.uploadButton.setOnClickListener { uploadImage() }
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun startCameraX() {
@@ -159,7 +164,7 @@ class CassavaPlantActivity : AppCompatActivity() {
                 requestImageFile
             )
             val service = ApiConfig.getApiService().uploadPhoto(imageMultipart)
-
+            showLoading(true)
             service.enqueue(object : Callback<UploadFileResponse> {
                 override fun onResponse(
                     call: Call<UploadFileResponse>,
@@ -220,6 +225,7 @@ class CassavaPlantActivity : AppCompatActivity() {
                     prepareToSendData(responseBody.data.toString())
 
                 }else{
+                    showFailed()
                     logd("Respones Message ${response.message()}")
                 }
             }
@@ -346,9 +352,30 @@ class CassavaPlantActivity : AppCompatActivity() {
         Log.d(this@CassavaPlantActivity.toString(), "$msg")
     }
 
-    //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
+    private fun showLoading(b: Boolean){
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_bottomsheet_upload,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetView.findViewById<View>(R.id.btn_close).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+    }
+    private fun showFailed(){
+
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_upload_failed,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+        bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
+            startActivity(Intent(this, CassavaPlantActivity::class.java))
+        }
     }
 }

@@ -29,10 +29,10 @@ class SignupActivity : AppCompatActivity() {
 
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
 
         binding.signupBtnSignup.setOnClickListener{
             registerUser()
@@ -46,10 +46,7 @@ class SignupActivity : AppCompatActivity() {
     }
 
     //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+
 
     //ANIMATION
 

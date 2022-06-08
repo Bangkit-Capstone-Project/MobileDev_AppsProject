@@ -6,14 +6,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet_background">
+
+    <ImageView
+        android:id="@+id/btn_close"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_round_close_24" />
+
+    <ImageView
+        android:id="@+id/imageView21"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:src="@drawable/senior_planting" />
+
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/progressBar"
         style="@style/SpinKitView.Large.ThreeBounce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
-
         app:SpinKit_Color="@color/dark_green"
          />
 
@@ -21,7 +35,26 @@
         android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="TextView" />
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Sabar..."
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+         />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gambar sedang Diproses"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"/>
 
 </LinearLayout>

@@ -47,6 +47,9 @@ class LoginActivity : AppCompatActivity() {
 
         //Handling Backbutton
         supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
 
 
         binding.loginBtnLogin.setOnClickListener {

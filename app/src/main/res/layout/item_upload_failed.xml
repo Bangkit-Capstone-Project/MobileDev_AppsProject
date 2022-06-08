@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/imageView26"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:src="@drawable/capture_failed" />
+
+    <TextView
+        android:fontFamily="@font/poppins_regular"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/textView16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yahhh..." />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Sepertinya gambar gagal di proses. Pastikan gambar yang kamu unggah sesuai. Jangan khawatir, Oke!" />
+
+    <Button
+        android:id="@+id/btn_tryagain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button_green"
+        android:text="Coba Lagi" />
+</LinearLayout>

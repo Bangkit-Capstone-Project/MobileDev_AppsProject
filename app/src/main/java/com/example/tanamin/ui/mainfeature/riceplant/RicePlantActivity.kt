@@ -5,13 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -20,9 +21,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
+import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityRicePlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
-import com.example.tanamin.nonui.response.ClassificationsResponse
 import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.RiceDiseaseResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
@@ -32,7 +33,7 @@ import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.riceplant.result.RicePlantDetailResultActivity
-import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -100,10 +101,10 @@ class RicePlantActivity : AppCompatActivity() {
         binding.uploadButton.setOnClickListener { uploadImage() }
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun startCameraX() {
@@ -160,18 +161,21 @@ class RicePlantActivity : AppCompatActivity() {
                 requestImageFile
             )
             val service = ApiConfig.getApiService().uploadPhoto(imageMultipart)
+            showLoading(true)
 
             service.enqueue(object : Callback<UploadFileResponse> {
                 override fun onResponse(
                     call: Call<UploadFileResponse>,
                     response: Response<UploadFileResponse>
                 ) {
+
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
                             logd("THEBIGINNING " + responseBody.toString())
                             logd("Another thebiginning " + responseBody.data.toString())
                             riceDiseasePrediction(responseBody.data.toString())
+
                         }
                     }else{
                         logd("ngeselin ${response.toString()}")
@@ -183,6 +187,7 @@ class RicePlantActivity : AppCompatActivity() {
                 }
                 override fun onFailure(call: Call<UploadFileResponse>, t: Throwable) {
                     logd("Retrofit Failed")
+                    showLoading(false)
                 }
             })
         } else {
@@ -226,6 +231,7 @@ class RicePlantActivity : AppCompatActivity() {
                     prepareToSendData(responseBody.data.toString())
 
                 }else{
+                    showFailed()
                     logd("Respones Message ${response.message()}")
                 }
             }
@@ -346,10 +352,32 @@ class RicePlantActivity : AppCompatActivity() {
 
 
     }
+    private fun showLoading(b: Boolean){
+        val bottomSheetDialog = BottomSheetDialog(this@RicePlantActivity, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_bottomsheet_upload,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetView.findViewById<View>(R.id.btn_close).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
 
-    //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
+    private fun showFailed(){
+
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
+            R.layout.item_upload_failed,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+        bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
+            startActivity(Intent(this, RicePlantActivity::class.java))
+        }
+    }
+
+
 }
