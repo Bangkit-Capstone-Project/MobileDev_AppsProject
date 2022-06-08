@@ -237,6 +237,7 @@ class RicePlantActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<RiceDiseaseResponse>, t: Throwable) {
                 logd("Checking Failed")
+                showFailed()
             }
         })
     }

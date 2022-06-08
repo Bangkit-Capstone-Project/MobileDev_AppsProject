@@ -2,6 +2,7 @@ package com.example.tanamin.ui.mainfeature.riceplant.result
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityRicePlantDetailResultBinding
@@ -24,6 +25,9 @@ class RicePlantDetailResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRicePlantDetailResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        supportActionBar?.hide()
 
         val description = intent.getStringExtra(TomatoPlantDetailResultActivity.EXTRA_DESCRIPTION)
         val accuracy = intent.getStringExtra(TomatoPlantDetailResultActivity.EXTRA_ACCURACY)

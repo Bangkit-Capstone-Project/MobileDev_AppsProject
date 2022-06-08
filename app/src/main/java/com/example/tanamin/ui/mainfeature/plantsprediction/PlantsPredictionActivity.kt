@@ -249,6 +249,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<ClassificationsResponse>, t: Throwable) {
                 logd("Checking Failed")
+                showFailed()
             }
         })
     }
@@ -346,6 +347,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
+
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
     private fun showLoading(b: Boolean){
@@ -372,6 +374,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         bottomSheetDialog.show()
         bottomSheetView.findViewById<View>(R.id.btn_tryagain).setOnClickListener {
             startActivity(Intent(this, PlantsPredictionActivity::class.java))
+            finish()
         }
     }
 

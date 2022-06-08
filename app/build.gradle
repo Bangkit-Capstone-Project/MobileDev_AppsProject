@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
+
 }
 
 android {
@@ -49,10 +50,13 @@ dependencies {
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.datastore:datastore-core:1.0.0'
     implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
 
     //preferences
     implementation "androidx.datastore:datastore-preferences:1.0.0"
