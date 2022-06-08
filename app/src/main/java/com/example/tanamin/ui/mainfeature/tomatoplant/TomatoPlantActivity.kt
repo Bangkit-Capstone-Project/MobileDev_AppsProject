@@ -33,6 +33,7 @@ import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.plantsprediction.CameraPlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
+import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -50,7 +51,6 @@ class TomatoPlantActivity : AppCompatActivity() {
     private var mFile: File? = null
     private lateinit var token: String
     private lateinit var refreshToken: String
-
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -242,6 +242,7 @@ class TomatoPlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
+                    prepareToSendData(responseBody.data.toString())
 
                 }else{
                     logd("Respones Message ${response.message()}")
@@ -274,6 +275,76 @@ class TomatoPlantActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
+    private fun prepareToSendData(theData: String){
+        /*
+        Karena ada 7 data yang mau di send (createdAt, diseasesName, historyId, imageUrl, accuracy, description, plantName)
+        kita buat parsing untuk setiap tujug tujuhnya. Kemudian, karena setiap datanya itu memiliki kesamaan
+        dalam struktur, kita parsing dari belakang :)
+         */
+        val intentTomatoPlantDetailResultActivity = Intent(this@TomatoPlantActivity, TomatoPlantDetailResultActivity::class.java)
+
+        //UNTUK PLANT NAME
+        val firstArrayplantName: List<String> = theData.split("))")
+        val secondParsingDescription: String = firstArrayplantName[0]
+        val secondArrayPlantName: List<String> = secondParsingDescription.split(", plantName=")
+        val thePlantName: String = secondArrayPlantName[1]
+        logd("thePlantName: $thePlantName")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_PLANTNAME, thePlantName)
+
+        //UNTUK DESCRIPTIONS
+        val prepareDescription: String = secondArrayPlantName[0]
+        val firstArrayDescription : List<String> = prepareDescription.split(", description=")
+        val theDescription: String = firstArrayDescription[1]
+        logd("theDescription: $theDescription")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
+
+
+        //UNTUK ACCURACY
+        val prepareAccuracy: String = firstArrayDescription[0]
+        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
+        val theAccuracy: String = firstArrayAccuracy[1]
+        logd("theAccuracy: $theAccuracy")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
+
+
+        //UNTUK IMAGEURL
+        val prepareImageUrl: String = firstArrayAccuracy[0]
+        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
+        val theImageUrl: String = firstArrayImageUrl[1]
+        logd("theImageUrl: $theImageUrl")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
+
+
+        //UNTUK HISTORY_ID
+        val prepareHistoryId: String = firstArrayImageUrl[0]
+        val firstArrayHistoryId: List<String> = prepareHistoryId.split(", historyId=")
+        val theHistoryId: String = firstArrayHistoryId[1]
+        logd("theHistoryId: $theHistoryId")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_HISTORYID, theHistoryId)
+
+
+        //UNTUK DISEASE NAME
+        val prepareDiseaseName: String = firstArrayHistoryId[0]
+        val firstArrayDiseaseName: List<String> = prepareDiseaseName.split(", diseasesName=")
+        val theDiseaseName: String = firstArrayDiseaseName[1]
+        logd("theDiseaseName: $theDiseaseName")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_DISEASENAME, theDiseaseName)
+
+
+        //UNTUK WAKTU PEMBUATAN
+        val prepareCreatedAt: String = firstArrayDiseaseName[0]
+        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataTomato(result=ResultTomato(createdAt=")
+        val theCreatedAt: String = firstArrayCreatedAt[1]
+        logd("theCreatedAt: $theCreatedAt")
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
+
+        startActivity(intentTomatoPlantDetailResultActivity)
+
+
+
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)

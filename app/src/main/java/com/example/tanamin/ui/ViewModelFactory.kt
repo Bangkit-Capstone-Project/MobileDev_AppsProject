@@ -27,6 +27,7 @@ class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.Ne
             modelClass.isAssignableFrom(ManageAccountViewModel::class.java) -> {
                 ManageAccountViewModel(pref) as T
             }
+
             //MAIN FEATURES
             modelClass.isAssignableFrom(PlantsPredictionActivityViewModel::class.java) -> {
                 PlantsPredictionActivityViewModel(pref) as T
@@ -40,6 +41,7 @@ class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.Ne
             modelClass.isAssignableFrom(CassavaPlantActivityViewModel::class.java) -> {
                 CassavaPlantActivityViewModel(pref) as T
             }
+
             //MAIN FEATURE DETAIL RESULT
             modelClass.isAssignableFrom(PlantsPredictionDetailResultViewModel::class.java) -> {
                 PlantsPredictionDetailResultViewModel(pref) as T
