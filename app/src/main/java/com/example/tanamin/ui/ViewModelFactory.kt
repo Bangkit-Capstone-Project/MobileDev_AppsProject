@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.bottomnavigation.ui.profile.credit.CreditViewModel
 import com.example.tanamin.ui.bottomnavigation.ui.profile.logout.ManageAccountViewModel
+import com.example.tanamin.ui.history.HistoryActivityViewModel
 import com.example.tanamin.ui.login.LoginViewModel
 import com.example.tanamin.ui.mainfeature.casavaplant.CassavaPlantActivityViewModel
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
@@ -45,6 +46,11 @@ class ViewModelFactory(private val pref: UserPreferences) : ViewModelProvider.Ne
             //MAIN FEATURE DETAIL RESULT
             modelClass.isAssignableFrom(PlantsPredictionDetailResultViewModel::class.java) -> {
                 PlantsPredictionDetailResultViewModel(pref) as T
+            }
+
+            //HISTORY FEATURE
+            modelClass.isAssignableFrom(HistoryActivityViewModel::class.java) -> {
+                HistoryActivityViewModel(pref) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

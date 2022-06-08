@@ -90,4 +90,9 @@ interface ApiService {
     fun deleteRefreshToken(
         @Field("refreshToken") refreshToken: String
     ): Call<DeleteRefreshTokenResponse>
+
+    @GET("predict/historys")
+    fun getHistory(
+        @Header("Authorization") token: String,
+        ):Call<HistoryResponse>
 }
