@@ -16,6 +16,15 @@
         android:theme="@style/Theme.TANAMIN"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.mainfeature.casavaplant.result.CassavaPlantDetailResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.riceplant.result.RicePlantDetailResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.mainfeature.plantsprediction.result.PlantsPredictionDetailResultActivity"
             android:exported="false" />
         <activity

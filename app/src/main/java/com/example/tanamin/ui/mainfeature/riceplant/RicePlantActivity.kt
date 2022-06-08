@@ -31,6 +31,8 @@ import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
+import com.example.tanamin.ui.mainfeature.riceplant.result.RicePlantDetailResultActivity
+import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -221,6 +223,7 @@ class RicePlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
+                    prepareToSendData(responseBody.data.toString())
 
                 }else{
                     logd("Respones Message ${response.message()}")
@@ -272,6 +275,76 @@ class RicePlantActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
+    private fun prepareToSendData(theData: String){
+        /*
+        Karena ada 7 data yang mau di send (createdAt, diseasesName, historyId, imageUrl, accuracy, description, plantName)
+        kita buat parsing untuk setiap tujug tujuhnya. Kemudian, karena setiap datanya itu memiliki kesamaan
+        dalam struktur, kita parsing dari belakang :)
+         */
+        val intentRicePlantDetailResultActivity = Intent(this@RicePlantActivity, RicePlantDetailResultActivity::class.java)
+
+        //UNTUK PLANT NAME
+        val firstArrayplantName: List<String> = theData.split("))")
+        val secondParsingDescription: String = firstArrayplantName[0]
+        val secondArrayPlantName: List<String> = secondParsingDescription.split(", plantName=")
+        val thePlantName: String = secondArrayPlantName[1]
+        logd("thePlantName: $thePlantName")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_PLANTNAME, thePlantName)
+
+        //UNTUK DESCRIPTIONS
+        val prepareDescription: String = secondArrayPlantName[0]
+        val firstArrayDescription : List<String> = prepareDescription.split(", description=")
+        val theDescription: String = firstArrayDescription[1]
+        logd("theDescription: $theDescription")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
+
+
+        //UNTUK ACCURACY
+        val prepareAccuracy: String = firstArrayDescription[0]
+        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
+        val theAccuracy: String = firstArrayAccuracy[1]
+        logd("theAccuracy: $theAccuracy")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
+
+
+        //UNTUK IMAGEURL
+        val prepareImageUrl: String = firstArrayAccuracy[0]
+        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
+        val theImageUrl: String = firstArrayImageUrl[1]
+        logd("theImageUrl: $theImageUrl")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
+
+
+        //UNTUK HISTORY_ID
+        val prepareHistoryId: String = firstArrayImageUrl[0]
+        val firstArrayHistoryId: List<String> = prepareHistoryId.split(", historyId=")
+        val theHistoryId: String = firstArrayHistoryId[1]
+        logd("theHistoryId: $theHistoryId")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_HISTORYID, theHistoryId)
+
+
+        //UNTUK DISEASE NAME
+        val prepareDiseaseName: String = firstArrayHistoryId[0]
+        val firstArrayDiseaseName: List<String> = prepareDiseaseName.split(", diseasesName=")
+        val theDiseaseName: String = firstArrayDiseaseName[1]
+        logd("theDiseaseName: $theDiseaseName")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_DISEASENAME, theDiseaseName)
+
+
+        //UNTUK WAKTU PEMBUATAN
+        val prepareCreatedAt: String = firstArrayDiseaseName[0]
+        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataRice(result=ResultRice(createdAt=")
+        val theCreatedAt: String = firstArrayCreatedAt[1]
+        logd("theCreatedAt: $theCreatedAt")
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
+
+        startActivity(intentRicePlantDetailResultActivity)
+
+
+
     }
 
     //Handling onBackPressed for the Backbutton

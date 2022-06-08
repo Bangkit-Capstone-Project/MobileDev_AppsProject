@@ -296,7 +296,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
     //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
     private fun prepareToSendData(theData: String){
         /*
-        Karena ada 5 data yang mau di send (createdAt, vegetableName, imageUrl, accuracy, description)
+        Karena ada 7 data yang mau di send (createdAt, diseasesName, imageUrl, accuracy, description)
         kita buat parsing untuk setiap lima limanya. Kemudian, karena setiap datanya itu memiliki kesamaan
         dalam struktur, kita parsing dari belakang :)
          */
