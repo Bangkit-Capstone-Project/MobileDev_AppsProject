@@ -22,6 +22,7 @@ class DeseaseAdapter(private val listDisease: ArrayList<Diseases>): RecyclerView
 
         Glide.with(holder.itemView.context).load(imageUrl).into(holder.binding.imgDeseases)
         holder.binding.tvDeseasesName.text = name
+        holder.binding.tvDescDesease.text = description
 
         val story = Diseases(id, name, description, imageUrl)
     }

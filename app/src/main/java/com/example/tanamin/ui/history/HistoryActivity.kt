@@ -12,6 +12,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityHistoryBinding
@@ -44,16 +45,13 @@ class HistoryActivity : AppCompatActivity() {
         setupModel()
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
     //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
+
 
     //GETTING EVERYTHING FOR THE API :)
     private fun setupModel() {
@@ -140,7 +138,7 @@ class HistoryActivity : AppCompatActivity() {
             binding.rvDeseases.layoutManager = GridLayoutManager(this, 2)
         } else {
             binding.rvDeseases.layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                LinearLayoutManager(this)
         }
 
         val listHistoryAdapter = HistoryAdapter(listHistory)

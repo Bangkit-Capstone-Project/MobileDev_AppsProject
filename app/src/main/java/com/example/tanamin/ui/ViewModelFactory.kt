@@ -3,7 +3,6 @@ package com.example.tanamin.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.nonui.userpreference.UserPreferences
-import com.example.tanamin.ui.bottomnavigation.ui.profile.credit.CreditViewModel
 import com.example.tanamin.ui.bottomnavigation.ui.profile.logout.ManageAccountViewModel
 import com.example.tanamin.ui.history.HistoryActivityViewModel
 import com.example.tanamin.ui.login.LoginViewModel

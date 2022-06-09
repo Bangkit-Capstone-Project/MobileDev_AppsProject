@@ -38,10 +38,12 @@ class ManageAccountActivity : AppCompatActivity() {
         setupViewModel()
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
+        
+
 
         binding.cvLogout.setOnClickListener { beautifulUi() }
     }

@@ -30,7 +30,9 @@ class HistoryAdapter(private val listHistory: ArrayList<History>):  RecyclerView
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val(createdAt, diseasesName, diseasesDescription, imageUrl, accuracy, id, plantName) = listHistory[position]
         Glide.with(holder.itemView.context).load(imageUrl).into(holder.binding.imgDeseases)
-        holder.binding.tvAccuracy.text = accuracy
+        holder.binding.tvDiseaseName.text = diseasesName
+        holder.binding.tvPlantName.text = plantName
+        holder.binding.tvCreatedAt.text = createdAt
         holder.itemView.setOnClickListener{ onItemClickCallback.onItemClicked(listHistory[holder.adapterPosition])}
     }
 

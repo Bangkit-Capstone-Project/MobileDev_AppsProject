@@ -18,6 +18,8 @@ class HistoryDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.hide()
         binding.floatBack.setOnClickListener {
             onBackPressed()
             finish()

@@ -108,6 +108,22 @@ class CassavaPlantActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+        binding.btnHelp.setOnClickListener {
+            help()
+        }
+    }
+    private fun help(){
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_help_bottomsheet,
+            findViewById<LinearLayout>(R.id.bottomSheet)
+        )
+        bottomSheetView.findViewById<View>(R.id.btn_close).setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+
     }
 
     private fun startCameraX() {

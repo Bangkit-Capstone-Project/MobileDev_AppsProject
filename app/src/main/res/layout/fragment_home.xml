@@ -21,59 +21,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imgProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="24dp"
-            android:src="@drawable/user"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView25"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView25" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:cardBackgroundColor="@color/light_grey"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView25">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:src="@drawable/ic_round_search_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/poppins_light"
-                    android:text="@string/search"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
         <ViewFlipper
             android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
@@ -85,7 +32,7 @@
             android:outAnimation="@android:anim/slide_out_right"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_search">
+            app:layout_constraintTop_toBottomOf="@+id/imageView25">
 
 
             <androidx.cardview.widget.CardView
@@ -232,6 +179,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewFlipper" />
 
+        <ImageView
+            android:id="@+id/imageView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_outline_document_scanner_24"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMenuCapt"
+            app:layout_constraintStart_toEndOf="@+id/tvMenuCapt"
+            app:layout_constraintTop_toTopOf="@+id/tvMenuCapt"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/tittle_capt"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMenuCapt" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
@@ -239,14 +210,14 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMenuCapt">
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvRice"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
-
+                android:clickable="true"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="7dp">
 
@@ -283,6 +254,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvCassava"
+                android:clickable="true"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
@@ -332,6 +304,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvTomato"
                 android:layout_width="120dp"
+                android:clickable="true"
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
@@ -373,6 +346,7 @@
                 android:layout_height="150dp"
                 android:layout_margin="12dp"
                 app:cardCornerRadius="10dp"
+                android:clickable="true"
                 app:cardElevation="7dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -405,36 +379,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvNews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/news"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/tvMenuCapt"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-        <TextView
-            android:id="@+id/tvAllNews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Lihat semua"
-            android:textColor="@color/dark_green"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tvNews"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvNews" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvNews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvNews" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

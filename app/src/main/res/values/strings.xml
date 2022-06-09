@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">TANAMIN</string>
+    <string name="app_name">Tanamin</string>
     <string name="title_activity_bottom_navigation">BottomNavigationActivity</string>
-    <string name="title_home">Beranda</string>
-    <string name="title_my_plant">Tanamanku</string>
-    <string name="title_profile">Profil</string>
+    <string name="title_home">Home</string>
+    <string name="title_my_plant">Explore</string>
+    <string name="title_profile">Profile</string>
     <string name="welcome_desc">Aplikasi yang bikin kamu anti gagal panen, Panen hasilnya sekarang!</string>
     <string name="login">Masuk</string>
     <string name="register">Daftar</string>
@@ -45,6 +45,14 @@
     <string name="logout_sure">Apakah kamu yakin ingin keluar dari aplikasi?</string>
     <string name="mantap">Mantap!</string>
     <string name="register_success">Pendaftaran akun kamu berhasil. Silakan lanjutkan ke halaman login</string>
+    <string name="Article_capt">Kenali berbagai jenis penyakit tanaman yang ada disini</string>
+    <string name="news_capt">Kumpulan berita terbaik khusus untuk kamu</string>
+    <string name="tittle_capt">Pilih tanaman yang akan kamu diagnosa dan identifikasi</string>
+    <string name="cam_help">Ambil gambar secara detail pada daun tanaman padi, singkong, atau tomat. Pastikan foto yang kamu ambil sesuai dengan perintah</string>
+    <string name="help_tittle">Cara Mendiagnosa Tanaman</string>
+    <string name="kamera">Kamera :</string>
+    <string name="galeri">Galeri :</string>
+    <string name="gallery_help">Pilih gambar daun tanaman padi, singkong, atau tomat di galeri kamu. Pastikan gambar sesuai dengan perintah.</string>
 
 
     <string-array name="news_tittle">

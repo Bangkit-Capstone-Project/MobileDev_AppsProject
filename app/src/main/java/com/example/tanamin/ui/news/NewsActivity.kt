@@ -26,10 +26,10 @@ class NewsActivity : AppCompatActivity() {
         showRecyclerList()
 
         //Handling Backbutton
-        val actionbar = supportActionBar
-        actionbar!!.title = "TANAMIN"
-        actionbar.setDisplayHomeAsUpEnabled(true)
-        actionbar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.hide()
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
     private val listNews: ArrayList<News> get() {
         val dataNewsTitle = resources.getStringArray(R.array.news_tittle)

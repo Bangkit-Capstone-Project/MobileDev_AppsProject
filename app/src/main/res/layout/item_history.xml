@@ -15,13 +15,14 @@
         android:orientation="vertical">
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/imgDeseases"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/tv_accuracy"
+            android:id="@+id/tv_disease_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -31,9 +32,27 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textAlignment="center"
             android:fontFamily="@font/poppins_regular"/>
 
+        <TextView
+            android:id="@+id/tv_plant_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            android:fontFamily="@font/poppins_regular"
+            android:textSize="16sp"
+            android:layout_marginStart="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_createdAt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="TextView"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/poppins_light"
+            android:textSize="14sp"/>
 
 
     </LinearLayout>
