@@ -25,6 +25,10 @@ class TomatoPlantDetailResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTomatoPlantDetailResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.floatBack.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
         val description = intent.getStringExtra(EXTRA_DESCRIPTION)
         val accuracy = intent.getStringExtra(EXTRA_ACCURACY)

@@ -26,6 +26,10 @@ class PlantsPredictionDetailResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlantsPredictionDetailResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.floatBack.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
         val description = intent.getStringExtra(EXTRA_DESCRIPTION)
         val accuracy = intent.getStringExtra(EXTRA_ACCURACY)

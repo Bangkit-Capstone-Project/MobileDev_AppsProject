@@ -28,6 +28,10 @@ class RicePlantDetailResultActivity : AppCompatActivity() {
 
 
         supportActionBar?.hide()
+        binding.floatBack.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
         val description = intent.getStringExtra(TomatoPlantDetailResultActivity.EXTRA_DESCRIPTION)
         val accuracy = intent.getStringExtra(TomatoPlantDetailResultActivity.EXTRA_ACCURACY)

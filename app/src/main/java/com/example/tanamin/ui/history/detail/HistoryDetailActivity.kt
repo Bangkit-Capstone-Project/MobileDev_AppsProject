@@ -18,6 +18,10 @@ class HistoryDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.floatBack.setOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
         val detail = intent.getParcelableExtra<History>(EXTRA_DETAIL) as History
 

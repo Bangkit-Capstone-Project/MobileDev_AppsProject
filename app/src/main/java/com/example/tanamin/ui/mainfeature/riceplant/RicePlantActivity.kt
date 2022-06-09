@@ -104,6 +104,7 @@ class RicePlantActivity : AppCompatActivity() {
         supportActionBar?.hide()
         binding.btnBack.setOnClickListener {
             onBackPressed()
+
         }
     }
 
