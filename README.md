@@ -88,12 +88,39 @@ Tanamin app is used to interact with users in predicting Paddy leave diseases, C
 - [x] [Glide](https://github.com/bumptech/glide)
 - [x] [Retrofit](https://square.github.io/retrofit/).
 - [x] [CameraX](https://developer.android.com/training/camerax)
+- [x] [preferences](https://developer.android.com/reference/android/preference/Preference)
+- [x] [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
 
 ## Features
 - [x] Welcoming Activity
 - [x] Login
 - [x] Register
 - [x] Bottom Navigation
+- [x] News Feature
+- [x] Tomato leave diseases Feature
+- [x] Paddy leave diseases Feature 
+- [x] Cassava leave diseases Feature
+- [x] Vegetable Prediction Feature
+- [x] History Feature
+- [x] List of Diseases Feature
+
+## Installation
+
+### 1. Clone this Project to your Computer
+```bash
+git clone https://Bangkit-Capstone-Project/MobileDev_AppsProject.git
+```
+
+or you can use Android Studio 
+
+File > New > Project from Version Control ...
+
+### 2. Open the Project in your Android Studio
+Open Android Studio and select open an existing project.
+
+### 3. Run Project in Android Studio
+Wait for Gradle Build to Finish and finally press the `Run > Run ‘app’`. Now the app has been installed in your phone / emulator. Make sure that you have configured your android device or emulator 
 
 
+## Thank You :)
 
