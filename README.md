@@ -50,17 +50,50 @@ Based on these problems, can be prevented by providing technological solutions, 
 **Android:**
 Tanamin app is used to interact with users in predicting Paddy leave diseases, Cassava leave diseases, Tomato leave diseaes, and predicting vegetables (after registering or logging in). the Users interaction are by inputting images (from gallery or CameraX) that will be sent to the cloud (and the result will be returend by using Retrofit). This apllication will also be able to share the history data. 
 
-**Case: **
+**Case:**
 
 - [x] Cassava Leave Prediction
 - [x] Paddy Leave Prediction
 - [x] Tomato Leave Prediction
 - [x] Vegetable Classification
 
-<!-- ## Screenshots
+## Screenshots
 <p align="center">
-  <img src="/misc/img/01.jpg" width="200">
-  <img src="/misc/img/02.jpg" width="200">
-  <img src="/misc/img/03.jpeg" width="200">
-  <img src="/misc/img/04.jpg" width="200">
-</p> -->
+  <img src="Image/Welcoming Page.png" width="200">
+  <img src="Image/Signin Page.png" width="200">
+  <img src="Image/Register Page.png" width="200">
+  <img src="Image/Logout Activity.png" width="200">
+</p>
+
+<p align="center">
+  <img src="Image/Home Fragment.png" width="200">
+  <img src="Image/Explore Fragment.png" width="200">
+  <img src="Image/Profile Fragment.png" width="200">
+</p>
+
+<p align="center">
+  <img src="Image/Take Pictore Activity.png" width="200">
+  <img src="Image/Help.png" width="200">
+  <img src="Image/Result Activity.png" width="200">
+</p>
+
+<p align="center">
+  <img src="Image/Article Activity.png" width="200">
+  <img src="Image/History Activity.png" width="200">
+  <img src="Image/Credit Activity.png" width="200">
+</p>
+
+## Development Roadmap
+- [x] [Kotlin](https://kotlinlang.org/)
+- [x] [Glide](https://github.com/bumptech/glide)
+- [x] [Retrofit](https://square.github.io/retrofit/).
+- [x] [CameraX](https://developer.android.com/training/camerax)
+
+## Features
+- [x] Welcoming Activity
+- [x] Login
+- [x] Register
+- [x] Bottom Navigation
+
+
+
