@@ -104,6 +104,12 @@ Tanamin app is used to interact with users in predicting Paddy leave diseases, C
 - [x] History Feature
 - [x] List of Diseases Feature
 
+## Requirement
+* Android Studio Chipmunk
+* Android Device or Android Emulator with minimum Lollipop Version
+* Emulator / External Device
+* USB Cable (to Connect Android Device to your Computer)
+
 ## Installation
 
 ### 1. Clone this Project to your Computer
