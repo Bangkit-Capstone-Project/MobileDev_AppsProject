@@ -32,8 +32,10 @@ class WelcomingPageActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
+
         //ANIMATION
-        playAnimation()
+
 
         //SESSION CHECKER
         setupViewModel()
@@ -51,13 +53,7 @@ class WelcomingPageActivity : AppCompatActivity() {
     }
 
     //ANIMATION
-    private fun playAnimation() {
-        ObjectAnimator.ofFloat(binding.welcomingImage, View.TRANSLATION_X, -30f, 30f).apply {
-            duration = 3000
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.REVERSE
-        }.start()
-    }
+
 
     //SESSION CHECKER
     private fun setupViewModel() {

@@ -1,9 +1,11 @@
 package com.example.tanamin.ui.mainfeature.plantsprediction
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -48,7 +50,15 @@ class CameraPlantsPredictionActivity : AppCompatActivity() {
         binding.backButtonImage.setOnClickListener{
             finish()
         }
+        playAnimation()
 
+    }
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(binding.imgScanner, View.TRANSLATION_Y, -750f, 600f).apply {
+            duration = 1600
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
     }
 
     public override fun onResume() {

@@ -147,5 +147,11 @@
         <item>Kamis 26 Mei 2022</item>
         <item>Minggu, 29 Mei 2022</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="onboard_tittle_two">Cegah gagal panen!</string>
+    <string name="onboard_desc_two">Cegah gagal panen dengan mendeteksi dini penyakit tanamanmu</string>
+    <string name="onboard_tittle_three">Identifikasi Tanamanmu</string>
+    <string name="onboard_three_desc">Kamu bisa mendiagnosa tanaman seperti padi, singkong, tomat, dan sayuran </string>
 
 </resources>

@@ -96,8 +96,8 @@ class RicePlantActivity : AppCompatActivity() {
         }
         setupModel()
 
-        binding.cvCamera.setOnClickListener { startCameraX() }
-        binding.cvGallery.setOnClickListener { startGallery() }
+        binding.btnCamera.setOnClickListener { startCameraX() }
+        binding.btnGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
 
         //Handling Backbutton
