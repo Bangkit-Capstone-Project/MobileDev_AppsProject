@@ -35,6 +35,7 @@ class AllDeseaseActivity : AppCompatActivity() {
         actionbar.setDisplayHomeAsUpEnabled(true)
         actionbar.setDisplayHomeAsUpEnabled(true)
     }
+
     //Handling onBackPressed for the Backbutton
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
@@ -51,7 +52,6 @@ class AllDeseaseActivity : AppCompatActivity() {
                     val responseBody = response.body()
                     if(responseBody != null){
                         getList(responseBody.dataDisease.diseases)
-                        Log.d(this@AllDeseaseActivity.toString(), "onResponse: ${responseBody.dataDisease.diseases}")
                     }
                 }
             }
@@ -76,7 +76,6 @@ class AllDeseaseActivity : AppCompatActivity() {
     }
 
     private fun showRecyclerList(listUser: ArrayList<Diseases>) {
-
         if(applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             binding.rvDeseases.layoutManager = GridLayoutManager(this , 2)
         }else {
@@ -85,10 +84,6 @@ class AllDeseaseActivity : AppCompatActivity() {
 
         val listUserAdapter = DeseaseAdapter(listUser)
         binding.rvDeseases.adapter = listUserAdapter
-    }
-
-    private fun printLog(message: String) {
-        Log.d(TAG, message)
     }
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =

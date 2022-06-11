@@ -54,8 +54,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private var mFile: File? = null
     private lateinit var token: String
     private lateinit var refreshToken: String
-//    private lateinit var theResultData: String
-
 
     companion object {
         const val CAMERA_X_RESULT = 200
@@ -98,23 +96,15 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+
         setupModel()
+        supportActionBar?.hide()
 
         binding.btnCamera.setOnClickListener { startCameraX() }
         binding.btnGallery.setOnClickListener { startGallery() }
-        binding.uploadButton.setOnClickListener {
-            uploadImage()
-        }
-        binding.btnHelp.setOnClickListener {
-            help()
-        }
-
-
-        //HANDLING BACKBUTTON
-        supportActionBar?.hide()
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
-        }
+        binding.uploadButton.setOnClickListener { uploadImage() }
+        binding.btnHelp.setOnClickListener { help() }
+        binding.btnBack.setOnClickListener { onBackPressed() }
     }
     private fun help(){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
@@ -123,10 +113,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
         )
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
     }
-
-
 
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
@@ -169,12 +156,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
         }
     }
 
-    //HANDLING BACKPRESSEN ON THE BACKBUTTON
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
     //THIS FUNCTION IS TO SEND IMAGE TO THE SERVER AND RETURN THE IMAGE LINK FROM THE SERVER
     private fun uploadImage(){
         if(mFile != null){
@@ -196,7 +177,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-//                            sendIntent(responseBody.data.toString())
                             plantsPrediction(responseBody.data.pictureUrl)
                         }
                     }else{
@@ -220,10 +200,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private fun plantsPrediction(theUrl: String){
         val endpoint = "5666821356906348544"
         val userToken = "Bearer $token"
-
-        logd("UserToken di sending data: $userToken")
-
         val service = ApiConfig.getApiService().getVegetableClassification(userToken, theUrl, endpoint)
+
         service.enqueue(object : Callback<ClassificationsResponse>{
             override fun onResponse(
                 call: Call<ClassificationsResponse>,
@@ -254,8 +232,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
-            logd("Token sebelum diubah di fungsi setup model $token")
         }
+
         viewModel.getRefreshToken().observe(this){ userRefreshToken ->
             refreshToken = userRefreshToken
         }
@@ -271,9 +249,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if(response.isSuccessful){
                     viewModel.saveToken(responseBody?.data!!.accessToken)
-                    logd("Token sesudah diubah $token")
-                    logd("Ini token yang di get dari viewmodel ${token}")
-                    Log.d(this@PlantsPredictionActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
                 }else{
                     logd("data yang di ambil itu ${responseBody?.message}")
                 }
@@ -295,9 +270,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
             "${Classification.data.result.accuracy}",
             "${Classification.data.result.description}",
         )
-
-        logd("This is the result of classification $resultData")
         val intentPlantsPredictionDetailResultActivity = Intent(this@PlantsPredictionActivity, PlantsPredictionDetailResultActivity::class.java)
+
         intentPlantsPredictionDetailResultActivity.putExtra(
             PlantsPredictionDetailResultActivity.EXTRA_RESULT,
             resultData
@@ -307,7 +281,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
-
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
 
@@ -337,6 +310,4 @@ class PlantsPredictionActivity : AppCompatActivity() {
             finish()
         }
     }
-
-
 }

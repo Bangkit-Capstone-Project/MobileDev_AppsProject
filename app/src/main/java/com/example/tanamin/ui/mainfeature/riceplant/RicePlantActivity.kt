@@ -97,13 +97,11 @@ class RicePlantActivity : AppCompatActivity() {
             )
         }
         setupModel()
+        supportActionBar?.hide()
 
         binding.btnCamera.setOnClickListener { startCameraX() }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
-
-        //Handling Backbutton
-        supportActionBar?.hide()
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
@@ -121,7 +119,6 @@ class RicePlantActivity : AppCompatActivity() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
     }
 
     private fun startCameraX() {
@@ -189,16 +186,12 @@ class RicePlantActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("THEBIGINNING " + responseBody.toString())
-                            logd("Another thebiginning " + responseBody.data.toString())
-                            riceDiseasePrediction(responseBody.data.toString())
-
+                            riceDiseasePrediction(responseBody.data.pictureUrl)
                         }
                     }else{
-                        logd("ngeselin ${response.toString()}")
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("ngeselin lah ini ${responseBody.status}")
+                            logd("bismillah lah ini ${responseBody.status}")
                         }
                     }
                 }
@@ -221,21 +214,8 @@ class RicePlantActivity : AppCompatActivity() {
     private fun riceDiseasePrediction(theUrl: String){
         val endpoint = "2528938316535955456"
         val userToken = "Bearer $token"
+        val service = ApiConfig.getApiService().getRiceDisease(userToken, theUrl, endpoint)
 
-        //GETTING JUST THE LINK BY PARSING
-        val beforeParsedUrl: String = theUrl
-        val firstArray: List<String> = beforeParsedUrl.split("=")
-        val beforeSecondParsing: String = firstArray[1]
-
-        //this one is to erase the ')'
-        val secondArray: List<String> = beforeSecondParsing.split(")")
-        val url = secondArray[0]
-
-        logd("UserToken: $userToken")
-        logd("imageURL: $url")
-        logd("endpoint: $endpoint")
-
-        val service = ApiConfig.getApiService().getRiceDisease(userToken, url, endpoint)
         service.enqueue(object : Callback<RiceDiseaseResponse>{
             override fun onResponse(
                 call: Call<RiceDiseaseResponse>,
@@ -244,9 +224,7 @@ class RicePlantActivity : AppCompatActivity() {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    logd("PREDICTION CHECKER: ${responseBody.data}")
                     prepareToSendResult(responseBody)
-
                 }else{
                     showFailed()
                     logd("Respones Message ${response.message()}")
@@ -268,8 +246,8 @@ class RicePlantActivity : AppCompatActivity() {
 
         viewModel.getToken().observe(this) { userToken ->
             token = userToken
-            logd("Token sebelum diubah di fungsi setup model $token")
         }
+
         viewModel.getRefreshToken().observe(this){ userRefreshToken ->
             refreshToken = userRefreshToken
         }
@@ -286,9 +264,6 @@ class RicePlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if(response.isSuccessful){
                     viewModel.saveToken(responseBody?.data!!.accessToken)
-                    logd("Token sesudah diubah $token")
-                    logd("Ini token yang di get dari viewmodel ${token}")
-                    Log.d(this@RicePlantActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
                 }else{
                     logd("data yang di ambil itu ${responseBody?.message}")
                 }
@@ -296,9 +271,7 @@ class RicePlantActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
                 Log.d(this@RicePlantActivity.toString(), "${t.message}")
-
             }
-
         })
     }
 
@@ -312,7 +285,6 @@ class RicePlantActivity : AppCompatActivity() {
             "${PlantsDiseases.data.result.description}",
             "${PlantsDiseases.data.result.plantName}"
         )
-        logd("This is the result of classification $resultData")
         val intentRicePlantDetailResultActivity = Intent(this@RicePlantActivity, RicePlantDetailResultActivity::class.java)
         intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_RESULT, resultData)
         startActivity(intentRicePlantDetailResultActivity)
@@ -332,7 +304,6 @@ class RicePlantActivity : AppCompatActivity() {
     }
 
     private fun showFailed(){
-
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
             R.layout.item_upload_failed,
@@ -344,6 +315,4 @@ class RicePlantActivity : AppCompatActivity() {
             startActivity(Intent(this, RicePlantActivity::class.java))
         }
     }
-
-
 }

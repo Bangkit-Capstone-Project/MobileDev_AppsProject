@@ -14,6 +14,10 @@ class ManageAccountViewModel (private val preferences: UserPreferences): ViewMod
         }
     }
 
+    fun getSession() : LiveData<Boolean> {
+        return preferences.getSession().asLiveData()
+    }
+
     fun getRefreshToken() : LiveData<String> {
         return preferences.getRefreshToken().asLiveData()
     }

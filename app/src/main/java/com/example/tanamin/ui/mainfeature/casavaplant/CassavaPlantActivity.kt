@@ -94,20 +94,15 @@ class CassavaPlantActivity : AppCompatActivity() {
             )
         }
         setupModel()
+        supportActionBar?.hide()
 
         binding.btnCamera.setOnClickListener { startCameraX() }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
-
-        //Handling Backbutton
-        supportActionBar?.hide()
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
-        }
-        binding.btnHelp.setOnClickListener {
-            help()
-        }
+        binding.btnBack.setOnClickListener { onBackPressed() }
+        binding.btnHelp.setOnClickListener { help() }
     }
+
     private fun help(){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_help_bottomsheet,
@@ -118,7 +113,6 @@ class CassavaPlantActivity : AppCompatActivity() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
 
     }
 
@@ -185,8 +179,6 @@ class CassavaPlantActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("THEBIGINNING " + responseBody.toString())
-                            logd("Another thebiginning " + responseBody.data.toString())
                             cassavaDiseasePrediction(responseBody.data.pictureUrl)
                         }
                     }else{
@@ -210,12 +202,8 @@ class CassavaPlantActivity : AppCompatActivity() {
     private fun cassavaDiseasePrediction(theUrl: String){
         val endpoint = "4257194673539383296"
         val userToken = "Bearer $token"
-
-        logd("UserToken: $userToken")
-        logd("imageURL: $theUrl")
-        logd("endpoint: $endpoint")
-
         val service = ApiConfig.getApiService().getCassavaDisease(userToken, theUrl, endpoint)
+
         service.enqueue(object : Callback<CassavaDiseaseResponse>{
             override fun onResponse(
                 call: Call<CassavaDiseaseResponse>,
@@ -224,9 +212,7 @@ class CassavaPlantActivity : AppCompatActivity() {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    logd("PREDICTION CHECKER: ${responseBody.data}")
                     prepareToSendResult(responseBody)
-
                 }else{
                     showFailed()
                     logd("Respones Message ${response.message()}")
@@ -266,9 +252,6 @@ class CassavaPlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if(response.isSuccessful){
                     viewModel.saveToken(responseBody?.data!!.accessToken)
-                    logd("Token sesudah diubah $token")
-                    logd("Ini token yang di get dari viewmodel ${token}")
-                    Log.d(this@CassavaPlantActivity.toString(), "onResponse: ${responseBody?.data!!.accessToken}")
                 }else{
                     logd("data yang di ambil itu ${responseBody?.message}")
                 }
@@ -291,7 +274,6 @@ class CassavaPlantActivity : AppCompatActivity() {
             "${PlantsDiseases.data.result.description}",
             "${PlantsDiseases.data.result.plantName}"
         )
-        logd("This is the result of classification $resultData")
         val intentCassavaPlantDetailResultActivity = Intent(this@CassavaPlantActivity, TomatoPlantDetailResultActivity::class.java)
         intentCassavaPlantDetailResultActivity.putExtra(CassavaPlantDetailResultActivity.EXTRA_RESULT, resultData)
         startActivity(intentCassavaPlantDetailResultActivity)
@@ -316,7 +298,6 @@ class CassavaPlantActivity : AppCompatActivity() {
 
     }
     private fun showFailed(){
-
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
             R.layout.item_upload_failed,

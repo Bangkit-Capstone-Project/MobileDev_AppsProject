@@ -37,14 +37,10 @@ class ManageAccountActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupViewModel()
 
-        //Handling Backbutton
         supportActionBar?.hide()
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
-        
-
-
         binding.cvLogout.setOnClickListener { beautifulUi() }
     }
 
@@ -59,19 +55,26 @@ class ManageAccountActivity : AppCompatActivity() {
             refreshToken = userRefreshToken
             Log.d(this@ManageAccountActivity.toString(), "refreshToken: $refreshToken")
         }
+
+        viewModel.getSession().observe(this){
+            session ->
+            val refreshToken = session
+            if(refreshToken == false){
+                startActivity(Intent(this, WelcomingPageActivity::class.java))
+                finishAffinity()
+            }
+        }
     }
 
     //TO DELETE THE REFRESH TOKEN WHEN LOGING OUT
     private fun deleteRefreshToken(){
         val service = ApiConfig.getApiService().deleteRefreshToken(refreshToken)
-        Log.d(this@ManageAccountActivity.toString(), "refreshToken deleteRefreshToken: $refreshToken")
         service.enqueue(object: Callback<DeleteRefreshTokenResponse> {
             override fun onResponse(
                 call: Call<DeleteRefreshTokenResponse>,
                 response: Response<DeleteRefreshTokenResponse>
             ) {
                 val responseBody = response.body()
-                Log.d(this@ManageAccountActivity.toString(), "responseBody: $responseBody")
                 if (responseBody != null) {
                     Toast.makeText(this@ManageAccountActivity, "${responseBody.status}", Toast.LENGTH_SHORT).show()
                 }else{
@@ -85,9 +88,7 @@ class ManageAccountActivity : AppCompatActivity() {
         })
     }
 
-
     private fun beautifulUi(){
-        deleteRefreshToken()
         val bottomSheetDialog = BottomSheetDialog(this@ManageAccountActivity, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_logout_dialog,
             findViewById<LinearLayout>(R.id.bottomSheet)
@@ -97,14 +98,6 @@ class ManageAccountActivity : AppCompatActivity() {
         bottomSheetView.findViewById<View>(R.id.btn_logout).setOnClickListener {
             deleteRefreshToken()
             viewModel.logout()
-            startActivity(Intent(this, WelcomingPageActivity::class.java))
-            finish()
         }
-    }
-
-    //Handling onBackPressed for the Backbutton
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
     }
 }

@@ -15,21 +15,12 @@ class BottomNavigationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBottomNavigationBinding
 
-    companion object {
-        //KEY TO GET THE USERNAME DATA FROM LOGINACTIVITY.KT
-        const val EXTRA_USERNAME = "extra_username"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityBottomNavigationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
-
-        //GETTING THE DATA FROM LOGINACTIVITY
-        val userName = intent.getStringExtra(EXTRA_USERNAME)
-        Log.d(this@BottomNavigationActivity.toString(), "onCreate: $userName")
 
         val navView: BottomNavigationView = binding.navView
 

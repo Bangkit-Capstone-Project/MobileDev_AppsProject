@@ -50,8 +50,12 @@ class HistoryActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
-    //Handling onBackPressed for the Backbutton
 
+    //Handling onBackPressed for the Backbutton
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 
     //GETTING EVERYTHING FOR THE API :)
     private fun setupModel() {
@@ -111,7 +115,6 @@ class HistoryActivity : AppCompatActivity() {
             override fun onFailure(call: Call<HistoryResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
         })
     }
 
@@ -133,7 +136,6 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun showRecyclerList(listHistory: ArrayList<History>) {
-
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             binding.rvDeseases.layoutManager = GridLayoutManager(this, 2)
         } else {
@@ -154,7 +156,6 @@ class HistoryActivity : AppCompatActivity() {
 
         })
     }
-
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE

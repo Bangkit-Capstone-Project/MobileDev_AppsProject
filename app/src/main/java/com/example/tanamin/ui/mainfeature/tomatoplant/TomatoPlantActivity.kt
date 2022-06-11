@@ -86,7 +86,6 @@ class TomatoPlantActivity : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTomatoPlantBinding.inflate(layoutInflater)
@@ -102,20 +101,13 @@ class TomatoPlantActivity : AppCompatActivity() {
         }
 
         setupModel()
+        supportActionBar?.hide()
 
         binding.btnCamera.setOnClickListener { startCameraX() }
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.uploadButton.setOnClickListener { uploadImage() }
-
-
-        //HANDLING BACKBUTTON
-        supportActionBar?.hide()
-        binding.btnBack.setOnClickListener {
-            onBackPressed()
-        }
-        binding.btnHelp.setOnClickListener {
-            help()
-        }
+        binding.btnBack.setOnClickListener { onBackPressed() }
+        binding.btnHelp.setOnClickListener { help() }
     }
     private fun help(){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
@@ -129,9 +121,6 @@ class TomatoPlantActivity : AppCompatActivity() {
         bottomSheetDialog.show()
 
     }
-
-    //HANDLING ONBACKPRESSED FOR THE BACKBUTTON
-
 
     private fun startCameraX() {
         val intent = Intent(this, CameraPlantsPredictionActivity::class.java)
@@ -212,15 +201,12 @@ class TomatoPlantActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("THEBIGINNING " + responseBody.toString())
-                            logd("Another thebiginning " + responseBody.data.toString())
                             tomatoDisease(responseBody.data.pictureUrl)
                         }
                     }else{
-                        logd("ngeselin ${response.toString()}")
                         val responseBody = response.body()
                         if(responseBody != null){
-                            logd("ngeselin lah ini ${responseBody.status}")
+                            logd("bismillah lah ini ${responseBody.status}")
                         }
                     }
                 }
@@ -237,11 +223,8 @@ class TomatoPlantActivity : AppCompatActivity() {
     private fun tomatoDisease(theUrl: String){
         val endpoint = "9197643464764817408"
         val userToken = "Bearer $token"
-
-        logd("UserToken: $userToken")
-        logd("imageURL: $theUrl")
-        logd("endpoint: $endpoint")
         val service = ApiConfig.getApiService().getTomatoDisease(userToken, theUrl, endpoint)
+
         service.enqueue(object : Callback<TomatoDiseaseResponse>{
             override fun onResponse(
                 call: Call<TomatoDiseaseResponse>,
@@ -250,11 +233,9 @@ class TomatoPlantActivity : AppCompatActivity() {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    logd("PREDICTION CHECKER: ${responseBody.data}")
                     prepareToSendResult(responseBody)
                 }else{
                     showFailed()
-                    logd("Respones Message ${response.message()}")
                 }
             }
             override fun onFailure(call: Call<TomatoDiseaseResponse>, t: Throwable) {
@@ -283,7 +264,6 @@ class TomatoPlantActivity : AppCompatActivity() {
             override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
                 Log.d(this@TomatoPlantActivity.toString(), "${t.message}")
             }
-
         })
     }
 
@@ -297,7 +277,6 @@ class TomatoPlantActivity : AppCompatActivity() {
             "${PlantsDiseases.data.result.description}",
             "${PlantsDiseases.data.result.plantName}"
         )
-        logd("This is the result of classification $resultData")
         val intentTomatoPlantDetailResultActivity = Intent(this@TomatoPlantActivity, TomatoPlantDetailResultActivity::class.java)
         intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_RESULT, resultData)
         startActivity(intentTomatoPlantDetailResultActivity)
@@ -307,6 +286,7 @@ class TomatoPlantActivity : AppCompatActivity() {
     private fun logd(msg: String) {
         Log.d(this@TomatoPlantActivity.toString(), "$msg")
     }
+
     private fun showLoading(b: Boolean){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
@@ -318,10 +298,9 @@ class TomatoPlantActivity : AppCompatActivity() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
     }
-    private fun showFailed(){
 
+    private fun showFailed(){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
             R.layout.item_upload_failed,
@@ -333,5 +312,4 @@ class TomatoPlantActivity : AppCompatActivity() {
             startActivity(Intent(this, TomatoPlantActivity::class.java))
         }
     }
-
 }

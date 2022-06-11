@@ -28,11 +28,8 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
 
         //HANDLIND TO CREDIT ACTIVITY
         binding.cvCredit.setOnClickListener {
@@ -45,9 +42,6 @@ class ProfileFragment : Fragment() {
         binding.cvAccount.setOnClickListener {
             startActivity(Intent(this.requireContext(), ManageAccountActivity::class.java))
         }
-
-
-        //TO LOG OUT
 
         return root
     }

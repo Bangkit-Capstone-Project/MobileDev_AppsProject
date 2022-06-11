@@ -39,9 +39,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         super.onCreate(savedInstanceState)
 
-        //ANIMATION
-
-
         //SESSION CHECKER
         setupViewModel()
 
@@ -50,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
-
 
         binding.loginBtnLogin.setOnClickListener {
             loginUser()
@@ -80,9 +76,6 @@ class LoginActivity : AppCompatActivity() {
         return true
     }
 
-    //ANIMATION
-
-
     //LOGIN LOGIC
     private fun loginUser(){
         val userName = binding.loginTextEditUserName.text.toString()
@@ -111,9 +104,7 @@ class LoginActivity : AppCompatActivity() {
 
                             viewModel.saveToken(responseBody?.data!!.accessToken)
                             viewModel.saveRefreshToken(responseBody?.data!!.refreshToken)
-                            Log.d(this@LoginActivity.toString(), "onResponse: ${responseBody?.data!!.refreshToken}")
-                            Log.d(this@LoginActivity.toString(), "Token: ${responseBody?.data!!.accessToken}")
-                            Log.d(this@LoginActivity.toString(),"${responseBody?.message}")
+
                             val bottomSheetDialog = BottomSheetDialog(this@LoginActivity, R.style.BottomSheetDialogTheme)
                             val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
                                 R.layout.item_bottomsheet_login,
@@ -144,7 +135,6 @@ class LoginActivity : AppCompatActivity() {
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                         showLoading(false)
                         onToast("${t.message}")
-                        Log.d(this@LoginActivity.toString(), "${t.message}")
                     }
                 })
             }
@@ -154,8 +144,6 @@ class LoginActivity : AppCompatActivity() {
     private fun onToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
-
-
 
     private fun showLoading(isLoading:Boolean){ binding.progressBar.visibility =
         if (isLoading) View.VISIBLE
