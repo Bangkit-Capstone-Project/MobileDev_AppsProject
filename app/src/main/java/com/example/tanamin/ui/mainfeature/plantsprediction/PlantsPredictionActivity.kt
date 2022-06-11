@@ -23,8 +23,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
+import com.example.tanamin.nonui.data.History
 import com.example.tanamin.nonui.response.ClassificationsResponse
 import com.example.tanamin.nonui.response.RefreshTokenResponse
+import com.example.tanamin.nonui.response.ResultPlant
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
@@ -42,6 +44,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import com.example.tanamin.nonui.data.Classification as Classification1
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -51,7 +54,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
     private var mFile: File? = null
     private lateinit var token: String
     private lateinit var refreshToken: String
-    private lateinit var theResultData: String
+//    private lateinit var theResultData: String
 
 
     companion object {
@@ -194,7 +197,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                         val responseBody = response.body()
                         if(responseBody != null){
 //                            sendIntent(responseBody.data.toString())
-                            plantsPrediction(responseBody.data.toString())
+                            plantsPrediction(responseBody.data.pictureUrl)
                         }
                     }else{
                         val responseBody = response.body()
@@ -218,18 +221,9 @@ class PlantsPredictionActivity : AppCompatActivity() {
         val endpoint = "5666821356906348544"
         val userToken = "Bearer $token"
 
-        //GETTING JUST THE LINK BY PARSING
-        val beforeParsedUrl: String = theUrl
-        val firstArray: List<String> = beforeParsedUrl.split("=")
-        val beforeSecondParsing: String = firstArray[1]
-
-        //this one is to erase the ')'
-        val secondArray: List<String> = beforeSecondParsing.split(")")
-        val url = secondArray[0]
-
         logd("UserToken di sending data: $userToken")
 
-        val service = ApiConfig.getApiService().getVegetableClassification(userToken, url, endpoint)
+        val service = ApiConfig.getApiService().getVegetableClassification(userToken, theUrl, endpoint)
         service.enqueue(object : Callback<ClassificationsResponse>{
             override fun onResponse(
                 call: Call<ClassificationsResponse>,
@@ -238,10 +232,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    logd("PREDICTION CHECKER: ${responseBody.data}")
-                    prepareToSendData(responseBody.data.toString())
-                    theResultData = responseBody.data.toString()
-                    plantsPrediction(responseBody.data.toString())
+                    prepareToSendResutl(responseBody)
                 }else{
                     showFailed()
                     logd("Respones Message ${response.message()}")
@@ -295,53 +286,22 @@ class PlantsPredictionActivity : AppCompatActivity() {
         })
     }
 
+    private fun prepareToSendResutl(Classification: ClassificationsResponse){
 
-    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
-    private fun prepareToSendData(theData: String){
-        /*
-        Karena ada 7 data yang mau di send (createdAt, diseasesName, imageUrl, accuracy, description)
-        kita buat parsing untuk setiap lima limanya. Kemudian, karena setiap datanya itu memiliki kesamaan
-        dalam struktur, kita parsing dari belakang :)
-         */
+        val resultData = Classification1(
+            "${Classification.data.result.createdAt}",
+            "${Classification.data.result.vegetableName}",
+            "${Classification.data.result.imageUrl}",
+            "${Classification.data.result.accuracy}",
+            "${Classification.data.result.description}",
+        )
 
+        logd("This is the result of classification $resultData")
         val intentPlantsPredictionDetailResultActivity = Intent(this@PlantsPredictionActivity, PlantsPredictionDetailResultActivity::class.java)
-
-        //UNTUK DESCRIPTION
-        val firstArrayDescription: List<String> = theData.split("))")
-        val secondParsingDescription: String = firstArrayDescription[0]
-        val secondArrayDescription: List<String> = secondParsingDescription.split(", description=")
-        val theDescription: String = secondArrayDescription[1]
-        logd("theDescription: $theDescription")
-        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
-
-        //UNTUK ACCURACY
-        val prepareAccuracy: String = secondArrayDescription[0]
-        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
-        val theAccuracy: String = firstArrayAccuracy[1]
-        logd("theAccuracy: $theAccuracy")
-        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
-
-        //UNTUK IMAGEURL
-        val prepareImageUrl: String = firstArrayAccuracy[0]
-        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
-        val theImageUrl: String = firstArrayImageUrl[1]
-        logd("theImageUrl: $theImageUrl")
-        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
-
-        //UNTUK VEGETABLE NAME
-        val prepareVegetableName: String = firstArrayImageUrl[0]
-        val firstArrayVegetableName: List<String> = prepareVegetableName.split(", vegetableName=")
-        val theVegetableName: String = firstArrayVegetableName[1]
-        logd("theVegetableName: $theVegetableName")
-        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_VEGETABLENAME, theVegetableName)
-
-        //UNTUK WAKTU PEMBUATAN
-        val prepareCreatedAt: String = firstArrayVegetableName[0]
-        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataResult(result=Result(createdAt=")
-        val theCreatedAt: String = firstArrayCreatedAt[1]
-        logd("theCreatedAt: $theCreatedAt")
-        intentPlantsPredictionDetailResultActivity.putExtra(PlantsPredictionDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
-
+        intentPlantsPredictionDetailResultActivity.putExtra(
+            PlantsPredictionDetailResultActivity.EXTRA_RESULT,
+            resultData
+        )
         startActivity(intentPlantsPredictionDetailResultActivity)
     }
 
@@ -350,6 +310,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
         Log.d(this@PlantsPredictionActivity.toString(), "$msg")
     }
+
     private fun showLoading(b: Boolean){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
@@ -364,7 +325,6 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     }
     private fun showFailed(){
-
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
             R.layout.item_upload_failed,

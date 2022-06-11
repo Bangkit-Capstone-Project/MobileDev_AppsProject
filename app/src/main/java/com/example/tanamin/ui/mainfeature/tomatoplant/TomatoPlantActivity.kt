@@ -24,6 +24,7 @@ import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.databinding.ActivityTomatoPlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
+import com.example.tanamin.nonui.data.Classification
 import com.example.tanamin.nonui.response.ClassificationsResponse
 import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.TomatoDiseaseResponse
@@ -213,7 +214,7 @@ class TomatoPlantActivity : AppCompatActivity() {
                         if(responseBody != null){
                             logd("THEBIGINNING " + responseBody.toString())
                             logd("Another thebiginning " + responseBody.data.toString())
-                            tomatoDisease(responseBody.data.toString())
+                            tomatoDisease(responseBody.data.pictureUrl)
                         }
                     }else{
                         logd("ngeselin ${response.toString()}")
@@ -230,7 +231,6 @@ class TomatoPlantActivity : AppCompatActivity() {
         } else {
             logd("Input Image first")
         }
-
     }
 
     //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER WITH ITS TOKEN TO GET THE PREDICTION
@@ -238,19 +238,10 @@ class TomatoPlantActivity : AppCompatActivity() {
         val endpoint = "9197643464764817408"
         val userToken = "Bearer $token"
 
-        //GETTING JUST THE LINK BY PARSING
-        val beforeParsedUrl: String = theUrl
-        val firstArray: List<String> = beforeParsedUrl.split("=")
-        val beforeSecondParsing: String = firstArray[1]
-
-        //this one is to erase the ')'
-        val secondArray: List<String> = beforeSecondParsing.split(")")
-        val url = secondArray[0]
-
         logd("UserToken: $userToken")
-        logd("imageURL: $url")
+        logd("imageURL: $theUrl")
         logd("endpoint: $endpoint")
-        val service = ApiConfig.getApiService().getTomatoDisease(userToken, url, endpoint)
+        val service = ApiConfig.getApiService().getTomatoDisease(userToken, theUrl, endpoint)
         service.enqueue(object : Callback<TomatoDiseaseResponse>{
             override fun onResponse(
                 call: Call<TomatoDiseaseResponse>,
@@ -260,8 +251,7 @@ class TomatoPlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
-                    prepareToSendData(responseBody.data.toString())
-
+                    prepareToSendResult(responseBody)
                 }else{
                     showFailed()
                     logd("Respones Message ${response.message()}")
@@ -269,6 +259,7 @@ class TomatoPlantActivity : AppCompatActivity() {
             }
             override fun onFailure(call: Call<TomatoDiseaseResponse>, t: Throwable) {
                 logd("Checking Failed")
+                showFailed()
             }
         })
     }
@@ -296,74 +287,20 @@ class TomatoPlantActivity : AppCompatActivity() {
         })
     }
 
-    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
-    private fun prepareToSendData(theData: String){
-        /*
-        Karena ada 7 data yang mau di send (createdAt, diseasesName, historyId, imageUrl, accuracy, description, plantName)
-        kita buat parsing untuk setiap tujug tujuhnya. Kemudian, karena setiap datanya itu memiliki kesamaan
-        dalam struktur, kita parsing dari belakang :)
-         */
+    private fun prepareToSendResult(PlantsDiseases: TomatoDiseaseResponse){
+        val resultData = com.example.tanamin.nonui.data.PlantsDiseases(
+            "${PlantsDiseases.data.result.createdAt}",
+            "${PlantsDiseases.data.result.diseasesName}",
+            "${PlantsDiseases.data.result.historyId}",
+            "${PlantsDiseases.data.result.imageUrl}",
+            PlantsDiseases.data.result.accuracy,
+            "${PlantsDiseases.data.result.description}",
+            "${PlantsDiseases.data.result.plantName}"
+        )
+        logd("This is the result of classification $resultData")
         val intentTomatoPlantDetailResultActivity = Intent(this@TomatoPlantActivity, TomatoPlantDetailResultActivity::class.java)
-
-        //UNTUK PLANT NAME
-        val firstArrayplantName: List<String> = theData.split("))")
-        val secondParsingDescription: String = firstArrayplantName[0]
-        val secondArrayPlantName: List<String> = secondParsingDescription.split(", plantName=")
-        val thePlantName: String = secondArrayPlantName[1]
-        logd("thePlantName: $thePlantName")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_PLANTNAME, thePlantName)
-
-        //UNTUK DESCRIPTIONS
-        val prepareDescription: String = secondArrayPlantName[0]
-        val firstArrayDescription : List<String> = prepareDescription.split(", description=")
-        val theDescription: String = firstArrayDescription[1]
-        logd("theDescription: $theDescription")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
-
-
-        //UNTUK ACCURACY
-        val prepareAccuracy: String = firstArrayDescription[0]
-        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
-        val theAccuracy: String = firstArrayAccuracy[1]
-        logd("theAccuracy: $theAccuracy")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
-
-
-        //UNTUK IMAGEURL
-        val prepareImageUrl: String = firstArrayAccuracy[0]
-        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
-        val theImageUrl: String = firstArrayImageUrl[1]
-        logd("theImageUrl: $theImageUrl")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
-
-
-        //UNTUK HISTORY_ID
-        val prepareHistoryId: String = firstArrayImageUrl[0]
-        val firstArrayHistoryId: List<String> = prepareHistoryId.split(", historyId=")
-        val theHistoryId: String = firstArrayHistoryId[1]
-        logd("theHistoryId: $theHistoryId")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_HISTORYID, theHistoryId)
-
-
-        //UNTUK DISEASE NAME
-        val prepareDiseaseName: String = firstArrayHistoryId[0]
-        val firstArrayDiseaseName: List<String> = prepareDiseaseName.split(", diseasesName=")
-        val theDiseaseName: String = firstArrayDiseaseName[1]
-        logd("theDiseaseName: $theDiseaseName")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_DISEASENAME, theDiseaseName)
-
-
-        //UNTUK WAKTU PEMBUATAN
-        val prepareCreatedAt: String = firstArrayDiseaseName[0]
-        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataTomato(result=ResultTomato(createdAt=")
-        val theCreatedAt: String = firstArrayCreatedAt[1]
-        logd("theCreatedAt: $theCreatedAt")
-        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
-
+        intentTomatoPlantDetailResultActivity.putExtra(TomatoPlantDetailResultActivity.EXTRA_RESULT, resultData)
         startActivity(intentTomatoPlantDetailResultActivity)
-
-
-
     }
 
     //THIS FUNCTION IS FOR DEBUGGING :)

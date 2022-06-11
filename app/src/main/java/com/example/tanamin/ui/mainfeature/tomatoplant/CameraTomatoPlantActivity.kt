@@ -50,6 +50,7 @@ class CameraTomatoPlantActivity : AppCompatActivity() {
         }
         playAnimation()
     }
+
     private fun playAnimation() {
         ObjectAnimator.ofFloat(binding.imgScanner, View.TRANSLATION_Y, -750f, 600f).apply {
             duration = 1600

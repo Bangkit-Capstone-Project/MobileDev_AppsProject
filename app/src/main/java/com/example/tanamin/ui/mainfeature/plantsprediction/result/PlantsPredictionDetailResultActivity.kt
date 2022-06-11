@@ -7,19 +7,17 @@ import com.bumptech.glide.Glide
 import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.databinding.ActivityPlantsPredictionDetailResultBinding
+import com.example.tanamin.nonui.data.Classification
+import com.example.tanamin.nonui.data.History
+import com.example.tanamin.ui.history.detail.HistoryDetailActivity
 import com.example.tanamin.ui.mainfeature.plantsprediction.PlantsPredictionActivityViewModel
+import kotlin.math.roundToInt
 
 class PlantsPredictionDetailResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlantsPredictionDetailResultBinding
-    private lateinit var viewModel: PlantsPredictionDetailResultViewModel
 
     companion object{
-        const val EXTRA_DESCRIPTION = "extra_description"
-        const val EXTRA_ACCURACY = "extra_accuracy"
-        const val EXTRA_IMAGEURL = "extra_imageurl"
-        const val EXTRA_VEGETABLENAME  = "extra_vegetablename"
-        const val EXTRA_CREATEDAT = "extra_createdat"
-        const val TAG = "Bismillah cepet bisanya"
+        const val EXTRA_RESULT = "extra_result"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,22 +29,13 @@ class PlantsPredictionDetailResultActivity : AppCompatActivity() {
             finish()
         }
 
-        val description = intent.getStringExtra(EXTRA_DESCRIPTION)
-        val accuracy = intent.getStringExtra(EXTRA_ACCURACY)
-        val imageUrl = intent.getStringExtra(EXTRA_IMAGEURL)
-        val vegetableName = intent.getStringExtra(EXTRA_VEGETABLENAME)
-        val createdAt = intent.getStringExtra(EXTRA_CREATEDAT)
+        val result = intent.getParcelableExtra<Classification>(EXTRA_RESULT) as Classification
+        val roundoff = ((result.accuracy.toDouble() * 100.0).roundToInt()).toString()
 
-        Log.d(TAG, "description: $description")
-        Log.d(TAG, "accuracy: $accuracy")
-        Log.d(TAG, "imageUrl: $imageUrl")
-        Log.d(TAG, "vegetableName: $vegetableName")
-        Log.d(TAG, "createdAt: $createdAt")
-
-        Glide.with(this).load(imageUrl).into(binding.imageResult)
-        binding.nameResult.setText(vegetableName)
-        binding.AccuracyResult.setText(accuracy)
-        binding.CreatedAt.setText(createdAt)
-        binding.DescriptionResult.setText(description)
+        Glide.with(this).load(result.imageUrl).into(binding.imageResult)
+        binding.nameResult.setText(result.vegetableName)
+        binding.AccuracyResult.setText("${roundoff}%")
+        binding.CreatedAt.setText(result.createdAt)
+        binding.DescriptionResult.setText(result.description)
     }
 }

@@ -26,6 +26,7 @@ import com.example.tanamin.databinding.ActivityRicePlantBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.response.RefreshTokenResponse
 import com.example.tanamin.nonui.response.RiceDiseaseResponse
+import com.example.tanamin.nonui.response.TomatoDiseaseResponse
 import com.example.tanamin.nonui.response.UploadFileResponse
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
@@ -33,6 +34,7 @@ import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
 import com.example.tanamin.ui.mainfeature.camerautil.rotateBitmap
 import com.example.tanamin.ui.mainfeature.camerautil.uriToFile
 import com.example.tanamin.ui.mainfeature.riceplant.result.RicePlantDetailResultActivity
+import com.example.tanamin.ui.mainfeature.tomatoplant.result.TomatoPlantDetailResultActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -243,7 +245,7 @@ class RicePlantActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     logd("PREDICTION CHECKER: ${responseBody.data}")
-                    prepareToSendData(responseBody.data.toString())
+                    prepareToSendResult(responseBody)
 
                 }else{
                     showFailed()
@@ -294,77 +296,28 @@ class RicePlantActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<RefreshTokenResponse>, t: Throwable) {
                 Log.d(this@RicePlantActivity.toString(), "${t.message}")
+
             }
 
         })
     }
 
-    //UNTUK MEMPERSIAPKAN DATA YANG DAPAT INTENT KAN KE DISPLAY ACTIVITY DAN NGESEND DATANYA :)
-    private fun prepareToSendData(theData: String){
-        /*
-        Karena ada 7 data yang mau di send (createdAt, diseasesName, historyId, imageUrl, accuracy, description, plantName)
-        kita buat parsing untuk setiap tujug tujuhnya. Kemudian, karena setiap datanya itu memiliki kesamaan
-        dalam struktur, kita parsing dari belakang :)
-         */
+    private fun prepareToSendResult(PlantsDiseases: RiceDiseaseResponse){
+        val resultData = com.example.tanamin.nonui.data.PlantsDiseases(
+            "${PlantsDiseases.data.result.createdAt}",
+            "${PlantsDiseases.data.result.diseasesName}",
+            "${PlantsDiseases.data.result.historyId}",
+            "${PlantsDiseases.data.result.imageUrl}",
+            PlantsDiseases.data.result.accuracy,
+            "${PlantsDiseases.data.result.description}",
+            "${PlantsDiseases.data.result.plantName}"
+        )
+        logd("This is the result of classification $resultData")
         val intentRicePlantDetailResultActivity = Intent(this@RicePlantActivity, RicePlantDetailResultActivity::class.java)
-
-        //UNTUK PLANT NAME
-        val firstArrayplantName: List<String> = theData.split("))")
-        val secondParsingDescription: String = firstArrayplantName[0]
-        val secondArrayPlantName: List<String> = secondParsingDescription.split(", plantName=")
-        val thePlantName: String = secondArrayPlantName[1]
-        logd("thePlantName: $thePlantName")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_PLANTNAME, thePlantName)
-
-        //UNTUK DESCRIPTIONS
-        val prepareDescription: String = secondArrayPlantName[0]
-        val firstArrayDescription : List<String> = prepareDescription.split(", description=")
-        val theDescription: String = firstArrayDescription[1]
-        logd("theDescription: $theDescription")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_DESCRIPTION, theDescription)
-
-
-        //UNTUK ACCURACY
-        val prepareAccuracy: String = firstArrayDescription[0]
-        val firstArrayAccuracy: List<String> = prepareAccuracy.split(", accuracy=")
-        val theAccuracy: String = firstArrayAccuracy[1]
-        logd("theAccuracy: $theAccuracy")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_ACCURACY, theAccuracy)
-
-
-        //UNTUK IMAGEURL
-        val prepareImageUrl: String = firstArrayAccuracy[0]
-        val firstArrayImageUrl: List<String> = prepareImageUrl.split(", imageUrl=")
-        val theImageUrl: String = firstArrayImageUrl[1]
-        logd("theImageUrl: $theImageUrl")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_IMAGEURL, theImageUrl)
-
-
-        //UNTUK HISTORY_ID
-        val prepareHistoryId: String = firstArrayImageUrl[0]
-        val firstArrayHistoryId: List<String> = prepareHistoryId.split(", historyId=")
-        val theHistoryId: String = firstArrayHistoryId[1]
-        logd("theHistoryId: $theHistoryId")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_HISTORYID, theHistoryId)
-
-
-        //UNTUK DISEASE NAME
-        val prepareDiseaseName: String = firstArrayHistoryId[0]
-        val firstArrayDiseaseName: List<String> = prepareDiseaseName.split(", diseasesName=")
-        val theDiseaseName: String = firstArrayDiseaseName[1]
-        logd("theDiseaseName: $theDiseaseName")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_DISEASENAME, theDiseaseName)
-
-        //UNTUK WAKTU PEMBUATAN
-        val prepareCreatedAt: String = firstArrayDiseaseName[0]
-        val firstArrayCreatedAt: List<String> = prepareCreatedAt.split("DataRice(result=ResultRice(createdAt=")
-        val theCreatedAt: String = firstArrayCreatedAt[1]
-        logd("theCreatedAt: $theCreatedAt")
-        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_CREATEDAT, theCreatedAt)
-
+        intentRicePlantDetailResultActivity.putExtra(RicePlantDetailResultActivity.EXTRA_RESULT, resultData)
         startActivity(intentRicePlantDetailResultActivity)
-
     }
+
     private fun showLoading(b: Boolean){
         val bottomSheetDialog = BottomSheetDialog(this@RicePlantActivity, R.style.BottomSheetDialogTheme)
         val bottomSheetView = LayoutInflater.from(applicationContext).inflate(
@@ -376,8 +329,8 @@ class RicePlantActivity : AppCompatActivity() {
         }
         bottomSheetDialog.setContentView(bottomSheetView)
         bottomSheetDialog.show()
-
     }
+
     private fun showFailed(){
 
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)

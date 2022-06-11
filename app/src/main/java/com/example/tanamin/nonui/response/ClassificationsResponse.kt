@@ -1,6 +1,8 @@
 package com.example.tanamin.nonui.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class ClassificationsResponse(
 
@@ -17,10 +19,10 @@ data class ClassificationsResponse(
 data class DataResult(
 
 	@field:SerializedName("result")
-	val result: Result
+	val result: ResultPlant
 )
 
-data class Result(
+data class ResultPlant(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String,
