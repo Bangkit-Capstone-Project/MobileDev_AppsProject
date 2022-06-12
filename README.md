@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img align="center" src="Image/Logo Tanamin 3-01.png"  width="500"></img>
+  <img align="center" src="Image/Logo Tanamin 1-01.png"  width="500"></img>
 <br>
 TANAMIN MOBILE DEVELOPMENT README
 </h1>
