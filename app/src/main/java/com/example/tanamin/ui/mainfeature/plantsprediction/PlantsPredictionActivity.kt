@@ -108,7 +108,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
     }
     private fun help(){
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
-        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_help_vegetable,
+        val bottomSheetView = LayoutInflater.from(applicationContext).inflate(R.layout.item_help_bottomsheet,
             findViewById<LinearLayout>(R.id.bottomSheet)
         )
         bottomSheetDialog.setContentView(bottomSheetView)
