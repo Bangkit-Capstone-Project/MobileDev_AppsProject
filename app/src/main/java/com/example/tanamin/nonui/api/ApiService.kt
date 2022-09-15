@@ -50,6 +50,15 @@ interface ApiService {
         @Field("endpoint") endpoint: String
     ): Call<ClassificationsResponse>
 
+    //FOR THE MERGED-MODEL
+    @FormUrlEncoded
+    @POST("predictions/merged-model2")
+    fun getMergedModel(
+        @Header("Authorization") token: String,
+        @Field("imgUrl") imgUrl: String,
+        @Field("endpoint") endpoint: String
+    ): Call<MergedModelResponse>
+
     //FOR THE TOMATO DISEASE FEATURE
     @FormUrlEncoded
     @POST("predictions/tomato")

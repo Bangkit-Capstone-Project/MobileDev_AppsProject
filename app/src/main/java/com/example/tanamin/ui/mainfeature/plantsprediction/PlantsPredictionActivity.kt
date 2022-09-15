@@ -24,10 +24,8 @@ import com.example.tanamin.R
 import com.example.tanamin.databinding.ActivityPlantsPredictionBinding
 import com.example.tanamin.nonui.api.ApiConfig
 import com.example.tanamin.nonui.data.History
-import com.example.tanamin.nonui.response.ClassificationsResponse
-import com.example.tanamin.nonui.response.RefreshTokenResponse
-import com.example.tanamin.nonui.response.ResultPlant
-import com.example.tanamin.nonui.response.UploadFileResponse
+import com.example.tanamin.nonui.data.Merged
+import com.example.tanamin.nonui.response.*
 import com.example.tanamin.nonui.userpreference.UserPreferences
 import com.example.tanamin.ui.ViewModelFactory
 import com.example.tanamin.ui.mainfeature.camerautil.reduceFileImage
@@ -177,6 +175,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         val responseBody = response.body()
                         if(responseBody != null){
+                            Log.e("PlantPrediciton", "onResponse: ${responseBody.data.pictureUrl}", )
                             plantsPrediction(responseBody.data.pictureUrl)
                         }
                     }else{
@@ -198,14 +197,15 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS TO SEND THE LINK PLUS THE ENDPOINT TO THE SERVER TO GET THE PREDICTION
     private fun plantsPrediction(theUrl: String){
-        val endpoint = "5666821356906348544"
+        val endpoint = "2898901989050023936"
         val userToken = "Bearer $token"
-        val service = ApiConfig.getApiService().getVegetableClassification(userToken, theUrl, endpoint)
+        Log.e("UserToken", "plantsPrediction: ${token}", )
+        val service = ApiConfig.getApiService().getMergedModel(userToken, theUrl, endpoint)
 
-        service.enqueue(object : Callback<ClassificationsResponse>{
+        service.enqueue(object : Callback<MergedModelResponse>{
             override fun onResponse(
-                call: Call<ClassificationsResponse>,
-                response: Response<ClassificationsResponse>
+                call: Call<MergedModelResponse>,
+                response: Response<MergedModelResponse>
             ) {
                 logd(response.body()?.data.toString())
                 val responseBody = response.body()
@@ -216,8 +216,8 @@ class PlantsPredictionActivity : AppCompatActivity() {
                     logd("Respones Message ${response.message()}")
                 }
             }
-            override fun onFailure(call: Call<ClassificationsResponse>, t: Throwable) {
-                logd("Checking Failed")
+            override fun onFailure(call: Call<MergedModelResponse>, t: Throwable) {
+                logd("Checking Failed ${t}")
                 showFailed()
             }
         })
@@ -261,14 +261,16 @@ class PlantsPredictionActivity : AppCompatActivity() {
         })
     }
 
-    private fun prepareToSendResutl(Classification: ClassificationsResponse){
+    private fun prepareToSendResutl(MergedResponse:
+                                    MergedModelResponse){
 
-        val resultData = Classification1(
-            "${Classification.data.result.createdAt}",
-            "${Classification.data.result.vegetableName}",
-            "${Classification.data.result.imageUrl}",
-            "${Classification.data.result.accuracy}",
-            "${Classification.data.result.description}",
+        val resultData = Merged(
+            "${MergedResponse.data.result.createdAt}",
+            "${MergedResponse.data.result.diseasesName}",
+            "${MergedResponse.data.result.imageUrl}",
+            "${MergedResponse.data.result.accuracy}",
+            "${MergedResponse.data.result.description}",
+            "${MergedResponse.data.result.plantName}"
         )
         val intentPlantsPredictionDetailResultActivity = Intent(this@PlantsPredictionActivity, PlantsPredictionDetailResultActivity::class.java)
 
@@ -281,7 +283,7 @@ class PlantsPredictionActivity : AppCompatActivity() {
 
     //THIS FUNCTION IS FOR DEBUGGING :)
     private fun logd(msg: String) {
-        Log.d(this@PlantsPredictionActivity.toString(), "$msg")
+        Log.e(this@PlantsPredictionActivity.toString(), "$msg")
     }
 
     private fun showLoading(b: Boolean){
